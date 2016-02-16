@@ -1,8 +1,7 @@
 <?php
 class Index extends Mvc {
-    public function _index() {
-        
+    public function _index($args) {
         // Init MVC
-        self::init('IndexModel', 'Index');
+        self::init('LoginModel', 'login', $args);
     }
 }
