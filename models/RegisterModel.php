@@ -2,7 +2,7 @@
 class RegisterModel {
 	public $data;
 	public function __construct(){
-		$this->data['title']="USER LOGIN";
+		$this->data['title']="Register - NCube School";
 		$this->data['action']="";
 	}
 }
