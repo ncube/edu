@@ -1,0 +1,5 @@
+#Not working for url like host/test%2Ftest
+RewriteEngine On
+
+RewriteRule  ^public  -  [L]
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
