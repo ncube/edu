@@ -1,4 +1,3 @@
-#Not working for url like host/test%2Ftest
 RewriteEngine On
 
 RewriteRule  ^public  -  [L]
