@@ -1,7 +1,8 @@
 <?php 
+require_once 'config/Config.php';
 class App {
-    public function __construct() {
-
+    public function __construct() {                
+        
         // Auto Load Classes
         spl_autoload_register(function($class) {
 
@@ -14,7 +15,7 @@ class App {
                 }
             }
         });
-
+                
         // Sanitize Input Data
         $safe_data = Sanitize::nonDatabase();
 

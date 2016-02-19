@@ -8,6 +8,6 @@ class Log {
                 $error = $error->getFile().'('.$error->getLine().')'.' ==>'.$error->getMessage();
                 break;
         }
-        file_put_contents('logs/error.log',  date('F j Y h:i:s A') . ' - ' . $type . ' - ' . $error . "\n", FILE_APPEND);
+        file_put_contents($GLOBALS['config']['logs']['path'],  date('F j Y h:i:s A') . ' - ' . $type . ' - ' . $error . "\n", FILE_APPEND);
     }
 }
