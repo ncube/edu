@@ -11,9 +11,9 @@ class Mvc {
     
     public function init($model, $view, $args = []) {
         // Get Model
-        $model = $this->model($model, $args);
+        $model = self::model($model, $args);
         
         // Generate View
-        $this->view($view, $model->data);
+        self::view($view, $model->data);
     }
 }

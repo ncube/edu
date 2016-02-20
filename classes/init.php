@@ -1,12 +1,15 @@
 <?php 
 require_once 'config/Config.php';
 class App {
-    public function __construct() {                
+    public function __construct() {
+        
+        //Start Session
+        session_start();
         
         // Auto Load Classes
         spl_autoload_register(function($class) {
 
-            $paths = ['controller/', 'classes/', 'models/'];
+            $paths = ['controller/', 'classes/', 'classes/DB/', 'models/'];
 
             foreach($paths as $path) {
                 $file = $path.$class.'.php';
