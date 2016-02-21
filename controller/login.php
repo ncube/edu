@@ -8,12 +8,12 @@ class Login extends Mvc {
             header('Location: /');
             exit();
         }
-        
+               
         
         $validation = Validate::login($post);
         
         if ($validation === true) {
-            echo 'Ready for login';
+            User::login($post['username'], $post['password']);
         } else {
             print_r($validation);
         }

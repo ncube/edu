@@ -28,4 +28,8 @@ class Session {
         }
         return FALSE;
     }
+    
+    public function login($user_id) {
+        self::create('user_id', $user_id);
+    }
 }

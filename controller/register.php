@@ -8,7 +8,7 @@ class Register extends Mvc {
 		if(!empty(($arg['post']))) {
             $validate = Validate::register($arg['post']);
             if($validate === TRUE) {
-                DB::addUser($arg['post']);
+                User::addUser($arg['post']);
                 echo 'Registered';
             } else {
                 echo '<pre>';

@@ -25,10 +25,14 @@ class DB {
     public function query($sql, $data = array(), $fetch = false) {
         if ($query = self::connect()->_conn->prepare($sql)) {
             $x = 1;
-            if (count($data)) {
-                foreach($data as $param) {
-                    $query->bindValue($x, $param);
-                    $x++;
+            if ($data === TRUE) {
+                $fetch = TRUE;
+            } else {
+                if (count($data)) {
+                    foreach($data as $param) {
+                        $query->bindValue($x, $param);
+                        $x++;
+                    }
                 }
             }
 
@@ -42,7 +46,11 @@ class DB {
 
             if ($execute) {
                 if ($fetch) {
-                    $this->_results = $query->fetchAll(PDO::FETCH_OBJ);
+                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                    if (count($results) === 1) {
+                        $results = $results[0];
+                    }
+                    $this->_results = $results;
                 }
                 $this->_count = $query->rowCount();
             } else {
@@ -66,7 +74,7 @@ class DB {
         }
 
         $sql = "INSERT INTO ".'`'.$table.'` '."(`".implode('`, `', $keys)."`) VALUES ({$values})";
-        if (!$this->query($sql, $fields)) {
+        if (!self::connect()->query($sql, $fields)) {
             return TRUE;
         }
         return FALSE;
@@ -82,16 +90,54 @@ class DB {
         return self::connect()->query($sql);
     }
 
-    public function addUser($data) {
-        $data['user_id'] = md5(uniqid(mt_rand, true));
-        $data['password'] = Hash::generate($data['password']);
+    public function fetch($table, $data, $logic = NULL) {
 
-        unset($data['password_again']);
+        $columns = '*';
 
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
+        if (gettype($table) === 'array') {
+            if (isset($table[0])) {
+                $table = $table[0];
+            } else {
+                $columns = '';
+                $tableData = $table;
+                $table = array_keys($tableData)[0];
+                $tableData = $tableData[$table];
+                $i = 0;
+                foreach($tableData as $value) {
+                    if ($i === 0) {
+                        $columns .= '`'.$value.'`';
+                    } else {
+                        $columns .= ', `'.$value.'`';
+                    }
+                    $i++;
+                }
+            }
+        }
 
-        self::connect()->insert('users', $data);
+        if (count($data) === 1) {
+            $sql = "SELECT ".$columns." FROM `".$table."` WHERE `".array_keys($data)[0]."` = '".array_values($data)[0]."'";
+            self::query($sql, true);
+            return $this->_results;
+        } else {
+            if ($logic === NULL) {
+                $logic = 'AND';
+            }
+            $sql = "SELECT ".$columns." FROM `".$table."` WHERE ";
+            $i = 0;
+            foreach($data as $key => $value) {
+                if ($i === 0) {
+                    $sql .= "`".$key."` = '".$value."'";
+                } else {
+                    $sql .= " ".$logic." "."`".$key."` = '".$value."'";
+                }
+                $i++;
+            }
+            self::query($sql, true);
+            return $this->_results;
+        }
+    }
+
+    public function count() {
+        return $this->_count;
     }
 }
