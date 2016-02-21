@@ -23,7 +23,7 @@ class DB {
     }
 
     public function query($sql, $data = array(), $fetch = false) {
-        if ($query = $this->_conn->prepare($sql)) {
+        if ($query = self::connect()->_conn->prepare($sql)) {
             $x = 1;
             if (count($data)) {
                 foreach($data as $param) {
@@ -79,7 +79,7 @@ class DB {
         }
 
         $sql = "UPDATE ".'`'.$table.'` SET '.implode(', ', $update)." WHERE `".$a."` = "."'".$b."'";
-        return self::query($sql);
+        return self::connect()->query($sql);
     }
 
     public function addUser($data) {
@@ -92,6 +92,6 @@ class DB {
         print_r($data);
         echo '</pre>';
 
-        DB::connect()->insert('users', $data);
+        self::connect()->insert('users', $data);
     }
 }
