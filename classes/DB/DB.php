@@ -90,7 +90,7 @@ class DB {
         return self::connect()->query($sql);
     }
 
-    public function fetch($table, $data, $logic = NULL) {
+    public function fetch($table, $data, $logic = 'AND') {
 
         $columns = '*';
 
@@ -122,9 +122,6 @@ class DB {
             self::query($sql, true);
             return $this->_results;
         } else {
-            if ($logic === NULL) {
-                $logic = 'AND';
-            }
             $sql = "SELECT ".$columns." FROM `".$table."` WHERE ";
             $i = 0;
             foreach($data as $key => $value) {
@@ -137,6 +134,28 @@ class DB {
             }
             self::query($sql, true);
             return $this->_results;
+        }
+    }
+
+    public function fetchCount($table, $data, $logic = 'AND') {
+
+        if (count($data) === 1) {
+            $sql = "SELECT `primary_id` FROM `".$table."` WHERE `".array_keys($data)[0]."` = '".array_values($data)[0]."'";
+            self::query($sql, true);
+            return $this->_count;
+        } else {
+            $sql = "SELECT `primary_id` FROM `".$table."` WHERE ";
+            $i = 0;
+            foreach($data as $key => $value) {
+                if ($i === 0) {
+                    $sql .= "`".$key."` = '".$value."'";
+                } else {
+                    $sql .= " ".$logic." "."`".$key."` = '".$value."'";
+                }
+                $i++;
+            }
+            self::query($sql, true);
+            return $this->_count;
         }
     }
 

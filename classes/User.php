@@ -27,6 +27,33 @@ class User {
         DB::insert('users', $data);
     }
 
+    public function follow($post) {
+        $user_id = User::getPublicUserId($post['username']);
+
+        if ($user_id === Session::get('user_id')) {
+            echo 'Sorry you cannot follow your profile';
+        } else {
+            //TOD0: check if following already
+
+            $primary_id = DB::fetch(array('follow' => 'primary_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
+
+            if (empty($primary_id)) {
+                DB::insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
+                return TRUE;
+            } else {
+                return 'You are already following';
+            }
+        }
+    }
+
+    public function followingCount() {
+        return DB::fetchCount('follow', array('user_id' => Session::get('user_id')));
+    }
+
+    public function followerCount() {
+        return DB::fetchCount('follow', array('following_id' => Session::get('user_id')));
+    }
+
     public function getUserData($fields = NULL) {
 
         if ($fields === NULL) {
