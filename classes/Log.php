@@ -1,13 +1,19 @@
 <?php
 class Log {
-    public function error($type, $error) {
+    public function error($type, $error, $trace = true) {
         $type = strtoupper($type);
         
         switch ($type) {
             case 'DB':
-                $error = $error->getFile().'('.$error->getLine().')'.' ==>'.$error->getMessage();
+                $log = $error->getFile().'('.$error->getLine().')'.' ==>';
+                
+                if ($trace) {
+                    $log .= $error;
+                } else {
+                    $log .= $error->getMessage();
+                }
                 break;
         }
-        file_put_contents($GLOBALS['config']['logs']['path'],  date('F j Y h:i:s A') . ' - ' . $type . ' - ' . $error . "\n", FILE_APPEND);
+        file_put_contents($GLOBALS['config']['logs']['path'],  date('F j Y h:i:s A') . ' - ' . $type . ' - ' . $log . "\n", FILE_APPEND);
     }
 }
