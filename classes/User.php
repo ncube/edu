@@ -1,5 +1,6 @@
 <?php 
 class User {
+    public $userData = NULL;
 
     public function login($username, $password) {
 
@@ -24,5 +25,81 @@ class User {
         unset($data['password_again']);
 
         DB::insert('users', $data);
+    }
+
+    public function getUserData($fields = NULL) {
+
+        if ($fields === NULL) {
+            $table = 'users';
+        } else {
+            $table = array('users' => $fields);
+        }
+
+        $this->userData = DB::fetch($table, array('user_id' => Session::get('user_id')));
+
+        // For Count
+        $count = new ArrayObject($this->userData);
+        $count = $count->count();
+
+        if ($count === 1) {
+            if (gettype($fields) === 'array') {
+                $fields = $fields[0];
+            }
+            return $this->userData->$fields;
+        } else {
+            return $this->userData;
+        }
+    }
+
+    public function getPublicData($id, $fields = NULL) {
+
+        $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email'];
+
+        if (gettype($fields) === 'string') {
+            $fields = [$fields];
+        }
+        if ($fields !== NULL) {
+            foreach($fields as $key => $field) {
+                foreach($allowed as $value) {
+                    if ($field === $value) {
+                        $safe[] = $field;
+                    }
+                }
+            }
+            if (empty($safe)) {
+                return FALSE;
+            } else {
+                $fields = $safe;
+            }
+        }
+
+        if ($fields === NULL) {
+            $table = array('users' => $allowed);
+        } else {
+            $table = array('users' => $fields);
+        }
+
+        $this->userData = DB::fetch($table, array('user_id' => $id));
+
+        // For Count
+        $count = new ArrayObject($this->userData);
+        $count = $count->count();
+
+        if ($count === 1) {
+            if (gettype($fields) === 'array') {
+                $fields = $fields[0];
+            }
+            return $this->userData->$fields;
+        } else {
+            return $this->userData;
+        }
+    }
+
+    public function getPublicUserId($username) {
+        $this->userData = DB::fetch(array('users' => 'user_id'), array('public ' => '1', 'username' => $username));
+        if (!empty($this->userData)) {
+            return $this->userData->user_id;
+        }
+        return FALSE;
     }
 }

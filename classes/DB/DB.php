@@ -102,6 +102,9 @@ class DB {
                 $tableData = $table;
                 $table = array_keys($tableData)[0];
                 $tableData = $tableData[$table];
+                if (gettype($tableData) === 'string') {
+                    $tableData = [$tableData];
+                }
                 $i = 0;
                 foreach($tableData as $value) {
                     if ($i === 0) {
