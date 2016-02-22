@@ -96,7 +96,7 @@ class User {
     }
 
     public function getPublicUserId($username) {
-        $this->userData = DB::fetch(array('users' => 'user_id'), array('public ' => '1', 'username' => $username));
+        $this->userData = DB::fetch(array('users' => 'user_id'), array('public' => '1', 'username' => $username));
         if (!empty($this->userData)) {
             return $this->userData->user_id;
         }
