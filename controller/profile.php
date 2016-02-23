@@ -42,6 +42,7 @@ class Profile {
     }
 
     public function follow($post) {
+        new Protect;
         $token = Token::check($post['token']);
         if (!empty($post['username'] && $token === TRUE)) {
             echo User::follow($post);
