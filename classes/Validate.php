@@ -46,7 +46,7 @@ class Validate {
         }
 
         if (empty($this->_errors)) {
-            return true;
+            return TRUE;
         }
         return $this->_errors;
     }
@@ -55,24 +55,24 @@ class Validate {
         return self::check(
             $post, array(
                 'username' => array(
-                            'required' => true,
+                            'required' => TRUE,
                             'min' => 3,
                             'max' => 32,
                             'unique' => 'users'),
                 'password' => array(
-                            'required' => true,
+                            'required' => TRUE,
                             'min' => 6, ),
                 'password_again' => array('matches' => 'password'),
                 'first_name' => array(
-                            'required' => true,
+                            'required' => TRUE,
                             'min' => 3,
                             'max' => 32),
                 'last_name' => array(
-                            'required' => true,
+                            'required' => TRUE,
                             'min' => 3,
                             'max' => 32),
                 'email' => array(
-                            'required' => true)
+                            'required' => TRUE)
             )
         );
     }
@@ -81,9 +81,9 @@ class Validate {
         return self::check(
             $post, array(
                 'username' => array(
-                            'required' => true),
+                            'required' => TRUE),
                 'password' => array(
-                            'required' => true)
+                            'required' => TRUE)
             )
         );
     }

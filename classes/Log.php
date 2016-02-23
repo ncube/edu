@@ -1,6 +1,6 @@
 <?php
 class Log {
-    public function error($type, $error, $trace = true) {
+    public function error($type, $error, $trace = TRUE) {
         $type = strtoupper($type);
         
         switch ($type) {

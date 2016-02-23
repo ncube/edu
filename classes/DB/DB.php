@@ -22,7 +22,7 @@ class DB {
         return self::$_object;
     }
 
-    public function query($sql, $data = array(), $fetch = false) {
+    public function query($sql, $data = array(), $fetch = FALSE) {
         if ($query = self::connect()->_conn->prepare($sql)) {
             $x = 1;
             if ($data === TRUE) {
@@ -119,7 +119,7 @@ class DB {
 
         if (count($data) === 1) {
             $sql = "SELECT ".$columns." FROM `".$table."` WHERE `".array_keys($data)[0]."` = '".array_values($data)[0]."'";
-            self::query($sql, true);
+            self::query($sql, TRUE);
             return $this->_results;
         } else {
             $sql = "SELECT ".$columns." FROM `".$table."` WHERE ";
@@ -132,7 +132,7 @@ class DB {
                 }
                 $i++;
             }
-            self::query($sql, true);
+            self::query($sql, TRUE);
             return $this->_results;
         }
     }
@@ -141,7 +141,7 @@ class DB {
 
         if (count($data) === 1) {
             $sql = "SELECT `primary_id` FROM `".$table."` WHERE `".array_keys($data)[0]."` = '".array_values($data)[0]."'";
-            self::query($sql, true);
+            self::query($sql, TRUE);
             return $this->_count;
         } else {
             $sql = "SELECT `primary_id` FROM `".$table."` WHERE ";
@@ -154,7 +154,7 @@ class DB {
                 }
                 $i++;
             }
-            self::query($sql, true);
+            self::query($sql, TRUE);
             return $this->_count;
         }
     }

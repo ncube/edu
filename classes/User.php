@@ -20,7 +20,7 @@ class User {
     }
 
     public function addUser($data) {
-        $safe_data['user_id'] = md5(uniqid(mt_rand, true));
+        $safe_data['user_id'] = md5(uniqid(mt_rand, TRUE));
         $safe_data['password'] = Hash::generate($data['password']);
         $safe_data['username'] = $data['username'];
         $safe_data['first_name'] = $data['first_name'];

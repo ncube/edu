@@ -1,7 +1,7 @@
 <?php
 class Session {
     public static function exists($name) {
-        return (isset($_SESSION[$name])) ? true : false;
+        return (isset($_SESSION[$name])) ? TRUE : FALSE;
     }
     
     public static function create($name, $value) {

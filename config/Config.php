@@ -6,7 +6,7 @@ global $CONFIG;
 
 foreach($files as $values) {
     $file = file_get_contents(__DIR__.'/'.$values.'.json');
-    $config[$values] = json_decode($file, true);
+    $config[$values] = json_decode($file, TRUE);
 }
 
 $GLOBALS['config'] = $config;
