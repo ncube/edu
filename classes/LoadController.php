@@ -8,15 +8,9 @@ class LoadController {
 
     protected $method = '_index';
 
-    protected $params = [];
+    private function __construct() {
 
-    protected $safe_data = [];
-
-    private function __construct($safe_data) {
-
-
-        $this->safe_data = $safe_data;
-        $url = $this->parseUrl($this->safe_data['get']['url']);
+        $url = $this->parseUrl(Input::get('url'));
 
         if ($url[0] === 'index.php') {
             $url[0] = preg_replace('/\\.[^.\\s]{3,4}$/', '', $url[0]);
@@ -37,9 +31,9 @@ class LoadController {
             }
         }
 
-        $this->safe_data['url'] = $url ? array_values($url) : [];
+        $url = $url ? array_values($url) : [];
 
-        call_user_func_array([$this->controller, $this->method], array($this->safe_data));
+        call_user_func_array([$this->controller, $this->method], array($url));
     }
 
     private function parseUrl($url) {
@@ -48,9 +42,9 @@ class LoadController {
         }
     }
 
-    public function init($safe_data = []) {
+    public function init() {
         if (!isset(self::$_init)) {
-            self::$_init = new LoadController($safe_data);
+            self::$_init = new LoadController;
         }
         return self::$_init;
     }

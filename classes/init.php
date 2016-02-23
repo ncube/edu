@@ -2,10 +2,10 @@
 require_once 'config/Config.php';
 class App {
     public function __construct() {
-        
+
         //Start Session
         session_start();
-        
+
         // Auto Load Classes
         spl_autoload_register(function($class) {
 
@@ -18,11 +18,8 @@ class App {
                 }
             }
         });
-                
-        // Sanitize Input Data
-        $safe_data = Sanitize::nonDatabase();
 
         // Load Controller
-        LoadController::init($safe_data);
+        LoadController::init();
     }
 }

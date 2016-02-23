@@ -1,9 +1,8 @@
 <?php 
 class Profile {
-    public function _index($args) {
-        $url = $args['url'];
+    public function _index($url) {
         if ($url[1] === 'follow') {
-            self::follow($args['post']);
+            self::follow(Input::post());
         } else {
             self::display($url);
         }

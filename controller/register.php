@@ -1,23 +1,25 @@
-<?php
+<?php 
 class Register extends Mvc {
-	
-	public function _index($arg){
-        
+
+    public function _index() {
+
         // TODO: Add from CSRF
-		
-		if(!empty(($arg['post']))) {
-            $validate = Validate::register($arg['post']);
-            if($validate === TRUE) {
-                User::addUser($arg['post']);
+
+        $post = Input::post();
+
+        if (!empty(($post))) {
+            $validate = Validate::register($post);
+            if ($validate === TRUE) {
+                User::addUser($post);
                 echo 'Registered';
             } else {
                 echo '<pre>';
                 print_r($validate);
                 echo '</pre>';
             }
-		}else{
-			self::init('RegisterModel','register',$arg);
-		}
+        } else {
+            self::init('RegisterModel', 'register', $arg);
+        }
 
-	}
+    }
 }

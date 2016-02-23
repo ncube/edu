@@ -1,11 +1,11 @@
-<?php
+<?php 
 class Index extends Mvc {
-    public function _index($args) {
-        
+    public function _index($url) {
+
         // Deny acces if not logged in
         new Protect;
-        
+
         // Init MVC
-        self::init('IndexModel', 'index', $args['get']['url']);
+        self::init('IndexModel', 'index');
     }
 }
