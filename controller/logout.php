@@ -2,10 +2,16 @@
 class Logout extends Mvc {
     public function _index() {
 
-        // Destroy Session
-        session_destroy();
+        $token = $token = Token::check(Input::post('token'));
 
-        // Redirect to index
-        Redirect::to('/');
+        if ($token) {
+            // Destroy Session
+            session_destroy();
+
+            // Redirect to index
+            Redirect::to('/');
+        } else {
+            echo 'Security Token Missing';
+        }
     }
 }

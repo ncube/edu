@@ -29,7 +29,7 @@ class Profile {
                 echo '<br>';
             } else {
                 echo '<form action="/profile/'.$url[0].'/follow" method="post">';
-                // echo '<input type="hidden" name="token" value="'. Token .'">';
+                echo '<input type="hidden" name="token" value="'.Token::generate().'">';
                 echo '<input type="hidden" name="username" value="'.$url[0].'">';
                 echo '<input type="submit" value="follow">';
                 echo '<form><br>';
@@ -42,10 +42,15 @@ class Profile {
     }
 
     public function follow($post) {
-        if (!empty($post['username'])) {
+        $token = Token::check($post['token']);
+        if (!empty($post['username'] && $token === TRUE)) {
             echo User::follow($post);
         } else {
-            Redirect::to('/profile');
+            if (!$token) {
+                echo 'Security Token Missing';
+            } else {
+                Redirect::to('/profile');
+            }
         }
     }
 }

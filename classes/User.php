@@ -20,11 +20,14 @@ class User {
     }
 
     public function addUser($data) {
-        $data['user_id'] = md5(uniqid(mt_rand, true));
-        $data['password'] = Hash::generate($data['password']);
-        unset($data['password_again']);
+        $safe_data['user_id'] = md5(uniqid(mt_rand, true));
+        $safe_data['password'] = Hash::generate($data['password']);
+        $safe_data['username'] = $data['username'];
+        $safe_data['first_name'] = $data['first_name'];
+        $safe_data['last_name'] = $data['last_name'];
+        $safe_data['email'] = $data['email'];
 
-        DB::insert('users', $data);
+        DB::insert('users', $safe_data);
     }
 
     public function follow($post) {
@@ -123,7 +126,7 @@ class User {
     }
 
     public function getPublicUserId($username) {
-        $this->userData = DB::fetch(array('users' => 'user_id'), array('public' => '1', 'username' => $username));
+        $this->userData = DB::fetch(array('users' => 'user_id'), array('public ' => '1', 'username' => $username));
         if (!empty($this->userData)) {
             return $this->userData->user_id;
         }

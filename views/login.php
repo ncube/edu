@@ -8,6 +8,7 @@
             <input type="username" name="username" id="username">
             <label for="password">Password: </label>
             <input type="password" name="password" id="password">
+            <input type="hidden" name="token" value="<?=$data['token']?>">
             <input type="submit" value="Login">
         </form>
     </body>

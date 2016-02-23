@@ -22,7 +22,7 @@
                 <input type="username" name="username" id="username">
             </li>
         </ul>
-        <ul>            
+        <ul>
             <li>
                 <label for="password">Password: </label>
             </li>
@@ -64,6 +64,7 @@
         </ul>
         <ul>
             <li>
+                <input type="hidden" name="token" value="<?=$data['token']?>">
                 <input type="submit" value="Login">
             </li>
         </ul>

@@ -9,5 +9,6 @@ class IndexModel {
         $this->data['title'] = 'Home - NCube School';
         $this->data['first_name'] = ucwords($userData->first_name);
         $this->data['last_name'] = ucwords($userData->last_name);
+        $this->data['token'] = Token::generate();
     }
 }
