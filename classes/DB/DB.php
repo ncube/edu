@@ -140,11 +140,11 @@ class DB {
     public function fetchCount($table, $data, $logic = 'AND') {
 
         if (count($data) === 1) {
-            $sql = "SELECT `primary_id` FROM `".$table."` WHERE `".array_keys($data)[0]."` = '".array_values($data)[0]."'";
+            $sql = "SELECT `user_id` FROM `".$table."` WHERE `".array_keys($data)[0]."` = '".array_values($data)[0]."'";
             self::query($sql, TRUE);
             return $this->_count;
         } else {
-            $sql = "SELECT `primary_id` FROM `".$table."` WHERE ";
+            $sql = "SELECT `user_id` FROM `".$table."` WHERE ";
             $i = 0;
             foreach($data as $key => $value) {
                 if ($i === 0) {

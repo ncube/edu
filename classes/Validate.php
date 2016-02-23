@@ -58,7 +58,7 @@ class Validate {
                             'required' => TRUE,
                             'min' => 3,
                             'max' => 32,
-                            'unique' => 'users'),
+                            'unique' => 'user'),
                 'password' => array(
                             'required' => TRUE,
                             'min' => 6, ),

@@ -4,7 +4,7 @@ class User {
 
     public function login($username, $password) {
 
-        $results = DB::fetch(array('users' => ['user_id', 'password']), array('username' => $username));
+        $results = DB::fetch(array('user' => ['user_id', 'password']), array('username' => $username));
 
         if (count($results) === 1) {
             if (Hash::verify($password, $results->password)) {
@@ -27,7 +27,7 @@ class User {
         $safe_data['last_name'] = $data['last_name'];
         $safe_data['email'] = $data['email'];
 
-        DB::insert('users', $safe_data);
+        DB::insert('user', $safe_data);
     }
 
     public function follow($post) {
@@ -38,9 +38,9 @@ class User {
         } else {
             //TOD0: check if following already
 
-            $primary_id = DB::fetch(array('follow' => 'primary_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
+            $follow_id = DB::fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
 
-            if (empty($primary_id)) {
+            if (empty($follow_id)) {
                 DB::insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
                 return TRUE;
             } else {
@@ -60,9 +60,9 @@ class User {
     public function getUserData($fields = NULL) {
 
         if ($fields === NULL) {
-            $table = 'users';
+            $table = 'user';
         } else {
-            $table = array('users' => $fields);
+            $table = array('user' => $fields);
         }
 
         $this->userData = DB::fetch($table, array('user_id' => Session::get('user_id')));
@@ -104,9 +104,9 @@ class User {
         }
 
         if ($fields === NULL) {
-            $table = array('users' => $allowed);
+            $table = array('user' => $allowed);
         } else {
-            $table = array('users' => $fields);
+            $table = array('user' => $fields);
         }
 
         $this->userData = DB::fetch($table, array('user_id' => $id));
@@ -126,7 +126,7 @@ class User {
     }
 
     public function getPublicUserId($username) {
-        $this->userData = DB::fetch(array('users' => 'user_id'), array('public' => '1', 'username' => $username));
+        $this->userData = DB::fetch(array('user' => 'user_id'), array('public' => '1', 'username' => $username));
         if (!empty($this->userData)) {
             return $this->userData->user_id;
         }
