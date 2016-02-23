@@ -9,6 +9,7 @@ class User {
         if (count($results) === 1) {
             if (Hash::verify($password, $results->password)) {
                 Session::login($results->user_id);
+                DB::updateIf('user', array('last_login' => time()), 'user_id', Session::get('user_id'));
                 header('Location: /');
                 exit();
             } else {
@@ -36,12 +37,11 @@ class User {
         if ($user_id === Session::get('user_id')) {
             echo 'Sorry you cannot follow your profile';
         } else {
-            //TOD0: check if following already
 
             $follow_id = DB::fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
 
             if (empty($follow_id)) {
-                DB::insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
+                DB::insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id, 'time' => time()));
                 return TRUE;
             } else {
                 return 'You are already following';
