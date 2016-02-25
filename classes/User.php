@@ -49,6 +49,12 @@ class User {
         }
     }
     
+    public function accept($post) {
+        $user_id = User::getPublicUserId($post['username']);
+        DB::updateIf('request', array('status' => 1), 'user_id', $user_id);
+        return 'Accepted';
+    }
+    
     public function request($post) {
         $user_id = User::getPublicUserId($post['username']);
 
@@ -68,7 +74,7 @@ class User {
     }
     
     public function getRequests() {
-        return DB::fetch('request', array('other_user_id' => Session::get('user_id')));
+        return DB::fetch(array('request' => ['user_id', 'type', 'time']), array('other_user_id' => Session::get('user_id'), 'status' => 0));
     }
 
     public function followingCount() {

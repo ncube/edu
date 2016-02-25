@@ -25,12 +25,18 @@
             <tr>
                 <td><?=$key?></td>
                 <td><?=$value?></td>
-                <td><button>Accept</button></td>
+                <td>
+                    <form method="post" action="/profile/<?=$key?>/accept">
+                    <input type="hidden" name="username" value="<?=$key?>">
+                    <input type="hidden" name="token" value="<?=$data['token']?>">
+                    <input type="submit">
+                    </form>
+                </td>
             </tr>
         <?php
         }
         }
-        ?>
+        ?>        
     </table>
 </body>
 </html>

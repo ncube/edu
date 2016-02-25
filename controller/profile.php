@@ -9,6 +9,9 @@ class Profile extends Mvc {
             case 'request':
                 self::request($post);
                 break;
+            case 'accept':
+                self::accept($post);
+                break;
 
             default:
                 self::display($url);
@@ -55,6 +58,20 @@ class Profile extends Mvc {
                 echo 'Security Token Missing';
             } else {
                 Redirect::to('/profile');
+            }
+        }
+    }
+    
+    public function accept($post) {
+        new Protect;
+        $token = Token::check($post['token']);
+        if (!empty($post['username'] && $token === TRUE)) {
+            echo User::accept($post);
+        } else {
+            if (!$token) {
+                echo 'Security Token Missing';
+            } else {
+                Redirect::to('/');
             }
         }
     }

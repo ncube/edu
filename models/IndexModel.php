@@ -10,10 +10,11 @@ class IndexModel {
         $this->data['first_name'] = ucwords($userData->first_name);
         $this->data['last_name'] = ucwords($userData->last_name);
         $this->data['token'] = Token::generate();
+        $this->data['username'] = $userData->username;
         
         $requestData = User::getRequests();
         
-        if(isset($requestData->request_id)) {
+        if(isset($requestData->user_id)) {
             $username = User::getPublicData($requestData->user_id)->username;
             $requests[$username] = $requestData->type;
         } else {
