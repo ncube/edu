@@ -1,10 +1,18 @@
 <?php 
-class Profile {
+class Profile extends Mvc {
     public function _index($url) {
-        if ($url[1] === 'follow') {
-            self::follow(Input::post());
-        } else {
-            self::display($url);
+        $post = Input::post();
+        switch ($url[1]) {
+            case 'follow':
+                self::follow($post);
+                break;
+            case 'request':
+                self::request($post);
+                break;
+
+            default:
+                self::display($url);
+                break;
         }
     }
 
@@ -17,7 +25,6 @@ class Profile {
 
         $data = User::getPublicData($user_id);
 
-        echo '<pre>';
         if ($data) {
             if ($user_id === Session::get('user_id')) {
                 echo '<h3>My profile</h3>';
@@ -28,17 +35,14 @@ class Profile {
                 echo User::followerCount();
                 echo '<br>';
             } else {
-                echo '<form action="/profile/'.$url[0].'/follow" method="post">';
-                echo '<input type="hidden" name="token" value="'.Token::generate().'">';
-                echo '<input type="hidden" name="username" value="'.$url[0].'">';
-                echo '<input type="submit" value="follow">';
-                echo '<form><br>';
+                self::init('ProfileModel', 'profile', $username);
             }
+            echo '<pre>';
             print_r($data);
+            echo '</pre>';
         } else {
             echo 'Sorry User not found or Private User';
         }
-        echo '</pre>';
     }
 
     public function follow($post) {
@@ -51,6 +55,43 @@ class Profile {
                 echo 'Security Token Missing';
             } else {
                 Redirect::to('/profile');
+            }
+        }
+    }
+
+    public function request($post) {
+        new Protect;
+        $token = Token::check($post['token']);
+
+        if (isset($post['type']) && !empty($post['type'] && $token === TRUE)) {
+            $request = User::request($post);
+            if ($request !== TRUE) {
+                echo $request;
+            } else {
+                echo 'Requested';
+            }
+        } else {
+            if (!empty($post['username'] && $token === TRUE)) {
+                echo '
+                    <form action="/profile/'.$post['username'].'/request" method="post">
+                        <input type="hidden" name="token" value="'.Token::generate().'">
+                        <input type="hidden" name="username" value="'.$post['username'].'">
+                        <select name="type">
+                        <option value="C">Classmate</option>
+                        <option value="T">Teacher</option>
+                        <option value="S">Student</option>
+                        <option value="F">Friend</option>
+                        <option value="P">Parent or Guardian</option>
+                        </select>
+                        <input type="submit" value="Send Request">
+                    </form>
+                ';
+            } else {
+                if (!$token) {
+                    echo 'Security Token Missing';
+                } else {
+                    Redirect::to('/profile');
+                }
             }
         }
     }

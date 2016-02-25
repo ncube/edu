@@ -35,7 +35,7 @@ class User {
         $user_id = User::getPublicUserId($post['username']);
 
         if ($user_id === Session::get('user_id')) {
-            echo 'Sorry you cannot follow your profile';
+            echo 'Sorry you cannot follow your own profile';
         } else {
 
             $follow_id = DB::fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
@@ -47,6 +47,28 @@ class User {
                 return 'You are already following';
             }
         }
+    }
+    
+    public function request($post) {
+        $user_id = User::getPublicUserId($post['username']);
+
+        if ($user_id === Session::get('user_id')) {
+            echo 'Sorry you cannot Request to your own profile';
+        } else {
+
+            $follow_id = DB::fetch(array('request' => 'request_id'), array('user_id' => Session::get('user_id'), 'other_user_id' => $user_id));
+
+            if (empty($follow_id)) {
+                DB::insert('request', array('user_id' => Session::get('user_id'), 'other_user_id' => $user_id, 'type' => $post['type'], 'time' => time()));
+                return TRUE;
+            } else {
+                return 'Request already sent';
+            }
+        }
+    }
+    
+    public function getRequests() {
+        return DB::fetch('request', array('other_user_id' => Session::get('user_id')));
     }
 
     public function followingCount() {
