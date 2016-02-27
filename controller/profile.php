@@ -30,19 +30,17 @@ class Profile extends Mvc {
 
         if ($data) {
             if ($user_id === Session::get('user_id')) {
-                echo '<h3>My profile</h3>';
-                echo 'Following :';
-                echo User::followingCount();
-                echo '<br>';
-                echo 'Followers :';
-                echo User::followerCount();
-                echo '<br>';
+                // echo '<h3>My profile</h3>';
+                // echo 'Following :';
+                // echo User::followingCount();
+                // echo '<br>';
+                // echo 'Followers :';
+                // echo User::followerCount();
+                // echo '<br>';
+                self::init('ProfileModel', 'profile', $username);
             } else {
                 self::init('ProfileModel', 'profile', $username);
             }
-            echo '<pre>';
-            print_r($data);
-            echo '</pre>';
         } else {
             echo 'Sorry User not found or Private User';
         }

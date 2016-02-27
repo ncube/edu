@@ -12,16 +12,21 @@ class Login extends Mvc {
 
         $validation = Validate::login($post);
         $token = Token::check($post['token']);
-
+        
+        $errors = NULL;
+        
         if ($validation === TRUE && $token === TRUE) {
-            User::login($post['username'], $post['password']);
+            if (!User::login($post['username'], $post['password'])) {
+                $errors = 'Username or Password is Incorrect'; 
+            }
         } else {
+            $errors = $validation;
             if (!$token) {
-                echo 'Security Token Missing';
-            } else {
-                print_r($validation);
+                $errors = 'Security Token Missing';
             }
         }
-
+        if (!empty($errors)) {
+            Session::errors($errors, '/');
+        }
     }
 }

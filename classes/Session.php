@@ -18,8 +18,8 @@ class Session {
         }
     }
     
-    public static function flash($name, $string = '') {
-        if(self::exists($name)) {
+    public static function flash($name, $string = NULL) {
+        if(self::exists($name) && $string === NULL) {
             $session = self::get($name);
             self::delete($name);
             return $session;
@@ -31,5 +31,16 @@ class Session {
     
     public function login($user_id) {
         self::create('user_id', $user_id);
+    }
+    
+    public function errors($errors, $to = NULL) {
+        
+        if ($to === NULL) {
+            return self::flash('errors');
+        } else {
+            self::flash('errors', $errors);
+            header('Location: '.$to);
+            exit();
+        }
     }
 }

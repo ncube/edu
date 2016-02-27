@@ -5,18 +5,19 @@ class User {
     public function login($username, $password) {
 
         $results = DB::fetch(array('user' => ['user_id', 'password']), array('username' => $username));
-
+               
         if (count($results) === 1) {
             if (Hash::verify($password, $results->password)) {
                 Session::login($results->user_id);
                 DB::updateIf('user', array('last_login' => time()), 'user_id', Session::get('user_id'));
                 header('Location: /');
                 exit();
+                return TRUE;
             } else {
-                echo 'Username or Password is Incorrect';
+                return FALSE;
             }
         } else {
-            echo 'Username or Password is Incorrect';
+            return FALSE;
         }
     }
 

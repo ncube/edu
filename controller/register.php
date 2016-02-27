@@ -3,8 +3,6 @@ class Register extends Mvc {
 
     public function _index() {
 
-        // TODO: Add from CSRF
-
         $post = Input::post();
 
         if (!empty(($post))) {
@@ -22,7 +20,11 @@ class Register extends Mvc {
                 echo '</pre>';
             }
         } else {
-            self::init('RegisterModel', 'register', $arg);
+            if (Session::exists('user_id')) {
+                header('Location: /');
+                exit();
+            }
+            self::init('LoginModel', 'login', $arg);
         }
 
     }

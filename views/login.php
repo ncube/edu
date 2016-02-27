@@ -36,6 +36,10 @@
     .push-top {
         margin-top: 100px;
     }
+    
+    .errors {
+        color: red;
+    }
 </style>
 
 <body>
@@ -47,9 +51,18 @@
                 <div class="panel">
                     <div class="row">
                         <div class="col-md-5 col-md-offset-1">
+                                <?php
+                                if (!empty($data['errors'])) {
+                                    foreach ($data['errors'] as $value) {
+                                        echo '<p class="errors">';
+                                        echo $value;
+                                        echo '</p>';
+                                    }
+                                }
+                                ?>
                             <h3>Register</h3>
                             <br>
-                            <form action="" method="post">
+                            <form action="<?=$data['registerAction']?>" method="post">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -412,9 +425,9 @@
                             <div class="col-md-4 col-md-offset-1 push-top">
                                 <h3>Login</h3>
                                 <br>
-                                <form method="post" action="">
+                                <form method="post" action="<?=$data['loginAction']?>">
                                     <div class="form-group">
-                                        <input type="username" class="form-field form-field-lg" placeholder="Email" name="username">
+                                        <input type="username" class="form-field form-field-lg" placeholder="Username" name="username">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-field form-field-red form-field-lg" placeholder="Password" name="password">
