@@ -19,18 +19,34 @@
         <div class="results">Results are displayed here</div>
         <div class="results">Results are displayed here</div>
     </div>
+    
+    <div class="side-container">
+            <div class="side-header">
+                <div class="row">
+                <div class="side-title"><strong><?=$data['first_name']?> <?=$data['last_name']?></strong></div>
+                </div>
+                    <br>
+                    <a href="/profile">
+                        <div class="side-items">
+                            Profile
+                        </div>
+                    </a>
+                    <a href="/profile">
+                        <div class="side-items">
+                            Messages
+                        </div>
+                    </a>
+            </div>
+        </div>
 
-    <div class="container-hr">
+    <div class="container-hr has-side-header">                                
         <div class="wrapper">
             <div class="container-fluid">
                 <div class="row">
                     
                     
                     
-                    
-                    <h3>Welcome: <?=$data['first_name']?> <?=$data['last_name']?></h3>
-                    
-                    <a href="/profile">Profile</a>
+                                        
                     
                     <h4>Requests</h4>
                     <table style="width: 30%">
