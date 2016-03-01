@@ -5,7 +5,7 @@ class User {
     public function login($username, $password) {
 
         $results = DB::fetch(array('user' => ['user_id', 'password']), array('username' => $username));
-               
+
         if (count($results) === 1) {
             if (Hash::verify($password, $results->password)) {
                 Session::login($results->user_id);
@@ -49,13 +49,13 @@ class User {
             }
         }
     }
-    
+
     public function accept($post) {
         $user_id = User::getPublicUserId($post['username']);
         DB::updateIf('request', array('status' => 1), 'user_id', $user_id);
         return 'Accepted';
     }
-    
+
     public function request($post) {
         $user_id = User::getPublicUserId($post['username']);
 
@@ -73,7 +73,7 @@ class User {
             }
         }
     }
-    
+
     public function getRequests() {
         return DB::fetch(array('request' => ['user_id', 'type', 'time']), array('other_user_id' => Session::get('user_id'), 'status' => 0));
     }
@@ -110,7 +110,7 @@ class User {
         }
     }
 
-    public function getPublicData($id, $fields = NULL) {
+    public function getPublicUserData($id, $fields = NULL) {
 
         $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email'];
 
@@ -160,5 +160,70 @@ class User {
             return $this->userData->user_id;
         }
         return FALSE;
+    }
+
+    public function sendMessage($recipient, $msg) {
+        $recipient_id = self::getPublicUserId($recipient);
+        $user_id = Session::get('user_id');
+
+        // TODO: Check if recipient is private or blocked
+        DB::insert('msg', array('from_id' => $user_id, 'to_id' => $recipient_id, 'msg' => $msg, 'time' => time()));
+        return TRUE;
+    }
+
+    public function getMessages($username) {
+        $id = self::getPublicUserId($username);
+        $user_id = Session::get('user_id');
+
+        $data1 = (array) DB::fetch(array('msg' => ['msg', 'time']), array('from_id' => $id, 'to_id' => $user_id));
+        $data2 = (array) DB::fetch(array('msg' => ['msg', 'time']), array('from_id' => $user_id, 'to_id' => $id));
+
+        if (!empty($data1)) {
+            if (!isset($data1[0])) {
+                $data1 = [$data1];
+            }
+        }
+        if (!empty($data2)) {
+            if (!isset($data2[0])) {
+                $data2 = [$data2];
+            }
+        }
+
+        foreach($data1 as $key => $value) {
+            $data1[$key] = (array) $value;
+            $data1[$key]['type'] = 'sent';
+        }
+        foreach($data2 as $key => $value) {
+            $data2[$key] = (array) $value;
+            $data2[$key]['type'] = 'received';
+        }
+
+        $data = array_merge($data1, $data2);
+        usort($data, function($a, $b) {
+            return $a['time'] - $b['time'];
+        });
+
+        return $data;
+    }
+
+    public function getAcceptedUsersData() {
+        $id = Session::get('user_id');
+        $sent = DB::fetch(array('request' => 'other_user_id'), array('user_id' => $id, 'status' => 1));
+        $received = DB::fetch(array('request' => 'user_id'), array('other_user_id' => $id, 'status' => 1));
+
+        if (count($sent) === 1) {
+            $sent = [$sent];
+        }
+        if (count($received) === 1) {
+            $received = array($received);
+        }
+
+        $ids = array_merge($sent, $received);
+        foreach($ids as $value) {
+            $value = (array) $value;
+            $id = array_values($value)[0];
+            $data[] = (array) User::getPublicUserData($id, ['username', 'first_name', 'last_name']);
+        }
+        return $data;
     }
 }

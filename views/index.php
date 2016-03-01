@@ -31,7 +31,7 @@
                             Profile
                         </div>
                     </a>
-                    <a href="/profile">
+                    <a href="/messages">
                         <div class="side-items">
                             Messages
                         </div>

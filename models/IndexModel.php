@@ -15,12 +15,12 @@ class IndexModel {
         $requestData = User::getRequests();
         
         if(isset($requestData->user_id)) {
-            $username = User::getPublicData($requestData->user_id)->username;
+            $username = User::getPublicUserData($requestData->user_id)->username;
             $requests[$username] = $requestData->type;
         } else {
             foreach(User::getRequests() as $value) {
              
-                $username = User::getPublicData($value->user_id)->username;
+                $username = User::getPublicUserData($value->user_id)->username;
                 $requests[$username] = $value->type;
             }
         }

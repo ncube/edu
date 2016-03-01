@@ -7,7 +7,7 @@ class ProfileModel {
         $this->data['token'] = Token::generate();
         
         $id = User::getPublicUserId($username);
-        $userData = User::getPublicData($id);
+        $userData = User::getPublicUserData($id);
         
         
         $this->data['first_name'] = ucwords($userData->first_name);

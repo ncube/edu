@@ -26,7 +26,7 @@ class Profile extends Mvc {
         $username = $url[0];
         $user_id = User::getPublicUserId($username);
 
-        $data = User::getPublicData($user_id);
+        $data = User::getPublicUserData($user_id);
 
         if ($data) {
             if ($user_id === Session::get('user_id')) {
@@ -59,7 +59,7 @@ class Profile extends Mvc {
             }
         }
     }
-    
+
     public function accept($post) {
         new Protect;
         $token = Token::check($post['token']);
