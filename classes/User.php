@@ -28,6 +28,9 @@ class User {
         $safe_data['first_name'] = $data['first_name'];
         $safe_data['last_name'] = $data['last_name'];
         $safe_data['email'] = $data['email'];
+        $safe_data['gender'] = $data['gender'];
+        $safe_data['dob'] = $data['year'].'-'.$data['month'].'-'.$data['day'];
+        $safe_data['country'] = $data['country'];
 
         DB::insert('user', $safe_data);
     }

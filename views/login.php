@@ -152,9 +152,9 @@
                                 <div class="form-group">
                                     <select class="form-field" name="gender">
                                         <option value="" selected disabled>Select Gender</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="others">Others</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Others</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
