@@ -1,7 +1,7 @@
 <?php 
 class Follow {
     public function _index() {
-        // Deny acces if not logged in
+        // Deny access if not logged in
         new Protect('api');
 
         $post = Input::post();
@@ -11,17 +11,19 @@ class Follow {
         if (!empty($post['username'] && $token === TRUE)) {
             $follow = User::follow($post);
             if ($follow !== TRUE) {
-                $errors[] = $follow;
+                $data['errors'][] = $follow;
             }
         } else {
             if (!$token) {
-                $errors[] = 'Security Token Missing';
+                $data['errors'][] = 'Security Token Missing';
+            } else {
+                $data['errors'][] = 'Username Required';
             }
         }
-        if (!empty($errors)) {
-            return $errors;
+        if (!empty($data)) {
+            return $data;
         } else {
-            return TRUE;
+            return FALSE;
         }
     }
 }

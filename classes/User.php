@@ -36,19 +36,23 @@ class User {
     }
 
     public function follow($post) {
-        $user_id = User::getPublicUserId($post['username']);
+        $user_id = self::getPublicUserId($post['username']);
 
-        if ($user_id === Session::get('user_id')) {
-            echo 'Sorry you cannot follow your own profile';
+        if (empty($user_id)) {
+            return FALSE;
         } else {
-
-            $follow_id = DB::fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
-
-            if (empty($follow_id)) {
-                DB::insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id, 'time' => time()));
-                return TRUE;
+            if ($user_id === Session::get('user_id')) {
+                return 'Sorry you cannot follow your own profile';
             } else {
-                return 'You are already following';
+
+                $follow_id = DB::fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
+
+                if (empty($follow_id)) {
+                    DB::insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id, 'time' => time()));
+                    return TRUE;
+                } else {
+                    return 'You are already following';
+                }
             }
         }
     }
