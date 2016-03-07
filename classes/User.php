@@ -67,7 +67,7 @@ class User {
         $user_id = User::getPublicUserId($post['username']);
 
         if ($user_id === Session::get('user_id')) {
-            echo 'Sorry you cannot Request to your own profile';
+            return 'Sorry you cannot Request to your own profile';
         } else {
 
             $follow_id = DB::fetch(array('request' => 'request_id'), array('user_id' => Session::get('user_id'), 'other_user_id' => $user_id));

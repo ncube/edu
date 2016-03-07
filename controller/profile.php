@@ -81,9 +81,9 @@ class Profile extends Mvc {
         if (isset($post['type']) && !empty($post['type'] && $token === TRUE)) {
             $request = User::request($post);
             if ($request !== TRUE) {
-                echo $request;
+                return $request;
             } else {
-                echo 'Requested';
+                return TRUE;
             }
         } else {
             if (!empty($post['username'] && $token === TRUE)) {
@@ -103,7 +103,7 @@ class Profile extends Mvc {
                 ';
             } else {
                 if (!$token) {
-                    echo 'Security Token Missing';
+                    return 'Security Token Missing';
                 } else {
                     Redirect::to('/profile');
                 }
