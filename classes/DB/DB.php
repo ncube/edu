@@ -89,6 +89,26 @@ class DB {
         $sql = "UPDATE ".'`'.$table.'` SET '.implode(', ', $update)." WHERE `".$a."` = "."'".$b."'";
         return self::connect()->query($sql);
     }
+    
+    public function deleteIf($table, $data, $logic = 'AND') {
+
+        if (count($data) === 1) {
+            $sql = "DELETE FROM `".$table."` WHERE `".array_keys($data)[0]."` = '".array_values($data)[0]."'";
+        } else {
+            $sql = "DELETE FROM `".$table."` WHERE ";
+            $i = 0;
+            foreach($data as $key => $value) {
+                if ($i === 0) {
+                    $sql .= "`".$key."` = '".$value."'";
+                } else {
+                    $sql .= " ".$logic." "."`".$key."` = '".$value."'";
+                }
+                $i++;
+            }
+        }
+        self::query($sql, TRUE);
+        return TRUE;
+    }
 
     public function fetch($table, $data, $logic = 'AND') {
 
@@ -119,8 +139,6 @@ class DB {
 
         if (count($data) === 1) {
             $sql = "SELECT ".$columns." FROM `".$table."` WHERE `".array_keys($data)[0]."` = '".array_values($data)[0]."'";
-            self::query($sql, TRUE);
-            return $this->_results;
         } else {
             $sql = "SELECT ".$columns." FROM `".$table."` WHERE ";
             $i = 0;
@@ -132,9 +150,9 @@ class DB {
                 }
                 $i++;
             }
-            self::query($sql, TRUE);
-            return $this->_results;
         }
+        self::query($sql, TRUE);
+        return $this->_results;
     }
 
     public function fetchCount($table, $data, $logic = 'AND') {
