@@ -33,9 +33,13 @@
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col-md-4">
-                                <a class="btn btn-success m-t-20" href="#"><!--<i class="fa fa-check"></i>--> Follow</a>
-                            </div>
+                            <div class="col-md-4" id="follow-btn"><?php
+                                if ($data['follow'] === TRUE) {
+                                    echo '<a class="btn btn-error m-t-20" id="unfollow"><i class="fa fa-times"></i> Unfollow</a>';
+                                } else {
+                                    echo '<a class="btn btn-success m-t-20" id="follow"><i class="fa fa-check"></i> Follow</a>';
+                                }
+                            ?></div>
                             <div class="col-md-3">
                                 <a class="btn btn-success m-t-20" href="#"> <i class="fa fa-plus"></i> Add</a>
                             </div>
@@ -52,22 +56,10 @@
                             <h4>About</h4>
                             <table class="table">
                                 <tbody>
-                                    <!--<tr>
-                                        <td>Gender</td>
-                                        <td>ncubeschool.org/profile/nutan</td>
-                                    </tr>
-                                    <tr>
-                                        <td>DOB</td>
-                                        <td>(546)-456-7890</td>
-                                    </tr>                                    -->
                                     <tr>
                                         <td>Email</td>
                                         <td><?=$data['email']?></td>
-                                    </tr> 
-                                    <!--<tr>
-                                        <td>Country</td>
-                                        <td>fb.com/n.nutan</td>
-                                    </tr>                                  -->
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -78,8 +70,47 @@
     </div>
     <?php include 'include/body/footer.php'; ?>
 </body>
+<script type="text/javascript" src="/public/js/jquery-2.2.1.min.js"></script>
 <script type="text/javascript">
+    function follow() {
+        var request = $.ajax({
+            url: "http://ncube/api/follow/",
+            method: "POST",
+            data: {"username" : "<?=$data['username']?>", "token": "<?=$data['token']?>"},
+            dataType: "json"
+        });
+        request.done(function( msg ) {
+            if (msg.success) {
+                $("#follow-btn").html('<a class="btn btn-error m-t-20" id="unfollow"><i class="fa fa-times"></i> Unfollow</a>');
+            }
+            console.log(msg.errors);
+        });
+        request.fail(function( jqxhr, textStatus, error ) {
+            var err = textStatus + ", " + error;
+            console.log( "Request Failed: " + err );
+        });
+    }
 
+    function unFollow() {
+        var request = $.ajax({
+            url: "http://ncube/api/unfollow/",
+            method: "POST",
+            data: {"username" : "<?=$data['username']?>", "token": "<?=$data['token']?>"},
+            dataType: "json"
+        });
+        request.done(function( msg ) {
+            if (msg.success) {
+            $("#follow-btn").html('<a class="btn btn-success m-t-20" id="follow"><i class="fa fa-check"></i> Follow</a>');
+            }
+            console.log(msg.errors);
+        });
+        request.fail(function( jqxhr, textStatus, error ) {
+            var err = textStatus + ", " + error;
+            console.log( "Request Failed: " + err );
+        });
+    }
+</script>
+<script type="text/javascript">
     function resetMe() {
         search.style.width = '';
         icon.style.marginRight = '';
@@ -104,6 +135,16 @@
 
         if (id == 'close') {
             resetMe();
+        }
+        
+        // For Follow
+        if (id === 'follow') {
+            follow();
+        }
+        
+        // For UnFollow
+        if (id === 'unfollow') {
+            unFollow();
         }
 
         if (id == 'search') {

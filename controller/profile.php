@@ -50,7 +50,7 @@ class Profile extends Mvc {
         new Protect;
         $token = Token::check($post['token']);
         if (!empty($post['username'] && $token === TRUE)) {
-            echo User::follow($post);
+            echo User::follow($post['username']);
         } else {
             if (!$token) {
                 echo 'Security Token Missing';

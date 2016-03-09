@@ -35,8 +35,8 @@ class User {
         DB::insert('user', $safe_data);
     }
 
-    public function follow($post) {
-        $user_id = self::getPublicUserId($post['username']);
+    public function follow($username) {
+        $user_id = self::getPublicUserId($username);
 
         if (empty($user_id)) {
             return FALSE;
@@ -51,9 +51,26 @@ class User {
                     DB::insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id, 'time' => time()));
                     return TRUE;
                 } else {
-                    return 'You are already following';
+                    return 'following';
                 }
             }
+        }
+    }
+
+    public function unFollow($username) {
+        $user_id = self::getPublicUserId($username);
+        DB::deleteIf('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
+        return TRUE;
+    }
+
+    public function checkFollow($username) {
+        $user_id = self::getPublicUserId($username);
+
+        $follow_id = DB::fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
+        if (!empty($follow_id)) {
+            return TRUE;
+        } else {
+            return FALSE;
         }
     }
 

@@ -1,5 +1,5 @@
 <?php 
-class Follow {
+class Unfollow {
     public function _index() {
         // Deny access if not logged in
         new Protect('api');
@@ -12,11 +12,9 @@ class Follow {
         $data['errors'] = NULL;
 
         if (!empty($post['username'] && $token === TRUE)) {
-            $follow = User::follow($post['username']);
-            if ($follow === TRUE) {
+            $unfollow = User::unFollow($post['username']);
+            if ($unfollow === TRUE) {
                 $data['success'] = TRUE;
-            } else {
-                $data['errors'][] = $follow;
             }
         } else {
             if (!$token) {

@@ -106,7 +106,7 @@ class DB {
                 $i++;
             }
         }
-        self::query($sql, TRUE);
+        self::query($sql);
         return TRUE;
     }
 
