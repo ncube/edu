@@ -14,4 +14,13 @@ class Token {
         }
         return FALSE;
     }
+
+    public static function ajaxCheck($token) {
+        $tokenName = 'csrf_form_token';
+
+        if (Session::exists($tokenName) && $token === Session::get($tokenName)) {
+            return TRUE;
+        }
+        return FALSE;
+    }
 }

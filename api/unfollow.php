@@ -6,7 +6,7 @@ class Unfollow {
 
         $post = Input::post();
 
-        $token = Token::check($post['token']);
+        $token = Token::ajaxCheck($post['token']);
         $data['success'] = FALSE;
 
         $data['errors'] = NULL;
