@@ -7,6 +7,7 @@
     <style>	
 	.right {
 		height: 100%;
+        padding-bottom: 45px;
 	}
 	
 	.left {
@@ -34,7 +35,7 @@
 		font-size: 16px;
 		padding: 15px;
         overflow-y: auto;
-        margin-bottom: -45px;
+        padding-bottom: 100px;
 	}
 	
 	.right-bottom {
@@ -50,6 +51,7 @@
 		padding: 10px;
 		padding-left: 20px;
 		border-radius: 10px;
+        margin-bottom: 5px;
 	}
     
 	.msg-received {
@@ -58,6 +60,7 @@
         padding: 10px;
 		padding-left: 20px;
 		border-radius: 10px;
+        margin-bottom: 5px;
 	}
 	.msg-field {
 		font-size: 16px;
@@ -143,44 +146,7 @@
                 </div>
                 <div class="col-md-9">
 				    <div class="row right">
-					   <div class="right-middle">
-                            <?php
-                                if (!empty($data['msgs'])) {
-                                    foreach ($data['msgs'] as $value) {
-                                        if ($value['type'] === 'sent') {
-                                            echo '
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="msg-sent">
-                                                        ' . $value['msg'] . '
-                                                        <div class="msg-time">
-                                                            ' . date("h:i A", $value['time']) . '
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            ';
-                                        } else if ($value['type'] === 'received') {
-                                            echo '
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="msg-received">
-                                                            ' . $value['msg'] . '
-                                                            <div class="msg-time">
-                                                                ' . date("h:i A", $value['time']) . '
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ';
-                                        }
-                                    }
-                                } else if (empty($data['active_username'])) {
-                                    echo '<- Select Recipient';
-                                } else {
-                                    echo 'No Messages';
-                                }
-                            ?>
+					   <div class="right-middle" id="msgs">
 					   </div>
 					   <div class="right-bottom">
                             <form method="post" action="">
@@ -201,6 +167,7 @@
     </div>
     <?php include 'include/body/footer.php'; ?>
 </body>
+<script type="text/javascript" src="/public/js/jquery-2.2.1.min.js"></script>
 <script type="text/javascript">
 
     function resetMe() {
@@ -235,6 +202,44 @@
             searchArea.style.display = 'block';
         } else {
             resetMe();
+        }
+    }
+    
+    <?php if (!empty($data['recipient'])) {?>
+        setInterval(function () {
+            
+            var request = $.ajax({
+                url: "http://ncube/api/messages/",
+                method: "POST",
+                data: {"username" : "<?=$data['recipient']?>", "token": "<?=$data['token']?>"},
+                dataType: "json"
+            });
+            request.done(function( msg ) {
+                var msgs = msg.msgs;
+                display(msgs);
+                
+                // Scroll to Bottom
+                $('#msgs').scrollTop($('#msgs')[0].scrollHeight);
+            });
+            request.fail(function( jqxhr, textStatus, error ) {
+                var err = textStatus + ", " + error;
+                console.log( "Request Failed: " + err );
+            });
+        },3000);
+    <?php } ?>
+        
+    function display(msgs) {
+        $("#msgs").html('');
+        if (msgs) {
+            for (var value of msgs) {
+                if (value.type === 'sent') {
+                    var output1 = '<div class="row"><div class="col-md-12"><div class="msg-sent">' + value.msg + '<div class="msg-time">' + value.time + '</div></div></div>';
+                    $("#msgs").append(output1);
+                } else if (value.type === 'received') {
+                    var output2 = '<div class="row"><div class="col-md-12"><div class="msg-received">' + value.msg + '<div class="msg-time">' + value.time + '</div></div></div>';
+                    $("#msgs").append(output2);
+                }
+            }
         }
     }
 </script>

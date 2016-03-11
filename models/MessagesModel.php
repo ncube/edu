@@ -15,7 +15,13 @@ class MessagesModel {
         $this->data['list_data'] = User::getAcceptedUsersData();
 
         if (!empty($url[0])) {
-            $this->data['msgs'] = User::getMessages($url[0]);
+            $data = User::getMessages($url[0]);
+            foreach($data as $key => $value) {
+                $data[$key]['time'] = date("h:i A", $value['time']);
+            }
+            $this->data['msgs'] = $data;
         }
+        
+        $this->data['recipient'] = $url[0];
     }
 }
