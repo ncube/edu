@@ -24,21 +24,27 @@
                             <a style="color: black">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam varius tellus vulputate sapien pellentesque scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus sodales tortor in pharetra convallis.</a>
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-md-4" id="follow-btn"><?php
+                        <?php
+                            if (User::getPublicUserId($data['username']) !== Session::get('user_id')) {
+                                echo '<div class="row">';
+                                echo '<div class="col-md-4" id="follow-btn">';
                                 if ($data['follow'] === TRUE) {
                                     echo '<a class="btn btn-error m-t-20" id="unfollow"><i class="fa fa-times"></i> Unfollow</a>';
                                 } else {
                                     echo '<a class="btn btn-success m-t-20" id="follow"><i class="fa fa-check"></i> Follow</a>';
                                 }
-                            ?></div>
-                            <div class="col-md-3">
-                                <a class="btn btn-success m-t-20" href="#"> <i class="fa fa-plus"></i> Add</a>
-                            </div>
-                            <div class="col-md-3">
-                                <a class="btn btn-success m-t-20" href="#"> <i class="fa fa-envelope"></i> Message</a>
-                            </div>
-                        </div>
+                                echo '
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a class="btn btn-success m-t-20" href="#"> <i class="fa fa-plus"></i> Add</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a class="btn btn-success m-t-20" href="#"> <i class="fa fa-envelope"></i> Message</a>
+                                        </div>
+                                    </div>
+                                ';
+                            }
+                        ?>
                     </div>
                 </div>
                 <div class="row">
@@ -48,6 +54,22 @@
                             <h4>About</h4>
                             <table class="table">
                                 <tbody>
+                                    <tr>
+                                        <td>Gender</td>
+                                        <td><?=$data['gender']?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Age</td>
+                                        <td><?=$data['age']?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of birth</td>
+                                        <td><?=$data['dob']?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country</td>
+                                        <td><?=$data['country']?></td>
+                                    </tr>
                                     <tr>
                                         <td>Email</td>
                                         <td><?=$data['email']?></td>

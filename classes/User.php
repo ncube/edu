@@ -136,7 +136,7 @@ class User {
 
     public function getPublicUserData($id, $fields = NULL) {
 
-        $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email'];
+        $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob', 'country'];
 
         if (gettype($fields) === 'string') {
             $fields = [$fields];
