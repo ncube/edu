@@ -1,16 +1,15 @@
 <?php 
 class Profile extends Mvc {
     public function _index($url) {
-        $post = Input::post();
         switch ($url[1]) {
             case 'follow':
-                self::follow($post);
+                self::follow();
                 break;
             case 'request':
-                self::request($post);
+                self::request();
                 break;
             case 'accept':
-                self::accept($post);
+                self::accept();
                 break;
 
             default:
@@ -30,13 +29,6 @@ class Profile extends Mvc {
 
         if ($data) {
             if ($user_id === Session::get('user_id')) {
-                // echo '<h3>My profile</h3>';
-                // echo 'Following :';
-                // echo User::followingCount();
-                // echo '<br>';
-                // echo 'Followers :';
-                // echo User::followerCount();
-                // echo '<br>';
                 self::init('ProfileModel', 'profile', $username);
             } else {
                 self::init('ProfileModel', 'profile', $username);
@@ -46,8 +38,10 @@ class Profile extends Mvc {
         }
     }
 
-    public function follow($post) {
+    public function follow() {
         new Protect;
+
+        $post = Input::post();
         $token = Token::check($post['token']);
         if (!empty($post['username'] && $token === TRUE)) {
             echo User::follow($post['username']);
@@ -60,8 +54,10 @@ class Profile extends Mvc {
         }
     }
 
-    public function accept($post) {
+    public function accept() {
         new Protect;
+
+        $post = Input::post();
         $token = Token::check($post['token']);
         if (!empty($post['username'] && $token === TRUE)) {
             echo User::accept($post);
@@ -74,8 +70,10 @@ class Profile extends Mvc {
         }
     }
 
-    public function request($post) {
+    public function request() {
         new Protect;
+
+        $post = Input::post();
         $token = Token::check($post['token']);
 
         if (isset($post['type']) && !empty($post['type'] && $token === TRUE)) {

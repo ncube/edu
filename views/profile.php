@@ -36,7 +36,10 @@
                                 echo '
                                         </div>
                                         <div class="col-md-3">
-                                            <a class="btn btn-success m-t-20" href="#"> <i class="fa fa-plus"></i> Add</a>
+                                        <form action="request" method="post">
+                                        <input type="hidden" name="username" value="'.$data['username'].'">
+                                        <input type="hidden" name="token" value="'.$data['token'].'">
+                                            <button type="submit" class="btn btn-success m-t-20"> <i class="fa fa-plus"></i> Add</button>
                                         </div>
                                         <div class="col-md-3">
                                             <a class="btn btn-success m-t-20" href="#"> <i class="fa fa-envelope"></i> Message</a>
