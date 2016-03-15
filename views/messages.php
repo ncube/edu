@@ -142,16 +142,12 @@
 					   <div class="right-middle" id="msgs">
 					   </div>
 					   <div class="right-bottom">
-                            <form method="post" action="">
-                                <div class="col-md-11">
-                                    <input type="text" name="msg" class="form-field msg-field" placeholder="Type a message...">
-                                </div>
-                                <div class="col-md-1 send-icon">
-                                    <input type="hidden" value="<?=$data['token']?>" name="token">
-                                    <input type="hidden" value="<?=$data['active_username']?>" name="username">
-                                    <button class="btn btn-primary" type="submit"><i class="fa fa-send"></i></button>
-                                </div>
-                            </form>
+                            <div class="col-md-11">
+                                <input type="text" id="msg" name="msg" class="form-field msg-field" placeholder="Type a message...">
+                            </div>
+                            <div class="col-md-1 send-icon">
+                                <button class="btn btn-primary" id="send-btn"><i class="fa fa-send"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -235,6 +231,28 @@
             }
         }
     }
+    
+    $("#send-btn").click(function () {
+        msg = $("#msg").val();
+        $("#msg").val("");
+        var send = $.ajax({
+                url: "http://ncube/api/messages/send/",
+                method: "POST",
+                data: {"username" : "<?=$data['recipient']?>", "token": "<?=$data['token']?>", "msg" : msg},
+                dataType: "json"
+            });
+            
+            send.done(function( msg ) {
+                
+                // Scroll to Bottom
+                $('#msgs').scrollTop($('#msgs')[0].scrollHeight);
+            });
+            send.fail(function( jqxhr, textStatus, error ) {
+                var err = textStatus + ", " + error;
+                console.log( "Request Failed: " + err );
+            });
+        
+    });
 </script>
 
 </html>

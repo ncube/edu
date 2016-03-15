@@ -34,4 +34,18 @@ class Messages {
             return FALSE;
         }
     }
+
+    public function send() {
+        new Protect('api');
+        if (Input::exists()) {
+            if (Token::ajaxCheck(Input::post('token'))) {
+                // TODO: Check for empty messages, Validate messages
+                $msg = Input::post('msg');
+                User::sendMessage(Input::post('username'), $msg);
+            } else {
+                return 'Security Token Missing';
+            }
+        }
+        return FALSE;
+    }
 }
