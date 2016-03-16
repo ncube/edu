@@ -42,7 +42,7 @@
                                             <button type="submit" class="btn btn-success m-t-20"> <i class="fa fa-plus"></i> Add</button>
                                         </div>
                                         <div class="col-md-3">
-                                            <a class="btn btn-success m-t-20" href="#"> <i class="fa fa-envelope"></i> Message</a>
+                                            <a class="btn btn-success m-t-20" href="/messages/'.$data['username'].'"> <i class="fa fa-envelope"></i> Message</a>
                                         </div>
                                     </div>
                                 ';
