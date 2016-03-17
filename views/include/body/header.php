@@ -5,7 +5,7 @@
         <input type="search" id="search" class=" search-field form form-field hidden-xs-down" placeholder="Search here..!"><i class="fa fa-search search-icon" id="search-icon"></i>
     </div>
     <?php
-        if (Session::exists('user_id')) {?>
+        if (Session::loggedIn()) {?>
             <div class="header-icon">
                 <form method="post" action="/logout">
                     <input type="hidden" value="<?=$data['token']?>" name="token">

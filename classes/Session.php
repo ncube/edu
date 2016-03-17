@@ -43,4 +43,8 @@ class Session {
             exit();
         }
     }
+    
+    public static function loggedIn() {
+        return self::exists('user_id');
+    }
 }
