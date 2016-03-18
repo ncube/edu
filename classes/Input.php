@@ -35,4 +35,15 @@ class Input {
         }
         return '';
     }
+
+    public static function files($item = NULL) {
+        $safe_data = Sanitize::nonDatabase();
+
+        if ($item === NULL) {
+            return $safe_data['files'];
+        } else {
+            return $safe_data['files'][$item];
+        }
+        return '';
+    }
 }

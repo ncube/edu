@@ -3,7 +3,10 @@
 // TODO: strip get and post before sanitize
 class Sanitize {
     public function nonDatabase() {
-        // $safe_data['files'] = $_FILES;
+
+        // TODO: Clean and sanitize $_FILES
+        $safe_data['files'] = $_FILES;
+
         // $safe_data['cookie'] = $_COOKIE;
         $safe_data['get'] = $_GET;
         $safe_data['post'] = $_POST;

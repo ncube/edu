@@ -108,4 +108,13 @@ class Profile extends Mvc {
             }
         }
     }
+
+    public function upload() {
+        $token = Token::check(Input::post('token'));
+        if ($token === TRUE) {
+            Upload::profilePic(Input::files());
+        } else {
+            echo 'Security Token Missing';
+        }
+    }
 }

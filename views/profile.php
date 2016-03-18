@@ -16,8 +16,22 @@
         <div class="wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-6"><img src="/public/images/profile-pic.png" alt="@" class="pro"></div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-5 profile-div">
+                        <img src="<?=$data['path']?>" alt="@<?=$data['username']?>" class="profile_pic">
+                        <?php
+                            if (User::getPublicUserId($data['username']) === Session::get('user_id')) {
+                                echo '
+                                    <form enctype="multipart/form-data" action="/profile/upload" method="post">
+                                        <input type="hidden" name="token" value="'.$data['token'].'" />
+                                        <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+                                        Choose a file to upload: <input name="uploaded_file" type="file" />
+                                        <input type="submit" value="Upload" />
+                                    </form>
+                                ';
+                            }
+                        ?>
+                    </div>
+                    <div class="col-sm-7">
                         <div class="row">
                             <h3><?=$data['first_name']?> <?=$data['last_name']?></h3>
                             <h4 style="color: gray">@ <?=$data['username']?></h4>

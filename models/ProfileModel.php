@@ -2,6 +2,9 @@
 class ProfileModel {
     public $data;
     public function __construct($username) {
+
+        $user_id = Session::get('user_id');
+
         $this->data['title'] = ucwords($username);
         $this->data['username'] = $username;
         $this->data['token'] = Token::generate();
@@ -24,6 +27,14 @@ class ProfileModel {
         $birthDate = explode("-", $birthDate);
         //get age from date or birthdate
         $this->data['age'] = (date("md", date("U", mktime(0, 0, 0, $birthDate[2], $birthDate[1], $birthDate[0]))) > date("md") ? ((date("Y") - $birthDate[0]) - 1) : (date("Y") - $birthDate[0]));
+
+        $profile_pic = DB::fetch(array('user' => 'profile_pic'), array('user_id' => $id))->profile_pic;
+        if ($profile_pic === NULL) {
+            $this->data['path'] = '/public/images/profile-pic.png';
+        } else {
+            $this->data['path'] = '/data/images/profile/'.$profile_pic.'.jpg';
+        }
+
 
 
         $this->data['country'] = $userData->country;
