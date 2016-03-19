@@ -190,7 +190,7 @@ class User {
         $recipient_id = self::getPublicUserId($recipient);
         $user_id = Session::get('user_id');
 
-        // TODO: Check if recipient is private or blocked
+        // TODO: Check if recipient is private or blocked and check if username is empty
         DB::insert('msg', array('from_id' => $user_id, 'to_id' => $recipient_id, 'msg' => $msg, 'time' => time()));
         return TRUE;
     }

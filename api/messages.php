@@ -41,7 +41,11 @@ class Messages {
             if (Token::ajaxCheck(Input::post('token'))) {
                 // TODO: Check for empty messages, Validate messages
                 $msg = Input::post('msg');
-                User::sendMessage(Input::post('username'), $msg);
+                if (!empty(Input::post('username'))) {
+                    User::sendMessage(Input::post('username'), $msg);
+                } else {
+                    return 'Username Required';
+                }
             } else {
                 return 'Security Token Missing';
             }
