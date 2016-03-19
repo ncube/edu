@@ -250,4 +250,9 @@ class User {
         }
         return $data;
     }
+    
+    public function post($post) {
+        DB::insert('post', array('user_id' => Session::get('user_id'), 'post_data' => $post, 'time' => time()));
+        return TRUE;
+    }
 }

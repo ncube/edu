@@ -117,4 +117,20 @@ class Profile extends Mvc {
             echo 'Security Token Missing';
         }
     }
+
+    public function post() {
+        $post = Input::post();
+        $token = Token::check($post['token']);
+        $data = $post['post_data'];
+
+        if (!empty($data) && $token === TRUE) {
+            if (User::post($data) === TRUE) {
+                echo 'Posted';
+            } else {
+                echo 'Unable to Post';
+            }
+        } else {
+            echo 'Security token is missing or post is empty';
+        }
+    }
 }
