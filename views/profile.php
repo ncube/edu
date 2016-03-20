@@ -105,7 +105,7 @@
 <script type="text/javascript">
     function follow() {
         var request = $.ajax({
-            url: "http://ncube/api/follow/",
+            url: "/api/follow/",
             method: "POST",
             data: {"username" : "<?=$data['username']?>", "token": "<?=$data['token']?>"},
             dataType: "json"
@@ -124,7 +124,7 @@
 
     function unFollow() {
         var request = $.ajax({
-            url: "http://ncube/api/unfollow/",
+            url: "/api/unfollow/",
             method: "POST",
             data: {"username" : "<?=$data['username']?>", "token": "<?=$data['token']?>"},
             dataType: "json"

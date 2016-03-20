@@ -198,7 +198,7 @@
         setInterval(function () {
             
             var request = $.ajax({
-                url: "http://ncube/api/messages/",
+                url: "/api/messages/",
                 method: "POST",
                 data: {"username" : "<?=$data['recipient']?>", "token": "<?=$data['token']?>"},
                 dataType: "json"
@@ -236,7 +236,7 @@
         msg = $("#msg").val();
         $("#msg").val("");
         var send = $.ajax({
-                url: "http://ncube/api/messages/send/",
+                url: "/api/messages/send/",
                 method: "POST",
                 data: {"username" : "<?=$data['recipient']?>", "token": "<?=$data['token']?>", "msg" : msg},
                 dataType: "json"
