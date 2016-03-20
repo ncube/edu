@@ -55,5 +55,11 @@ class ProfileModel {
             default:
                 break;
         }
+
+        if ($id === $user_id) {
+            $this->data['post'] = User::getPost();
+        } else {
+            $this->data['post'] = User::getPublicPost($id);
+        }
     }
 }

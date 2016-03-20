@@ -136,7 +136,7 @@ class User {
 
     public function getPublicUserData($id, $fields = NULL) {
 
-        $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob', 'country'];
+        $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob', 'country', 'profile_pic'];
 
         if (gettype($fields) === 'string') {
             $fields = [$fields];
@@ -250,9 +250,46 @@ class User {
         }
         return $data;
     }
-    
+
     public function post($post) {
-        DB::insert('post', array('user_id' => Session::get('user_id'), 'post_data' => $post, 'time' => time()));
+        DB::insert('post', array('unique_id' => md5(uniqid()), 'user_id' => Session::get('user_id'), 'post_data' => $post, 'time' => time()));
         return TRUE;
+    }
+
+    public function getPost() {
+        $data = DB::fetch('post', array('user_id' => Session::get('user_id')));
+        $data = (array) $data;
+
+        if (!isset($data[0])) {
+            if (empty($data)) {
+                return $data;
+            }
+            $temp[] = $data;
+            $data = $temp;
+        } else {
+            foreach($data as $key => $value) {
+                $data[$key] = (array) $data[$key];
+            }
+        }
+        return $data;
+    }
+
+    public function getPublicPost($id) {
+        // TODO: Restrict to only public posts
+        $data = DB::fetch('post', array('user_id' => $id));
+        $data = (array) $data;
+
+        if (!isset($data[0])) {
+            if (empty($data)) {
+                return $data;
+            }
+            $temp[] = $data;
+            $data = $temp;
+        } else {
+            foreach($data as $key => $value) {
+                $data[$key] = (array) $data[$key];
+            }
+        }
+        return $data;
     }
 }

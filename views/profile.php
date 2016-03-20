@@ -96,6 +96,35 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <?php
+                        foreach ($data['post'] as $value) {
+                            echo '
+                                <div class="col-xs-12">
+                                    <div class="col-md-12 post">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-4 post-head">
+                                                <img   class="profile_pic">
+                                                <img class="post-thumb" src="'.$data['path'].'" alt="@'.$data['username'].'"/>
+                                                <b>&nbsp @'.$data['username'].'</b>
+                                            </div>
+                                            <div class="col-md-3 post-time">
+                                                '.date("d M h:i A", $value['time']).'
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding: 15px;">
+                                            <hr>
+                                            <div class="col-md-12">
+                                                '.$value['post_data'].'
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ';
+                        }
+                    ?>
+                </div>
             </div>
         </div>
     </div>
