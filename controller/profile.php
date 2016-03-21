@@ -20,11 +20,10 @@ class Profile extends Mvc {
 
     public function display($url) {
         if (empty($url[0])) {
-            $url[0] = User::getUserData('username');
+            $url[0] = User::getUserData('username')[0]['username'];
         }
         $username = $url[0];
         $user_id = User::getPublicUserId($username);
-
         $data = User::getPublicUserData($user_id);
 
         if ($data) {

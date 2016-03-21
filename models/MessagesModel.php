@@ -4,10 +4,10 @@ class MessagesModel {
 
     public function __construct($url) {
 
-        $userData = User::getUserData(['username', 'first_name', 'last_name', 'user_id', 'email']);
+        $userData = User::getUserData(['username', 'first_name', 'last_name', 'user_id', 'email'])[0];
 
-        $this->data['first_name'] = ucwords($userData->first_name);
-        $this->data['last_name'] = ucwords($userData->last_name);
+        $this->data['first_name'] = ucwords($userData['first_name']);
+        $this->data['last_name'] = ucwords($userData['last_name']);
 
         $this->data['title'] = 'Messages - Ncube';
         $this->data['token'] = Token::generate();
@@ -21,7 +21,7 @@ class MessagesModel {
             }
             $this->data['msgs'] = $data;
         }
-        
+
         $this->data['recipient'] = $url[0];
     }
 }

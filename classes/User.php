@@ -5,6 +5,7 @@ class User {
     public function login($username, $password) {
 
         $results = DB::fetch(array('user' => ['user_id', 'password']), array('username' => $username));
+        $results = $results[0];
 
         if (count($results) === 1) {
             if (Hash::verify($password, $results->password)) {
@@ -124,23 +125,14 @@ class User {
         $count = new ArrayObject($this->userData);
         $count = $count->count();
 
-        if ($count === 1) {
-            if (gettype($fields) === 'array') {
-                $fields = $fields[0];
-            }
-            return $this->userData->$fields;
-        } else {
-            return $this->userData;
-        }
+        $this->userData = PhpConvert::toArray($this->userData);
+        return $this->userData;
     }
 
     public function getPublicUserData($id, $fields = NULL) {
 
         $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob', 'country', 'profile_pic'];
 
-        if (gettype($fields) === 'string') {
-            $fields = [$fields];
-        }
         if ($fields !== NULL) {
             foreach($fields as $key => $field) {
                 foreach($allowed as $value) {
@@ -168,18 +160,12 @@ class User {
         $count = new ArrayObject($this->userData);
         $count = $count->count();
 
-        if ($count === 1) {
-            if (gettype($fields) === 'array') {
-                $fields = $fields[0];
-            }
-            return $this->userData->$fields;
-        } else {
-            return $this->userData;
-        }
+        return PhpConvert::toArray($this->userData);;
     }
 
     public function getPublicUserId($username) {
         $this->userData = DB::fetch(array('user' => 'user_id'), array('public' => '1', 'username' => $username));
+        $this->userData = $this->userData[0];
         if (!empty($this->userData)) {
             return $this->userData->user_id;
         }
@@ -202,17 +188,6 @@ class User {
         $data1 = (array) DB::fetch(array('msg' => ['msg', 'time']), array('from_id' => $id, 'to_id' => $user_id));
         $data2 = (array) DB::fetch(array('msg' => ['msg', 'time']), array('from_id' => $user_id, 'to_id' => $id));
 
-        if (!empty($data1)) {
-            if (!isset($data1[0])) {
-                $data1 = [$data1];
-            }
-        }
-        if (!empty($data2)) {
-            if (!isset($data2[0])) {
-                $data2 = [$data2];
-            }
-        }
-
         foreach($data1 as $key => $value) {
             $data1[$key] = (array) $value;
             $data1[$key]['type'] = 'sent';
@@ -227,7 +202,7 @@ class User {
             return $a['time'] - $b['time'];
         });
 
-        return $data;
+        return PhpConvert::toArray($data);
     }
 
     public function getAcceptedUsersData() {
@@ -235,20 +210,13 @@ class User {
         $sent = DB::fetch(array('request' => 'other_user_id'), array('user_id' => $id, 'status' => 1));
         $received = DB::fetch(array('request' => 'user_id'), array('other_user_id' => $id, 'status' => 1));
 
-        if (count($sent) === 1) {
-            $sent = [$sent];
-        }
-        if (count($received) === 1) {
-            $received = array($received);
-        }
-
         $ids = array_merge($sent, $received);
         foreach($ids as $value) {
             $value = (array) $value;
             $id = array_values($value)[0];
-            $data[] = (array) User::getPublicUserData($id, ['username', 'first_name', 'last_name']);
+            $data[] = self::getPublicUserData($id, ['username', 'first_name', 'last_name'])[0];
         }
-        return $data;
+        return PhpConvert::toArray($data);
     }
 
     public function post($post) {
@@ -258,38 +226,12 @@ class User {
 
     public function getPost() {
         $data = DB::fetch('post', array('user_id' => Session::get('user_id')));
-        $data = (array) $data;
-
-        if (!isset($data[0])) {
-            if (empty($data)) {
-                return $data;
-            }
-            $temp[] = $data;
-            $data = $temp;
-        } else {
-            foreach($data as $key => $value) {
-                $data[$key] = (array) $data[$key];
-            }
-        }
-        return $data;
+        return PhpConvert::toArray($data);
     }
 
     public function getPublicPost($id) {
         // TODO: Restrict to only public posts
         $data = DB::fetch('post', array('user_id' => $id));
-        $data = (array) $data;
-
-        if (!isset($data[0])) {
-            if (empty($data)) {
-                return $data;
-            }
-            $temp[] = $data;
-            $data = $temp;
-        } else {
-            foreach($data as $key => $value) {
-                $data[$key] = (array) $data[$key];
-            }
-        }
-        return $data;
+        return PhpConvert::toArray($data);
     }
 }

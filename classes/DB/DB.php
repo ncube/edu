@@ -47,9 +47,6 @@ class DB {
             if ($execute) {
                 if ($fetch) {
                     $results = $query->fetchAll(PDO::FETCH_OBJ);
-                    if (count($results) === 1) {
-                        $results = $results[0];
-                    }
                     $this->_results = $results;
                 }
                 $this->_count = $query->rowCount();
