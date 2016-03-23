@@ -59,7 +59,7 @@ class ProfileModel {
         if ($id === $user_id) {
             $this->data['post'] = User::getPost();
         } else {
-            $this->data['post'] = User::getPublicPost($id);
+            $this->data['post'] = User::getPublicPosts($id);
         }
     }
 }

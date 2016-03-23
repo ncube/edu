@@ -98,9 +98,34 @@ class User {
             }
         }
     }
-
-    public function getRequests() {
-        return DB::fetch(array('request' => ['user_id', 'type', 'time']), array('other_user_id' => Session::get('user_id'), 'status' => 0));
+    
+    public function getRequests($status = false) {
+        if ($status === TRUE) {
+            $data = DB::fetch(array('request' => ['user_id', 'type', 'time']), array('other_user_id' => Session::get('user_id'), 'status' => 1));
+            return PhpConvert::toArray($data);
+        } elseif ($status === FALSE) {
+            $data = DB::fetch(array('request' => ['user_id', 'type', 'time']), array('other_user_id' => Session::get('user_id'), 'status' => 0));
+            return PhpConvert::toArray($data);
+        } else {
+            return FALSE;
+        }
+    }
+    
+    public function getRequested($status=true) {
+        if ($status === TRUE) {
+            $data = DB::fetch(array('request' => ['other_user_id', 'type', 'time']), array('user_id' => Session::get('user_id'), 'status' => 1));
+            return PhpConvert::toArray($data);
+        } elseif ($status === FALSE) {
+            $data = DB::fetch(array('request' => ['other_user_id', 'type', 'time']), array('user_id' => Session::get('user_id'), 'status' => 0));
+            return PhpConvert::toArray($data);
+        } else {
+            return FALSE;
+        }
+    }
+    
+    public function getFollowingIds() {
+        $data = DB::fetch(array('follow' => ['following_id', 'time']), array('user_id' => Session::get('user_id')));
+        return PhpConvert::toArray($data);
     }
 
     public function followingCount() {
@@ -229,9 +254,56 @@ class User {
         return PhpConvert::toArray($data);
     }
 
-    public function getPublicPost($id) {
+    public function getPublicPosts($id) {
         // TODO: Restrict to only public posts
-        $data = DB::fetch('post', array('user_id' => $id));
+        if (sizeof($id) !== 1) {
+            $data = DB::fetch('post', array('user_id' => $id), 'OR');
+        } else {
+            if (gettype($id) === 'array') {
+                $id = $id[0];
+            }
+            $data = DB::fetch('post', array('user_id' => $id));
+        }
         return PhpConvert::toArray($data);
+    }
+    
+    public function getFeedIds() {
+        $fields = ['user_id', 'other_user_id', 'following_id'];
+        
+        // TODO: Remove Duplicate Ids
+        $requests = self::getRequests(TRUE);
+        foreach ($requests as $key => $value) {
+            foreach ($value as $key2 => $value2) {
+                if (in_array($key2, $fields)) {
+                    $requests[$key] = $value2;
+                }
+            }
+        }
+
+        $requested = self::getRequested(TRUE);
+        foreach ($requested as $key => $value) {
+            foreach ($value as $key2 => $value2) {
+                if (in_array($key2, $fields)) {
+                    $requested[$key] = $value2;
+                }
+            }
+        }
+
+        $following = self::getFollowingIds(TRUE);
+        foreach ($following as $key => $value) {
+            foreach ($value as $key2 => $value2) {
+                if (in_array($key2, $fields)) {
+                    $following[$key] = $value2;
+                }
+            }
+        }
+
+        $merged = array_merge($requests, $requested, $following);
+        return PhpConvert::toArray($merged); 
+    }
+    
+    public function getFeed() {
+        $ids = self::getFeedIds();
+        return self::getPublicPosts($ids);
     }
 }

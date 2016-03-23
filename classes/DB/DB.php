@@ -135,11 +135,26 @@ class DB {
         }
 
         if (count($data) === 1) {
-            $sql = "SELECT ".$columns." FROM `".$table."` WHERE `".array_keys($data)[0]."` = '".array_values($data)[0]."'";
+            $type = gettype($data[array_keys($data)[0]]);
+            if ($type === 'array') {
+                $key = array_keys($data)[0];
+                $sql = "SELECT ".$columns." FROM `".$table."` WHERE ";
+                $i = 0;
+                foreach($data[$key] as $value) {                
+                    if ($i === 0) {
+                        $sql .= "`".$key."` = '".$value."'";
+                    } else {
+                        $sql .= " ".$logic." "."`".$key."` = '".$value."'";
+                    }
+                    $i++;
+                }
+            } else {
+                $sql = "SELECT ".$columns." FROM `".$table."` WHERE `".array_keys($data)[0]."` = '".array_values($data)[0]."'";
+            }
         } else {
             $sql = "SELECT ".$columns." FROM `".$table."` WHERE ";
             $i = 0;
-            foreach($data as $key => $value) {
+            foreach($data as $key => $value) {                
                 if ($i === 0) {
                     $sql .= "`".$key."` = '".$value."'";
                 } else {

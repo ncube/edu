@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/public/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/public/css/custom.css">
     <style>
-        .post {
+        .post-field {
             min-width: 100%;
             max-width: 100%;
             height: 70px;
@@ -41,7 +41,7 @@
                         </div>
                     </a>
             </div>
-        </div>
+    </div>
 
     <div class="container-hr has-side-header">                                
         <div class="wrapper">
@@ -50,7 +50,7 @@
                     
                     <!--<div class="post-div">-->
                         <form method="post" action="/profile/post/">
-                            <textarea class="form-field post" placeholder="Type here to post" name="post_data"></textarea>
+                            <textarea class="form-field post-field" placeholder="Type here to post" name="post_data"></textarea>
                             <input type="hidden" value="<?=$data['token']?>" name="token">
                             <input type="submit" value="Post" class="btn btn-primary" style="margin-top: 5px; float: right">
                         </form>
@@ -93,6 +93,35 @@
                     
                     
                     
+                </div>
+                <div class="row">
+                    <?php
+                        foreach ($data['feed'] as $value) {
+                            echo '
+                                <div class="col-xs-12">
+                                    <div class="col-md-12 post">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-4 post-head">
+                                                <img   class="profile_pic">
+                                                <img class="post-thumb" src="'.$value['profile_pic'].'" alt="@'.$value['username'].'"/>
+                                                <b>&nbsp @'.$value['username'].'</b>
+                                            </div>
+                                            <div class="col-md-3 post-time">
+                                                '.date("d M h:i A", $value['time']).'
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding: 15px;">
+                                            <hr>
+                                            <div class="col-md-12">
+                                                '.$value['post_data'].'
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ';
+                        }
+                    ?>
                 </div>
             </div>
         </div>

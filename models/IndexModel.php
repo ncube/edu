@@ -12,6 +12,24 @@ class IndexModel {
         $this->data['token'] = Token::generate();
         $this->data['username'] = $userData['username'];
 
+        $feed = User::getFeed();
+        foreach($feed as $key => $value) {
+            $id = $value['user_id'];
+            $temp = User::getPublicUserData($id, ['username', 'profile_pic'])[0];
+
+            foreach($temp as $key2 => $value2) {
+                $feed[$key][$key2] = $value2;
+            }
+
+            if ($feed[$key]['profile_pic'] === NULL) {
+                $feed[$key]['profile_pic'] = '/public/images/profile-pic.png';
+            } else {
+                $feed[$key]['profile_pic'] = '/data/images/profile/'.$feed[$key]['profile_pic'].'.jpg';
+            }
+        }
+
+        $this->data['feed'] = $feed;
+
         // $requestData = User::getRequests();
 
         // if(isset($requestData->user_id)) {
