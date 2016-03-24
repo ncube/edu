@@ -192,4 +192,65 @@ class DB {
     public function count() {
         return $this->_count;
     }
+    
+    public function search($table, $data, $logic = 'AND') {
+
+        $columns = '*';
+
+        if (gettype($table) === 'array') {
+            if (isset($table[0])) {
+                $table = $table[0];
+            } else {
+                $columns = '';
+                $tableData = $table;
+                $table = array_keys($tableData)[0];
+                $tableData = $tableData[$table];
+                if (gettype($tableData) === 'string') {
+                    $tableData = [$tableData];
+                }
+                $i = 0;
+                foreach($tableData as $value) {
+                    if ($i === 0) {
+                        $columns .= '`'.$value.'`';
+                    } else {
+                        $columns .= ', `'.$value.'`';
+                    }
+                    $i++;
+                }
+            }
+        }
+
+        if (count($data) === 1) {
+            $type = gettype($data[array_keys($data)[0]]);
+            if ($type === 'array') {
+                $key = array_keys($data)[0];
+                $sql = "SELECT ".$columns." FROM `".$table."` WHERE ";
+                $i = 0;
+                foreach($data[$key] as $value) {                
+                    if ($i === 0) {
+                        $sql .= "`".$key."` LIKE '%".$value."%'";
+                    } else {
+                        $sql .= " ".$logic." "."`".$key."` LIKE '%".$value."%'";
+                    }
+                    $i++;
+                }
+            } else {
+                $sql = "SELECT ".$columns." FROM `".$table."` WHERE `".array_keys($data)[0]."` LIKE '%".array_values($data)[0]."%'";
+            }
+        } else {
+            $sql = "SELECT ".$columns." FROM `".$table."` WHERE ";
+            $i = 0;
+            foreach($data as $key => $value) {                
+                if ($i === 0) {
+                    $sql .= "`".$key."` LIKE '%".$value."%'";
+                } else {
+                    $sql .= " ".$logic." "."`".$key."` LIKE '%".$value."%'";
+                }
+                $i++;
+            }
+        }
+        
+        self::query($sql, TRUE);
+        return PhpConvert::toArray($this->_results);
+    }
 }

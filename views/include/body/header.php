@@ -2,7 +2,7 @@
     <a href="index.php"><img src="/public/images/logo.svg" id="logo" alt="Logo"></a>
     <a href="/"><h1 class="title">NCube</h1></a>
     <div class="col-xs-7" style="margin-left: 50px;">
-        <input type="search" id="search" class=" search-field form form-field hidden-xs-down" placeholder="Search here..!"><i class="fa fa-search search-icon" id="search-icon"></i>
+        <input type="search" autocomplete="off" id="search" class=" search-field form form-field hidden-xs-down" placeholder="Search here..!"><i class="fa fa-search search-icon" id="search-icon"></i>
     </div>
     <?php
         if (Session::loggedIn()) {?>
