@@ -12,7 +12,7 @@ $(document).ready(function () {
     });
 
     request.done(function (data) {
-        $("#search-area").html('');
+        $("#search-area").html('<div class="col-sm-2 col-sm-offset-10"><i class="fa fa-close" id="close"> Close</i></div>');
         if (!data.errors) {
             data.forEach(function(element) {
                 $("#search-area").append('<div class="results"><a href="/profile/'+element.username+'">'+element.username+'</a></div>');
