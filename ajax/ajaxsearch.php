@@ -2,7 +2,7 @@
 class AjaxSearch {
     public function _index() {
         // Deny access if not logged in
-        new Protect('api');
+        new Protect('ajax');
 
         $post = Input::post();
 

@@ -8,7 +8,7 @@ class Protect {
                     die();
                 }
                 break;
-            case 'api':
+            case 'ajax':
                 if (!Session::exists('user_id')) {
                     $data['error'] = 'Please Login to Continue';
                     header('Content-Type: application/json');

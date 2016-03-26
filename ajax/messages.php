@@ -2,7 +2,7 @@
 class Messages {
     public function _index() {
         // Deny access if not logged in
-        new Protect('api');
+        new Protect('ajax');
 
         $post = Input::post();
         $token = Token::ajaxCheck($post['token']);
@@ -36,7 +36,7 @@ class Messages {
     }
 
     public function send() {
-        new Protect('api');
+        new Protect('ajax');
         if (Input::exists()) {
             if (Token::ajaxCheck(Input::post('token'))) {
                 // TODO: Check for empty messages, Validate messages

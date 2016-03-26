@@ -199,7 +199,7 @@
         setInterval(function () {
             
             var request = $.ajax({
-                url: "/api/messages/",
+                url: "/ajax/messages/",
                 method: "POST",
                 data: {"username" : "<?=$data['recipient']?>", "token": "<?=$data['token']?>"},
                 dataType: "json"
@@ -237,7 +237,7 @@
         msg = $("#msg").val();
         $("#msg").val("");
         var send = $.ajax({
-                url: "/api/messages/send/",
+                url: "/ajax/messages/send/",
                 method: "POST",
                 data: {"username" : "<?=$data['recipient']?>", "token": "<?=$data['token']?>", "msg" : msg},
                 dataType: "json"

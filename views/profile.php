@@ -135,7 +135,7 @@
 <script type="text/javascript">
     function follow() {
         var request = $.ajax({
-            url: "/api/follow/",
+            url: "/ajax/follow/",
             method: "POST",
             data: {"username" : "<?=$data['username']?>", "token": "<?=$data['token']?>"},
             dataType: "json"
@@ -154,7 +154,7 @@
 
     function unFollow() {
         var request = $.ajax({
-            url: "/api/unfollow/",
+            url: "/ajax/unfollow/",
             method: "POST",
             data: {"username" : "<?=$data['username']?>", "token": "<?=$data['token']?>"},
             dataType: "json"

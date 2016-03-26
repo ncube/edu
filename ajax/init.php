@@ -1,14 +1,14 @@
 <?php 
-class InitApi {
+class InitAjax {
     public function init($url) {
         $controller = 'NotFound';
         $method = '_index';
 
-        if (file_exists('api/'.$url[0].'.php')) {
+        if (file_exists('ajax/'.$url[0].'.php')) {
             $controller = $url[0];
             unset($url[0]);
         }
-        require_once 'api/'.$controller.'.php';
+        require_once 'ajax/'.$controller.'.php';
 
         $controller = new $controller;
 

@@ -1,9 +1,9 @@
 <?php 
-class Api {
+class ajax {
     public function _index($url) {
-        require_once 'api/init.php';
+        require_once 'ajax/init.php';
 
         header('Content-Type: application/json');
-        echo json_encode(InitApi::init($url));
+        echo json_encode(Initajax::init($url));
     }
 }

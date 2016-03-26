@@ -5,7 +5,7 @@ $(document).ready(function () {
   });
   function search (value) {
     var request = $.ajax({
-      url: '/api/ajaxsearch/',
+      url: '/ajax/ajaxsearch/',
       method: 'POST',
       data: {'username': value},
       dataType: 'json'
