@@ -4,8 +4,8 @@ class LoginModel {
 
     public function __construct() {
         $this->data['title'] = 'Login - NCube School';
-        $this->data['loginAction'] = 'login';
-        $this->data['registerAction'] = 'register';
+        $this->data['loginAction'] = '/login';
+        $this->data['registerAction'] = '/register';
         $this->data['token'] = Token::generate();
         
         $errors = Session::errors('errors');

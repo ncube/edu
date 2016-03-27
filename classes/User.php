@@ -11,8 +11,7 @@ class User {
             if (Hash::verify($password, $results->password)) {
                 Session::login($results->user_id);
                 DB::updateIf('user', array('last_login' => time()), 'user_id', Session::get('user_id'));
-                header('Location: /');
-                exit();
+                Redirect::ref();
                 return TRUE;
             } else {
                 return FALSE;
