@@ -100,13 +100,8 @@
 <body onclick="event_handler(event)">
     <?php include 'include/body/header.php'; ?>
     <?php include 'include/body/search.php'; ?>
-    <div class="side-container">
-        <div class="side-header">
-            <div class="side-title"><strong><?=$data['first_name']?> <?=$data['last_name']?></strong></div>
-            <a href="/profile"><div class="side-items">Profile</div></a>
-            <a href="/messages"><div class="side-items">Messages</div></a>
-        </div>
-    </div>
+    <?php include 'include/body/side-menu.php'; ?>
+
     <div class="container-hr has-side-header" style="padding: 0;">
         <div class="msg-container">
             <div class="row">
