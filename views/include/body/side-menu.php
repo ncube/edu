@@ -1,27 +1,30 @@
 <div class="side-container">
-    <div class="side-header">
+    <div class="side-body">
         <div class="row">
-            <div class="side-title"><strong><?=$data['first_name']?> <?=$data['last_name']?></strong></div>
+            <div class="side-title">
+                <img src="<?=$data['profile_pic']?>" class="side-profile-pic" />
+                <strong><?=$data['first_name']?> <?=$data['last_name']?></strong>
+            </div>
         </div>
-        <br>
+
         <a href="/profile">
             <div class="side-items">
-                Profile
+                <i class="fa fa-user" style="color: darkslategray">&nbsp</i> Profile
             </div>
         </a>
         <a href="/messages">
             <div class="side-items">
-                Messages
+                <i class="fa fa-envelope" style="color: darkslategray">&nbsp</i> Messages
             </div>
         </a>
-        <a href="/messages">
+        <a href="/groups">
             <div class="side-items">
-                Groups
+                <i class="fa fa-group" style="color: darkslategray">&nbsp</i> Groups
             </div>
         </a>
         <a href="/settings">
             <div class="side-items">
-                Settings
+                <i class="fa fa-cogs" style="color: darkslategray">&nbsp</i> Settings
             </div>
         </a>
     </div>

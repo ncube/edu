@@ -13,7 +13,7 @@
                 </form>
             </div>
             <div class="header-icon">
-                <button type="submit" class="btn-reset"><i class="fa fa-cog"></i></button>
+                <button type="submit" class="btn-reset"><i class="fa fa-cogs"></i></button>
             </div>
             <div class="header-icon">
                 <button type="submit" class="btn-reset"><i class="fa fa-envelope"></i></button>

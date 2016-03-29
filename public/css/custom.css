@@ -128,28 +128,31 @@ a:hover {
     padding: 0;
 }
 
+/*Side Menu*/
+
 .side-container {
-    width: 200px;
+    width: 180px;
     height: 100%;
     padding-top: 70px;
     padding-bottom: 40px;
     position: fixed;
 }
 
-.side-header {
+.side-body {
     width: 100%;
     height: 100%;
     background-color: white;
     box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
     color: black;
+    overflow: hidden;
 }
 
 .has-side-header {
-    margin-left: 210px;
+    margin-left: 190px;
 }
 
 .side-items {
-    text-align: center;
+    padding-left: 30px;
     min-height: 40px;
     line-height: 2.5em;
 }
@@ -160,8 +163,19 @@ a:hover {
 
 .side-title {
     font-size: 15px;
-    text-align: center;
+    padding: 10px;
+    color: white;
     padding-top: 15px;
+    background-color: gray;
+}
+
+.side-profile-pic {
+    width: 30px;
+    height: 30px;
+    margin-left: 12px;
+    margin-right: 5px;
+    border-radius: 3px;
+    border: 0;
 }
 
 .profile_pic {
