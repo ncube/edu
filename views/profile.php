@@ -171,51 +171,5 @@
         });
     }
 </script>
-<script type="text/javascript">
-    function resetMe() {
-        search.style.width = '';
-        icon.style.marginRight = '';
-        searchArea.style.display = '';
-    }
-
-    function event_handler(event) {
-        var id = event.target.id;
-        // var class_name = event.target.className;
-        // var tag_name = event.target.tagName;
-
-        search = document.getElementById('search');
-        icon = document.getElementById('search-icon');
-        searchArea = document.getElementById('search-area');
-
-        document.onkeydown = function(evt) {
-            evt = evt || window.event;
-            if (evt.keyCode == 27) {
-                resetMe();
-            }
-        };
-
-        if (id == 'close') {
-            resetMe();
-        }
-        
-        // For Follow
-        if (id === 'follow') {
-            follow();
-        }
-        
-        // For UnFollow
-        if (id === 'unfollow') {
-            unFollow();
-        }
-
-        if (id == 'search') {
-            search.style.width = '100%';
-            icon.style.marginRight = '0';
-            searchArea.style.display = 'block';
-        } else {
-            resetMe();
-        }
-    }
-</script>
 
 </html>
