@@ -68,7 +68,7 @@
 	}
     
     .msg-container {
-        padding-right: 219px;
+        padding-right: 9px;
     }
     
     .send-icon {
@@ -102,46 +102,48 @@
     <?php include 'include/body/search.php'; ?>
     <?php include 'include/body/side-menu.php'; ?>
 
-    <div class="container-hr has-side-header" style="padding: 0;">
-        <div class="msg-container">
-            <div class="row">
-                <div class="col-md-3 left">
-                    <?php
-                        $listOutput = NULL;
-                        foreach ($data['list_data'] as $value) {
-                            if ($data['active_username'] === $value['username']) {
-                                echo '
-                                <a href="/messages/'. $value['username'] .'">
-                                    <div class="row msg msg-active">
-                                        <img src="/public/images/profile-pic.png" class="msg-profile">
-                                        '. ucwords($value['first_name']) . ' ' . ucwords($value['last_name']) . '
-                                    </div>
-                                </a>
+    <div class="has-side-header">
+        <div class="container-hr" style="padding: 0;">
+            <div class="msg-container">
+                <div class="row">
+                    <div class="col-md-3 left">
+                        <?php
+                            $listOutput = NULL;
+                            foreach ($data['list_data'] as $value) {
+                                if ($data['active_username'] === $value['username']) {
+                                    echo '
+                                    <a href="/messages/'. $value['username'] .'">
+                                        <div class="row msg msg-active">
+                                            <img src="/public/images/profile-pic.png" class="msg-profile">
+                                            '. ucwords($value['first_name']) . ' ' . ucwords($value['last_name']) . '
+                                        </div>
+                                    </a>
+                                    ';
+                                    continue;
+                                }
+                                $listOutput .= '
+                                    <a href="/messages/'. $value['username'] .'">
+                                        <div class="row msg">
+                                            <img src="/public/images/profile-pic.png" class="msg-profile">
+                                            '. ucwords($value['first_name']) . ' ' . ucwords($value['last_name']) . '
+                                        </div>
+                                    </a>
                                 ';
-                                continue;
                             }
-                            $listOutput .= '
-                                <a href="/messages/'. $value['username'] .'">
-                                    <div class="row msg">
-                                        <img src="/public/images/profile-pic.png" class="msg-profile">
-                                        '. ucwords($value['first_name']) . ' ' . ucwords($value['last_name']) . '
-                                    </div>
-                                </a>
-                            ';
-                        }
-                        echo $listOutput;
-                    ?>
-                </div>
-                <div class="col-md-9">
-				    <div class="row right">
-					   <div class="right-middle" id="msgs">
-					   </div>
-					   <div class="right-bottom">
-                            <div class="col-md-11">
-                                <input type="text" id="msg" name="msg" class="form-field msg-field" placeholder="Type a message...">
-                            </div>
-                            <div class="col-md-1 send-icon">
-                                <button class="btn btn-primary" id="send-btn"><i class="fa fa-send"></i></button>
+                            echo $listOutput;
+                        ?>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row right">
+                        <div class="right-middle" id="msgs">
+                        </div>
+                        <div class="right-bottom">
+                                <div class="col-md-11">
+                                    <input type="text" id="msg" name="msg" class="form-field msg-field" placeholder="Type a message...">
+                                </div>
+                                <div class="col-md-1 send-icon">
+                                    <button class="btn btn-primary" id="send-btn"><i class="fa fa-send"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
