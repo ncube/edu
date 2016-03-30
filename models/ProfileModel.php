@@ -30,9 +30,9 @@ class ProfileModel {
 
         $profile_pic = $userData['profile_pic'];
         if ($profile_pic === NULL) {
-            $this->data['path'] = '/public/images/profile-pic.png';
+            $this->data['profile_pic'] = '/public/images/profile-pic.png';
         } else {
-            $this->data['path'] = '/data/images/profile/'.$profile_pic.'.jpg';
+            $this->data['profile_pic'] = '/data/images/profile/'.$profile_pic.'.jpg';
         }
 
 
