@@ -19,18 +19,20 @@ class IndexModel {
         }
 
         $feed = User::getFeed();
-        foreach($feed as $key => $value) {
-            $id = $value['user_id'];
-            $temp = User::getPublicUserData($id, ['username', 'profile_pic'])[0];
+        if (!empty($feed)) {
+            foreach($feed as $key => $value) {
+                $id = $value['user_id'];
+                $temp = User::getPublicUserData($id, ['username', 'profile_pic'])[0];
 
-            foreach($temp as $key2 => $value2) {
-                $feed[$key][$key2] = $value2;
-            }
+                foreach($temp as $key2 => $value2) {
+                    $feed[$key][$key2] = $value2;
+                }
 
-            if ($feed[$key]['profile_pic'] === NULL) {
-                $feed[$key]['profile_pic'] = '/public/images/profile-pic.png';
-            } else {
-                $feed[$key]['profile_pic'] = '/data/images/profile/'.$feed[$key]['profile_pic'].'.jpg';
+                if ($feed[$key]['profile_pic'] === NULL) {
+                    $feed[$key]['profile_pic'] = '/public/images/profile-pic.png';
+                } else {
+                    $feed[$key]['profile_pic'] = '/data/images/profile/'.$feed[$key]['profile_pic'].'.jpg';
+                }
             }
         }
 

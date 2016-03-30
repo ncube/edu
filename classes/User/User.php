@@ -303,6 +303,9 @@ class User {
 
     public function getFeed() {
         $ids = self::getFeedIds();
+        if (empty($ids)) {
+            return FALSE;
+        }
         return self::getPublicPosts($ids);
     }
 

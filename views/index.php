@@ -74,30 +74,32 @@
                     </div>
                     <div class="row">
                         <?php
-                            foreach ($data['feed'] as $value) {
-                                echo '
-                                    <div class="col-xs-12">
-                                        <div class="col-md-12 post">
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-4 post-head">
-                                                    <img   class="profile_pic">
-                                                    <img class="post-thumb" src="'.$value['profile_pic'].'" alt="@'.$value['username'].'"/>
-                                                    <b>&nbsp @'.$value['username'].'</b>
+                            if (!empty($data['feed'])) {
+                                foreach ($data['feed'] as $value) {
+                                    echo '
+                                        <div class="col-xs-12">
+                                            <div class="col-md-12 post">
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-4 post-head">
+                                                        <img   class="profile_pic">
+                                                        <img class="post-thumb" src="'.$value['profile_pic'].'" alt="@'.$value['username'].'"/>
+                                                        <b>&nbsp @'.$value['username'].'</b>
+                                                    </div>
+                                                    <div class="col-md-3 post-time">
+                                                        '.date("d M h:i A", $value['time']).'
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-3 post-time">
-                                                    '.date("d M h:i A", $value['time']).'
-                                                </div>
-                                            </div>
-                                            <div class="row" style="padding: 15px;">
-                                                <hr>
-                                                <div class="col-md-12">
-                                                    '.$value['post_data'].'
+                                                <div class="row" style="padding: 15px;">
+                                                    <hr>
+                                                    <div class="col-md-12">
+                                                        '.$value['post_data'].'
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ';
+                                    ';
+                                }
                             }
                         ?>
                     </div>
