@@ -11,6 +11,8 @@ class IndexModel {
         $this->data['last_name'] = ucwords($userData['last_name']);
         $this->data['token'] = Token::generate();
         $this->data['username'] = $userData['username'];
+        
+        $this->data['side_active']['home'] = ' side-menu-active';
 
         if (empty($userData['profile_pic'])) {
             $this->data['profile_pic'] = '/public/images/profile-pic.png';

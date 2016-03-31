@@ -8,6 +8,8 @@ class GroupsListModel {
 
         $this->data['first_name'] = ucwords($userData['first_name']);
         $this->data['last_name'] = ucwords($userData['last_name']);
+        
+        $this->data['side_active']['groups'] = ' side-menu-active';
 
         if (empty($userData['profile_pic'])) {
             $this->data['profile_pic'] = '/public/images/profile-pic.png';

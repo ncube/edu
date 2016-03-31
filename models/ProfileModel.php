@@ -8,6 +8,8 @@ class ProfileModel {
         $this->data['title'] = ucwords($username);
         $this->data['username'] = $username;
         $this->data['token'] = Token::generate();
+        
+        $this->data['side_active']['profile'] = ' side-menu-active';
 
         $id = User::getPublicUserId($username);
         $userData = User::getPublicUserData($id)[0];
