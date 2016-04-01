@@ -3,7 +3,43 @@ class Groups extends Mvc {
     public function _index($url) {
         new Protect;
         if (!empty($url[0])) {
-            self::init('GroupModel', 'group', $url);
+            if ($url[1] === 'join') {
+                $post = Input::post();
+                $id = $url[0];
+
+                // TODO: Check for existance of group.
+
+                $token = Token::check($post['token']);
+
+                if (!empty($post) && $token === TRUE) {
+                    if (Group::joinAsMember($id)) {
+                        echo 'Requested';
+                    } else {
+                        echo 'Already Requested';
+                    }
+                } else {
+                    if (empty($post)) {
+                        echo '
+                            <form method="post" action="">
+                                <input type="hidden" value="'.Token::generate().'" name="token">
+                                <button type="submit" class="btn btn-secondary"><i class="fa fa-user-plus"></i> Join</button>
+                            </form>
+                        ';
+                    }
+                    elseif($token === FALSE) {
+                        echo 'Security Token Missing';
+                    }
+                }
+            }
+            elseif($url[1] === 'accept') {
+                echo $url[0];
+            }
+            elseif($url[1] === 'reject') {
+                echo $url[0];
+            } else {
+                // TODO: Check for existance of group.
+                self::init('GroupModel', 'group', $url);
+            }
         } else {
             self::init('GroupsListModel', 'groupsList', $url);
         }

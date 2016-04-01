@@ -35,11 +35,34 @@
         }
         
         .grp-menu {
-            float: right;
+            padding-top: 13px;
+            padding-right: 10px;
+            text-align: right;
         }
         
         .grp-title {
             margin-top: 15px;
+        }
+        
+        .req-content {
+            background-color: whitesmoke;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .req-content a {
+            color: gray;
+        }
+
+        .req-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+        }
+
+        .req-btns {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -52,24 +75,55 @@
 <div class="has-side-header">
     <div class="container-hr">
         <div class="grp-header">
-            <?php
-                if (!empty($data['grp_data']['group_pic'])) {
-                    echo '<img src="/data/images/group/'.$data['grp_data']['group_pic'].'.jpg" class="grp-img" />';
-                } else {
-                    echo '<i class="fa fa-group fa-2x grp-img grp-img-icon"></i>';
-                }
-            ?>
+            <div class="col-xs-5">
+                <?php
+                    if (!empty($data['grp_data']['group_pic'])) {
+                        echo '<img src="/data/images/group/'.$data['grp_data']['group_pic'].'.jpg" class="grp-img" />';
+                    } else {
+                        echo '<i class="fa fa-group fa-2x grp-img grp-img-icon"></i>';
+                    }
+                ?>
                 <h4 class="grp-title"><?=$data['grp_data']['group_name']?></h4>
-            <div class="grp-menu">
-                <button type="submit" class="btn btn-secondary" style="margin-top: -45px;"><i class="fa fa-info-circle"></i> About</button>
-                <button type="submit" class="btn btn-secondary" style="margin-top: -45px;"><i class="fa fa-group"></i> Members</button>
-                <button type="submit" class="btn btn-secondary" style="margin-top: -45px;"><i class="fa fa-cog"></i> Settings</button>
+            </div>
+            <div class="col-xs-7 grp-menu">
+                    <button type="submit" class="btn btn-secondary"><i class="fa fa-info-circle"></i> About</button>
+                    <?php
+                        if (Group::isMember($data['grp_id'])) {
+                            echo '
+                                <a class="btn btn-secondary" href="members"><i class="fa fa-group"></i> Members</a>
+                            ';
+                            if (Group::isAdmin($data['grp_id'])) {
+                                echo '
+                                    <button type="submit" class="btn btn-secondary"><i class="fa fa-cog"></i> Settings</button>
+                                    <a href="/groups/'.$data['grp_id'].'/requests" class="btn btn-secondary"><i class="fa fa-user-plus"></i> Requests</a>
+                                ';
+                            }
+                        } else {
+                            echo '
+                                <a href="/groups/'.$data['grp_id'].'/join" class="btn btn-secondary"><i class="fa fa-user-plus"></i> Join</a>
+                            ';
+                        }
+                    ?>
             </div>
         </div>                                
         <div class="wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    Description: <?=$data['grp_data']['desp']?>
+                    <?php
+                    switch ($data['grp_page']) {
+                        case 'requests':
+                            include 'include/body/group/requests.php';
+                            break;
+                            
+                        case 'members':
+                            include 'include/body/group/members.php';
+                            break;
+                        
+                        default:
+                            echo 'Description: '.$data['grp_data']['desp'];
+                            break;
+                    }
+                    ?>
                 </div>
             </div>
         </div>

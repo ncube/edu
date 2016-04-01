@@ -7,7 +7,7 @@ class GroupModel {
 
         $this->data['first_name'] = ucwords($userData['first_name']);
         $this->data['last_name'] = ucwords($userData['last_name']);
-        
+
         $this->data['side_active']['groups'] = ' side-menu-active';
 
         if (empty($userData['profile_pic'])) {
@@ -20,5 +20,8 @@ class GroupModel {
         $this->data['token'] = Token::generate();
 
         $this->data['grp_data'] = User::getGroupData($url[0])[0];
+        $this->data['grp_id'] = $this->data['grp_data']['group_id'];
+
+        $this->data['grp_page'] = $url[1];
     }
 }
