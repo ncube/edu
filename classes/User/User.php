@@ -327,4 +327,9 @@ class User {
 
         return $data;
     }
+
+    public function raiseNtf($to_id,$type) {
+        $user_id=Session::get('user_id');
+        DB::insert('notification',array('user_id'=>$user_id,'to_id'=>$to_id,'type'=>$type,'time'=>time()));
+        }
 }
