@@ -55,6 +55,16 @@ function event_handler (event) {
   if (id == 'close') {
     resetMe()
   }
+  
+    //   TODO: Seperate Event handler
+  
+  if (id == 'follow') {
+    follow()
+  }
+  
+  if (id == 'unfollow') {
+    unFollow()
+  }
 
   if (id == 'search') {
     search.style.width = '100%'
