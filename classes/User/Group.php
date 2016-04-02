@@ -15,7 +15,8 @@ class Group {
     public function joinAsMember($id) {
         if (!self::checkRequest($id)) {
             DB::insert('group_user', array('user_id' => Session::get('user_id'), 'group_id' => $id, 'type' => 'M', 'time' => time()));
-            return TRUE;
+           User::raiseNtf($id,'GR');
+           return TRUE;
         }
         return FALSE;
     }

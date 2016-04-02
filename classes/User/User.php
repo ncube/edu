@@ -49,6 +49,7 @@ class User {
 
                 if (empty($follow_id)) {
                     DB::insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id, 'time' => time()));
+                    self::raiseNtf($user_id,'F');
                     return TRUE;
                 } else {
                     return 'following';
@@ -91,6 +92,7 @@ class User {
 
             if (empty($follow_id)) {
                 DB::insert('request', array('user_id' => Session::get('user_id'), 'other_user_id' => $user_id, 'type' => $post['type'], 'time' => time()));
+                self::raiseNtf($user_id,'R');
                 return TRUE;
             } else {
                 return 'Request already sent';
