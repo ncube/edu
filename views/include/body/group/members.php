@@ -17,7 +17,7 @@ foreach($reqs as $value) {
                         <img class="req-pic" src="'.$value['profile_pic'].'" />
                     </div>
                     <div class="col-md-10">
-                        <h4>'.ucwords($value['first_name']).' '.ucwords($value['last_name']).'</h4>
+                        <h4><a href="/profile/'.$value['username'].'" style="color: black">'.ucwords($value['first_name']).' '.ucwords($value['last_name']).'</a></h4>
                         <a>@'.$value['username'].', '.$value['country'].'</a>
                     </div>
                 </div>
