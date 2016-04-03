@@ -15,8 +15,8 @@ class Group {
     public function joinAsMember($id) {
         if (!self::checkRequest($id)) {
             DB::insert('group_user', array('user_id' => Session::get('user_id'), 'group_id' => $id, 'type' => 'M', 'time' => time()));
-           User::raiseNtf($id,'GR');
-           return TRUE;
+            User::raiseNtf($id, 'GR');
+            return TRUE;
         }
         return FALSE;
     }
@@ -27,6 +27,19 @@ class Group {
 
     public function getRequests($id) {
         $reqs = self::getRequestsIds($id);
+        $data = NULL;
+        foreach($reqs as $value) {
+            $data[] = User::getPublicUserData($value['user_id'])[0];
+        }
+        return $data;
+    }
+
+    public function getMembersIds($id) {
+        return PhpConvert::toArray(DB::fetch('group_user', array('group_id' => $id, 'status' => 1)));
+    }
+
+    public function getMembers($id) {
+        $reqs = self::getMembersIds($id);
         $data = NULL;
         foreach($reqs as $value) {
             $data[] = User::getPublicUserData($value['user_id'])[0];

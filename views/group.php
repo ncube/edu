@@ -90,7 +90,7 @@
                     <?php
                         if (Group::isMember($data['grp_id'])) {
                             echo '
-                                <a class="btn btn-secondary" href="members"><i class="fa fa-group"></i> Members</a>
+                                <a class="btn btn-secondary" href="/groups/'.$data['grp_id'].'/members"><i class="fa fa-group"></i> Members</a>
                             ';
                             if (Group::isAdmin($data['grp_id'])) {
                                 echo '
