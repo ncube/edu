@@ -157,6 +157,10 @@ class User {
 
     public function getPublicUserData($id, $fields = NULL) {
 
+        if (empty($id)) {
+            return FALSE;
+        }
+
         $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob', 'country', 'profile_pic'];
 
         if ($fields !== NULL) {
