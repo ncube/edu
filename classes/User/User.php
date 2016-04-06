@@ -250,7 +250,7 @@ class User {
     }
 
     public function post($post) {
-        DB::insert('post', array('unique_id' => md5(uniqid()), 'user_id' => Session::get('user_id'), 'post_data' => $post, 'time' => time()));
+        DB::insert('post', array('unique_id' => md5(uniqid(mt_rand, TRUE)), 'user_id' => Session::get('user_id'), 'post_data' => $post, 'time' => time()));
         return TRUE;
     }
 
