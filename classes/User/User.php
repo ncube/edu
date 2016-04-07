@@ -162,7 +162,9 @@ class User {
         }
 
         $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob', 'country', 'profile_pic'];
-
+        
+        // TODO: Replace with restrict function.
+        
         if ($fields !== NULL) {
             foreach($fields as $key => $field) {
                 foreach($allowed as $value) {
@@ -337,5 +339,18 @@ class User {
     public function raiseNotif($to_id,$type) {
         $user_id=Session::get('user_id');
         DB::insert('notification',array('user_id'=>$user_id,'to_id'=>$to_id,'type'=>$type,'time'=>time()));
+        }
+
+    function postQuestion($data) {
+            $allowed = ['title', 'content'];
+
+            $data = Restrict::data($data, $allowed);
+            $data['user_id'] = Session::get('user_id');
+            $data['q_id'] = md5(uniqid(mt_rand, TRUE));
+            $data['time'] = time();
+            $data['public'] = 1;
+
+            DB::insert('question', $data);
+            return TRUE;
         }
 }
