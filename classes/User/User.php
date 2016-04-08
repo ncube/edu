@@ -357,4 +357,41 @@ class User {
     public function getPublicQuestions() {
         return PhpConvert::toArray(DB::fetch('question', array('public' => 1)));
     }
+    
+    public function voteQuestion($id, $vote) {
+        $user_id = Session::get('user_id');
+        $count = DB::fetchcount('vote', array('user_id' => $user_id, 'q_id' => $id));
+        if (!empty($id)) {
+            if (!$count == 0) {
+                DB::updateIf('vote', array('vote' => $vote), 'user_id', $user_id);
+            } else {
+                DB::insert('vote', array('user_id' => $user_id, 'q_id' => $id, 'vote' => $vote, 'time' => time()));
+            }
+            return TRUE;
+        }
+    }
+
+    public function questionDifficulty($id, $level) {
+        $user_id = Session::get('user_id');
+        $count = DB::fetchcount('difficulty', array('user_id' => $user_id, 'q_id' => $id));
+        if (!empty($id)) {
+            if (!$count == 0) {
+                DB::updateIf('difficulty', array('level' => $level), 'user_id', $user_id);
+            } else {
+                DB::insert('difficulty', array('user_id' => $user_id, 'q_id' => $id, 'level' => $level, 'time' => time()));
+            }
+            return TRUE;
+        }
+    }
+
+    public function countQuestionViews($id) {
+        $count = DB::fetch(array('question' => ['views']), array('q_id' => $id))[0]->views;
+        if (!empty($count)) {
+            $count++;
+            DB::updateIf('question', array('views' => $count), 'q_id', $id);
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 }
