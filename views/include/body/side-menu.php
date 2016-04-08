@@ -26,6 +26,11 @@
                 <i class="fa fa-group" style="color: darkslategray">&nbsp</i> Groups
             </div>
         </a>
+        <a href="/questions">
+            <div class="side-items<?=$data['side_active']['questions']?>">
+                <i class="fa fa-question" style="color: darkslategray">&nbsp</i> Questions
+            </div>
+        </a>
         <a href="/settings">
             <div class="side-items<?=$data['side_active']['settings']?>">
                 <i class="fa fa-cogs" style="color: darkslategray">&nbsp</i> Settings

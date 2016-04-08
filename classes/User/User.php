@@ -341,7 +341,7 @@ class User {
         DB::insert('notification',array('user_id'=>$user_id,'to_id'=>$to_id,'type'=>$type,'time'=>time()));
         }
 
-    function postQuestion($data) {
+    public function postQuestion($data) {
             $allowed = ['title', 'content'];
 
             $data = Restrict::data($data, $allowed);
@@ -353,4 +353,8 @@ class User {
             DB::insert('question', $data);
             return TRUE;
         }
+
+    public function getPublicQuestions() {
+        return PhpConvert::toArray(DB::fetch('question', array('public' => 1)));
+    }
 }
