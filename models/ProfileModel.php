@@ -12,36 +12,32 @@ class ProfileModel {
         $this->data['side_active']['profile'] = ' side-menu-active';
 
         $id = User::getPublicUserId($username);
-        $userData = User::getPublicUserData($id)[0];
+        $user_data = User::getPublicUserData($id)[0];
 
 
-        $this->data['first_name'] = ucwords($userData['first_name']);
-        $this->data['last_name'] = ucwords($userData['last_name']);
-        $this->data['email'] = $userData['email'];
+        $this->data['first_name'] = ucwords($user_data['first_name']);
+        $this->data['last_name'] = ucwords($user_data['last_name']);
+        $this->data['email'] = $user_data['email'];
 
         $this->data['follow'] = User::checkFollow($username);
 
-        $this->data['dob'] = $userData['dob'];
+        $this->data['dob'] = $user_data['dob'];
 
         //date in mm/dd/yyyy format; or it can be in other formats as well
-        $birthDate = $userData['dob'];
+        $birthDate = $user_data['dob'];
         //explode the date to get month, day and year
         $birthDate = explode("-", $birthDate);
         //get age from date or birthdate
         $this->data['age'] = (date("md", date("U", mktime(0, 0, 0, $birthDate[2], $birthDate[1], $birthDate[0]))) > date("md") ? ((date("Y") - $birthDate[0]) - 1) : (date("Y") - $birthDate[0]));
 
-        $profile_pic = $userData['profile_pic'];
-        if ($profile_pic === NULL) {
-            $this->data['profile_pic'] = '/public/images/profile-pic.png';
-        } else {
-            $this->data['profile_pic'] = '/data/images/profile/'.$profile_pic.'.jpg';
-        }
+        $profile_pic = $user_data['profile_pic'];
+        $this->data['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
 
 
 
-        $this->data['country'] = $userData['country'];
+        $this->data['country'] = $user_data['country'];
 
-        switch ($userData['gender']) {
+        switch ($user_data['gender']) {
             case 'M':
                 $this->data['gender'] = 'Male';
                 break;

@@ -340,7 +340,7 @@ class User {
         $user_id=Session::get('user_id');
         DB::insert('notification',array('user_id'=>$user_id,'to_id'=>$to_id,'type'=>$type,'time'=>time()));
         }
-
+    
     public function postQuestion($data) {
             $allowed = ['title', 'content'];
 
@@ -392,6 +392,14 @@ class User {
             return TRUE;
         } else {
             return FALSE;
+        }
+    }
+
+    public function getProfilePic($name) {
+        if (empty($name)) {
+            return '/public/images/profile-pic.png';
+        } else {
+            return '/data/images/profile/'.$name.'.jpg';
         }
     }
 }
