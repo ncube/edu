@@ -12,7 +12,7 @@ class Questions extends Mvc {
         echo '<pre>';
         if (!empty($post)) {
             if (Token::check($post['token'])) {
-                User::postQuestion($post);
+                Question::postQuestion($post);
                 echo 'Posted';
             } else {
                 echo 'Security token missing.';

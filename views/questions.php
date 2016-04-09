@@ -8,10 +8,10 @@
     <style>
         .q-list {
             margin-top: 20px;
-            padding: 15px;
-            overflow: hidden;
-            border-radius: 8px;
+            border-radius: 0 8px 8px 0;
             background-color: whitesmoke;
+            border-left: 5px solid green;
+            padding-left: 10px;
         }
 
         .q-name {
@@ -19,16 +19,25 @@
             margin-bottom: 20px;
             font-size: 20px;
             font-weight: bold;
+            color: orange;
         }
 
-        .q-head {
-            margin: -15px;
-            margin-top: 5px;
-            background-color: whitesmoke;
-            height: 70px;
-            padding: 10px;
-            border-top: 1px solid lightgray;
-            text-align: right;
+        .q-desp {
+           color: darkslategray;
+        }
+        
+        .q-left {
+            text-align: center;
+            background-color: #EEEEEE;
+            line-height: 1.8em;
+            padding: 15px 0;
+        }
+        
+        .q-img {
+            width:  30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -43,25 +52,49 @@
         <div class="container-hr">                                
             <div class="wrapper">
                 <div class="container-fluid">
-                    <div class="row">
-                        <a href="/questions/create" class="btn">Ask Question</a>
-                        <?php
-                            if (!empty($data['questions'])) {
-                                foreach ($data['questions'] as $value) {
-                                    echo '
-                                        <div class="q-list">
-                                            <div class="q-name">
-                                                <a href="#">'.$value['title'].'</a>
+                    <a href="/questions/create" class="btn">Ask Question</a>
+                    <?php
+                        if (!empty($data['questions'])) {
+                            foreach ($data['questions'] as $value) {
+                                echo '
+                                    <div class="q-list">
+                                        <div class="row">
+                                            <div class="col-xs-3 q-left">
+                                                <i class="fa fa-thumbs-up fa-2x"></i> '.$value['up_count'].' &nbsp
+                                                <i class="fa fa-thumbs-down fa-2x"></i> '.$value['down_count'].'
+                                                <h5>'.$value['answers'].' Answers</h5>
+                                                '.$value['views'].' Views
+                                                <br>
+                                                <br>';
+                                                for ($i=0; $i < 5; $i++) {
+                                                    $a = (int) $value['level'];
+                                                    if ($i === $a && gettype($value['level']) === 'double') {
+                                                        echo '<i class="fa fa-star-half-full"></i> ';
+                                                    } elseif ($i < $value['level']) {
+                                                        echo '<i class="fa fa-star"></i> ';
+                                                    } else {
+                                                        echo '<i class="fa fa-star-o"></i> ';
+                                                    }
+                                                }
+                                            echo '&nbsp '.$value['level'].'
+                                                <br>
+                                                <img src="'.$value['pic'].'" class="q-img">
+                                                '.ucwords($value['user_data']['first_name']).' '.ucwords($value['user_data']['last_name']).'
                                             </div>
-                                            <div class="q-desp">
-                                                '.$value['content'].'
+                                            <div class="col-xs-9">
+                                                <div class="q-name">
+                                                    <a href="#">'.$value['title'].'</a>
+                                                </div>
+                                                <div class="q-desp">
+                                                    '.$value['content'].'
+                                                </div>
                                             </div>
                                         </div>
-                                    ';
-                                }
+                                    </div>
+                                ';
                             }
-                        ?>
-                    </div>
+                        }
+                    ?>
                 </div>
             </div>
         </div>
