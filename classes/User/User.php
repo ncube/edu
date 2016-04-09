@@ -49,7 +49,7 @@ class User {
 
                 if (empty($follow_id)) {
                     DB::insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id, 'time' => time()));
-                    self::raiseNotif($user_id,'F');
+                    self::raiseNotif($user_id, 'F');
                     return TRUE;
                 } else {
                     return 'following';
@@ -92,7 +92,7 @@ class User {
 
             if (empty($follow_id)) {
                 DB::insert('request', array('user_id' => Session::get('user_id'), 'other_user_id' => $user_id, 'type' => $post['type'], 'time' => time()));
-                self::raiseNotif($user_id,'R');
+                self::raiseNotif($user_id, 'R');
                 return TRUE;
             } else {
                 return 'Request already sent';
@@ -156,15 +156,15 @@ class User {
     }
 
     public function getPublicUserData($id, $fields = NULL) {
-        
+
         if (empty($id)) {
             return FALSE;
         }
 
         $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob', 'country', 'profile_pic'];
-        
+
         // TODO: Replace with restrict function.
-        
+
         if ($fields !== NULL) {
             foreach($fields as $key => $field) {
                 foreach($allowed as $value) {
@@ -336,10 +336,10 @@ class User {
         return $data;
     }
 
-    public function raiseNotif($to_id,$type) {
-        $user_id=Session::get('user_id');
-        DB::insert('notification',array('user_id'=>$user_id,'to_id'=>$to_id,'type'=>$type,'time'=>time()));
-        }
+    public function raiseNotif($to_id, $type) {
+        $user_id = Session::get('user_id');
+        DB::insert('notification', array('user_id' => $user_id, 'to_id' => $to_id, 'type' => $type, 'time' => time()));
+    }
 
     public function getProfilePic($name) {
         if (empty($name)) {
