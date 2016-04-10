@@ -22,7 +22,7 @@ class Question {
         $count = DB::fetchcount('vote', array('user_id' => $user_id, 'q_id' => $id));
         if (!empty($id)) {
             if (!$count == 0) {
-                DB::updateIf('vote', array('vote' => $vote), 'q_id', $id);
+                DB::updateIf('vote', array('vote' => $vote, 'time' => time()), 'q_id', $id);
             } else {
                 DB::insert('vote', array('user_id' => $user_id, 'q_id' => $id, 'vote' => $vote, 'time' => time()));
             }
@@ -35,7 +35,7 @@ class Question {
         $count = DB::fetchcount('difficulty', array('user_id' => $user_id, 'q_id' => $id));
         if (!empty($id)) {
             if (!$count == 0) {
-                DB::updateIf('difficulty', array('level' => $level), 'user_id', $user_id);
+                DB::updateIf('difficulty', array('level' => $level), 'q_id', $id);
             } else {
                 DB::insert('difficulty', array('user_id' => $user_id, 'q_id' => $id, 'level' => $level, 'time' => time()));
             }
