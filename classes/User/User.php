@@ -348,4 +348,10 @@ class User {
             return '/data/images/profile/'.$name.'.jpg';
         }
     }
+
+    public function comment($id, $content) {
+        $user_id = Session::get('user_id');
+        DB::insert('comment', array('user_id' => $user_id, 'post_id' => $id, 'content' => $content, 'time' => time()));
+        return TRUE;
+    }
 }

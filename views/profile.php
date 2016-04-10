@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/public/css/ncube-ui.min.css">
     <link rel="stylesheet" type="text/css" href="/public/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/public/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/widgets/posts.css">
 </head>
 
 <body onclick="event_handler(event)">
@@ -19,9 +20,9 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-5 profile-div">
-                            <img src="<?=$data['profile_pic']?>" alt="@<?=$data['username']?>" class="profile_pic">
+                            <img src="<?=$data['profile_data']['profile_pic']?>" alt="@<?=$data['profile_data']['username']?>" class="profile_pic">
                             <?php
-                                if (User::getPublicUserId($data['username']) === Session::get('user_id')) {
+                                if (User::getPublicUserId($data['profile_data']['username']) === Session::get('user_id')) {
                                     echo '
                                         <form enctype="multipart/form-data" action="/profile/upload" method="post">
                                             <input type="hidden" name="token" value="'.$data['token'].'" />
@@ -35,16 +36,16 @@
                         </div>
                         <div class="col-sm-7">
                             <div class="row">
-                                <h3><?=$data['first_name']?> <?=$data['last_name']?></h3>
-                                <h4 style="color: gray">@ <?=$data['username']?></h4>
+                                <h3><?=$data['profile_data']['first_name']?> <?=$data['profile_data']['last_name']?></h3>
+                                <h4 style="color: gray">@ <?=$data['profile_data']['username']?></h4>
                                 <a style="color: black">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam varius tellus vulputate sapien pellentesque scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus sodales tortor in pharetra convallis.</a>
                             </div>
                             <br>
                             <?php
-                                if (User::getPublicUserId($data['username']) !== Session::get('user_id')) {
+                                if (User::getPublicUserId($data['profile_data']['username']) !== Session::get('user_id')) {
                                     echo '<div class="row">';
                                     echo '<div class="col-md-4" id="follow-btn">';
-                                    if ($data['follow'] === TRUE) {
+                                    if ($data['profile_data']['follow'] === TRUE) {
                                         echo '<a class="btn btn-error m-t-20" id="unfollow"><i class="fa fa-times"></i> Unfollow</a>';
                                     } else {
                                         echo '<a class="btn btn-success m-t-20" id="follow"><i class="fa fa-check"></i> Follow</a>';
@@ -53,12 +54,13 @@
                                             </div>
                                             <div class="col-md-3">
                                             <form action="request" method="post">
-                                            <input type="hidden" name="username" value="'.$data['username'].'">
-                                            <input type="hidden" name="token" value="'.$data['token'].'">
-                                                <button type="submit" class="btn btn-success m-t-20"> <i class="fa fa-plus"></i> Add</button>
+                                                <input type="hidden" name="username" value="'.$data['profile_data']['username'].'">
+                                                <input type="hidden" name="token" value="'.$data['token'].'">
+                                                    <button type="submit" class="btn btn-success m-t-20"> <i class="fa fa-plus"></i> Add</button>
+                                            </form>
                                             </div>
                                             <div class="col-md-3">
-                                                <a class="btn btn-success m-t-20" href="/messages/'.$data['username'].'"> <i class="fa fa-envelope"></i> Message</a>
+                                                <a class="btn btn-success m-t-20" href="/messages/'.$data['profile_data']['username'].'"> <i class="fa fa-envelope"></i> Message</a>
                                             </div>
                                         </div>
                                     ';
@@ -74,23 +76,23 @@
                                     <tbody>
                                         <tr>
                                             <td>Gender</td>
-                                            <td><?=$data['gender']?></td>
+                                            <td><?=$data['profile_data']['gender']?></td>
                                         </tr>
                                         <tr>
                                             <td>Age</td>
-                                            <td><?=$data['age']?></td>
+                                            <td><?=$data['profile_data']['age']?></td>
                                         </tr>
                                         <tr>
                                             <td>Date of birth</td>
-                                            <td><?=$data['dob']?></td>
+                                            <td><?=$data['profile_data']['dob']?></td>
                                         </tr>
                                         <tr>
                                             <td>Country</td>
-                                            <td><?=$data['country']?></td>
+                                            <td><?=$data['profile_data']['country']?></td>
                                         </tr>
                                         <tr>
                                             <td>Email</td>
-                                            <td><?=$data['email']?></td>
+                                            <td><?=$data['profile_data']['email']?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -99,30 +101,10 @@
                     </div>
                     <div class="row">
                         <?php
-                            foreach ($data['post'] as $value) {
-                                echo '
-                                    <div class="col-xs-12">
-                                        <div class="col-md-12 post">
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-4 post-head">
-                                                    <img   class="profile_pic">
-                                                    <img class="post-thumb" src="'.$data['profile_pic'].'" alt="@'.$data['username'].'"/>
-                                                    <b>&nbsp @'.$data['username'].'</b>
-                                                </div>
-                                                <div class="col-md-3 post-time">
-                                                    '.date("d M h:i A", $value['time']).'
-                                                </div>
-                                            </div>
-                                            <div class="row" style="padding: 15px;">
-                                                <hr>
-                                                <div class="col-md-12">
-                                                    '.$value['post_data'].'
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ';
+                            if (!empty($data['post'])) {
+                                foreach ($data['post'] as $value) {
+                                    include 'include/body/widgets/post.php';
+                                }
                             }
                         ?>
                     </div>
@@ -139,7 +121,7 @@
         var request = $.ajax({
             url: "/ajax/follow/",
             method: "POST",
-            data: {"username" : "<?=$data['username']?>", "token": "<?=$data['token']?>"},
+            data: {"username" : "<?=$data['profile_data']['username']?>", "token": "<?=$data['token']?>"},
             dataType: "json"
         });
         request.done(function( msg ) {
@@ -158,7 +140,7 @@
         var request = $.ajax({
             url: "/ajax/unfollow/",
             method: "POST",
-            data: {"username" : "<?=$data['username']?>", "token": "<?=$data['token']?>"},
+            data: {"username" : "<?=$data['profile_data']['username']?>", "token": "<?=$data['token']?>"},
             dataType: "json"
         });
         request.done(function( msg ) {

@@ -11,7 +11,7 @@ class IndexModel {
         $this->data['last_name'] = ucwords($user_data['last_name']);
         $this->data['token'] = Token::generate();
         $this->data['username'] = $user_data['username'];
-        
+
         $this->data['side_active']['home'] = ' side-menu-active';
 
         $this->data['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
@@ -31,23 +31,19 @@ class IndexModel {
                 } else {
                     $feed[$key]['profile_pic'] = '/data/images/profile/'.$feed[$key]['profile_pic'].'.jpg';
                 }
+
+                $comments = PhpConvert::toArray(DB::fetch('comment', array('post_id' => $value['unique_id'])));
+                foreach($comments as $key2 => $value2) {
+                    $user_data = User::getPublicUserData($value2['user_id'])[0];
+                    $comments[$key2]['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
+                    $comments[$key2]['username'] = $user_data['username'];
+                }
+
+                $feed[$key]['comments'] = $comments;
+
             }
         }
 
         $this->data['feed'] = $feed;
-
-        // $requestData = User::getRequests();
-
-        // if(isset($requestData->user_id)) {
-        //     $username = User::getPublicUserData($requestData->user_id)->username;
-        //     $requests[$username] = $requestData->type;
-        // } else {
-        //     foreach(User::getRequests() as $value) {
-
-        //         $username = User::getPublicUserData($value->user_id)->username;
-        //         $requests[$username] = $value->type;
-        //     }
-        // }
-        // $this->data['request'] = $requests;
     }
 }
