@@ -354,4 +354,16 @@ class User {
         DB::insert('comment', array('user_id' => $user_id, 'post_id' => $id, 'content' => $content, 'time' => time()));
         return TRUE;
     }
+
+    public function likePost($post_id) {
+        $user = Session::get('user_id');
+        if (!empty($user)) {
+            DB::insert('post_likes', array('user_id' => $user, 'post_id' => $post_id, 'time' => time()));
+        }
+    }
+
+    public function getLikesCount() {
+        $data = DB::fetchcount('post_likes', array('user_id' => Session::get('user_id')));
+        return $data;
+    }
 }
