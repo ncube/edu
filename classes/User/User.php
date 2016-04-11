@@ -10,7 +10,7 @@ class User {
         if (count($results) === 1) {
             if (Hash::verify($password, $results->password)) {
                 Session::login($results->user_id);
-                DB::updateIf('user', array('last_login' => time()), 'user_id', Session::get('user_id'));
+                DB::updateIf('user', array('last_login' => time()), array('user_id' => Session::get('user_id')));
                 Redirect::ref();
                 return TRUE;
             } else {
@@ -77,7 +77,7 @@ class User {
 
     public function accept($post) {
         $user_id = User::getPublicUserId($post['username']);
-        DB::updateIf('request', array('status' => 1), 'user_id', $user_id);
+        DB::updateIf('request', array('status' => 1), array('user_id' => $user_id));
         return 'Accepted';
     }
 
@@ -354,7 +354,7 @@ class User {
         DB::insert('comment', array('user_id' => $user_id, 'post_id' => $id, 'content' => $content, 'time' => time()));
         return TRUE;
     }
-
+    
     public function likePost($post_id) {
         $user = Session::get('user_id');
         if (!empty($user)) {

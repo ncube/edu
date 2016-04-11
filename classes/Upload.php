@@ -19,7 +19,7 @@ class Upload {
 
             if (in_array($ext, $allowed_ext) && in_array($type, $allowed_type) && ($files["uploaded_file"]["size"] < $max_size)) {
                 $newname = $path.$filename.'.'.$ext;
-                DB::updateIf('user', array('profile_pic' => $filename), 'user_id', Session::get('user_id'));
+                DB::updateIf('user', array('profile_pic' => $filename), array('user_id' => Session::get('user_id')));
                 if (!file_exists($newname)) {
                     if ((move_uploaded_file($files['uploaded_file']['tmp_name'], $newname))) {
                         echo "Successfully Uploaded!";

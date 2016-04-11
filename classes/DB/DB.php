@@ -77,13 +77,28 @@ class DB {
         return FALSE;
     }
 
-    public function updateIf($table, $data, $a, $b) {
-
+    public function updateIf($table, $data, $condition, $logic = 'AND') {
+    
         foreach($data as $field => $value) {
             $update[] = '`'.$field.'` = \''.$value.'\'';
         }
+        
+        $sql = "UPDATE ".'`'.$table.'` SET '.implode(', ', $update)." WHERE ";
 
-        $sql = "UPDATE ".'`'.$table.'` SET '.implode(', ', $update)." WHERE `".$a."` = "."'".$b."'";
+        if (count($condition) === 1) {
+            $key = array_keys($condition)[0];
+            $sql .= "`".$key."` = '".$condition[$key]."'"; 
+        } else {
+            $i = 0;
+            foreach($condition as $key => $value) {
+                if ($i === 0) {
+                    $sql .= "`".$key."` = '".$value."'";
+                } else {
+                    $sql .= " ".$logic." "."`".$key."` = '".$value."'";
+                }
+                $i++;
+            }
+        }
         return self::connect()->query($sql);
     }
     
