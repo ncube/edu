@@ -80,4 +80,21 @@ class Question {
     public function getAnswersCount($id) {
         return DB::fetchCount('answer', array('q_id' => $id));
     }
+
+    public function getVote($id) {
+
+        $data = PhpConvert::toArray(DB::fetch(array('vote' => ['vote']), array('user_id' => Session::get('user_id'), 'q_id' => $id)));
+
+        if (count($data) > 0) {
+            return $data[0]['vote'];
+        } else {
+            return [];
+        }
+
+    }
+
+    public function unVoteQuestion($id) {
+        DB::deleteIf('vote', array('q_id' => $id, 'user_id' => Session::get('user_id')));
+        return TRUE;
+    }
 }

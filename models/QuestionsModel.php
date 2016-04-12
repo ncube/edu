@@ -29,6 +29,12 @@ class QuestionsModel {
             $questions[$key]['user_data'] = User::getPublicUserData($value['user_id'], ['profile_pic', 'first_name', 'last_name'])[0];
             $questions[$key]['answers'] = Question::getAnswersCount($value['q_id']);
             $questions[$key]['pic'] = User::getProfilePic($user_data['profile_pic']);
+            $vote = Question::getVote($value['q_id']);
+            if ($vote == 1) {
+                $questions[$key]['my_data']['vote_up_class'] = 'vote-up-active';
+            } else if ($vote == 0) {
+                $questions[$key]['my_data']['vote_down_class'] = 'vote-down-active';
+            }
         }
 
         $this->data['questions'] = $questions;
