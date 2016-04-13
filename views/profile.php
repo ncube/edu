@@ -116,44 +116,9 @@
 </body>
 <script type="text/javascript" src="/public/js/jquery-2.2.1.min.js"></script>
 <script type="text/javascript" src="/public/js/search.js"></script>
-<script type="text/javascript">
-    function follow() {
-        var request = $.ajax({
-            url: "/ajax/follow/",
-            method: "POST",
-            data: {"username" : "<?=$data['profile_data']['username']?>", "token": "<?=$data['token']?>"},
-            dataType: "json"
-        });
-        request.done(function( msg ) {
-            if (msg.success) {
-                $("#follow-btn").html('<a class="btn btn-error m-t-20" id="unfollow"><i class="fa fa-times"></i> Unfollow</a>');
-            }
-            console.log(msg.errors);
-        });
-        request.fail(function( jqxhr, textStatus, error ) {
-            var err = textStatus + ", " + error;
-            console.log( "Request Failed: " + err );
-        });
-    }
-
-    function unFollow() {
-        var request = $.ajax({
-            url: "/ajax/unfollow/",
-            method: "POST",
-            data: {"username" : "<?=$data['profile_data']['username']?>", "token": "<?=$data['token']?>"},
-            dataType: "json"
-        });
-        request.done(function( msg ) {
-            if (msg.success) {
-            $("#follow-btn").html('<a class="btn btn-success m-t-20" id="follow"><i class="fa fa-check"></i> Follow</a>');
-            }
-            console.log(msg.errors);
-        });
-        request.fail(function( jqxhr, textStatus, error ) {
-            var err = textStatus + ", " + error;
-            console.log( "Request Failed: " + err );
-        });
-    }
+<script>
+    var token = "<?=$data['token']?>";
+    var username = "<?=$data['profile_data']['username']?>";
 </script>
-
+<script type="text/javascript" src="/public/js/profile.js"></script>
 </html>
