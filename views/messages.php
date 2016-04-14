@@ -156,65 +156,18 @@
 <script type="text/javascript" src="/public/js/jquery-2.2.1.min.js"></script>
 <script type="text/javascript" src="/public/js/search.js"></script>
 <script type="text/javascript">
-    <?php if (!empty($data['recipient'])) {?>
-        setInterval(function () {
-            
-            var request = $.ajax({
-                url: "/ajax/messages/",
-                method: "POST",
-                data: {"username" : "<?=$data['recipient']?>", "token": "<?=$data['token']?>"},
-                dataType: "json"
-            });
-            request.done(function( msg ) {
-                var msgs = msg.msgs;
-                display(msgs);
-                
-                // Scroll to Bottom
-                $('#msgs').scrollTop($('#msgs')[0].scrollHeight);
-            });
-            request.fail(function( jqxhr, textStatus, error ) {
-                var err = textStatus + ", " + error;
-                console.log( "Request Failed: " + err );
-            });
-        },3000);
-    <?php } ?>
-        
-    function display(msgs) {
-        $("#msgs").html('');
-        if (msgs) {
-            for (var value of msgs) {
-                if (value.type === 'sent') {
-                    var output1 = '<div class="row"><div class="col-md-12"><div class="msg-sent">' + value.msg + '<div class="msg-time">' + value.time + '</div></div></div>';
-                    $("#msgs").append(output1);
-                } else if (value.type === 'received') {
-                    var output2 = '<div class="row"><div class="col-md-12"><div class="msg-received">' + value.msg + '<div class="msg-time">' + value.time + '</div></div></div>';
-                    $("#msgs").append(output2);
-                }
-            }
+    <?php
+        if (!empty($data['recipient'])) {
+            echo '
+                request = true;
+                recipient = "'.$data['recipient'].'";
+                token = "'.$data['token'].'";
+            ';
+        } else {
+            echo 'request = false;';
         }
-    }
-    
-    $("#send-btn").click(function () {
-        msg = $("#msg").val();
-        $("#msg").val("");
-        var send = $.ajax({
-                url: "/ajax/messages/send/",
-                method: "POST",
-                data: {"username" : "<?=$data['recipient']?>", "token": "<?=$data['token']?>", "msg" : msg},
-                dataType: "json"
-            });
-            
-            send.done(function( msg ) {
-                
-                // Scroll to Bottom
-                $('#msgs').scrollTop($('#msgs')[0].scrollHeight);
-            });
-            send.fail(function( jqxhr, textStatus, error ) {
-                var err = textStatus + ", " + error;
-                console.log( "Request Failed: " + err );
-            });
-        
-    });
+    ?>
 </script>
+<script type="text/javascript" src="/public/js/messages.js"></script>
 
 </html>
