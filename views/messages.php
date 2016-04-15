@@ -154,7 +154,7 @@
     <?php include 'include/body/footer.php'; ?>
 </body>
 <script type="text/javascript" src="/public/js/jquery-2.2.1.min.js"></script>
-<script type="text/javascript" src="/public/js/search.js"></script>
+<script type="text/javascript" src="/public/js/ajax/search.js"></script>
 <script type="text/javascript">
     <?php
         if (!empty($data['recipient'])) {
@@ -168,6 +168,6 @@
         }
     ?>
 </script>
-<script type="text/javascript" src="/public/js/messages.js"></script>
+<script type="text/javascript" src="/public/js/ajax/messages.js"></script>
 
 </html>

@@ -115,10 +115,10 @@
     <?php include 'include/body/footer.php'; ?>
 </body>
 <script type="text/javascript" src="/public/js/jquery-2.2.1.min.js"></script>
-<script type="text/javascript" src="/public/js/search.js"></script>
+<script type="text/javascript" src="/public/js/ajax/search.js"></script>
 <script>
     var token = "<?=$data['token']?>";
     var username = "<?=$data['profile_data']['username']?>";
 </script>
-<script type="text/javascript" src="/public/js/profile.js"></script>
+<script type="text/javascript" src="/public/js/ajax/profile.js"></script>
 </html>

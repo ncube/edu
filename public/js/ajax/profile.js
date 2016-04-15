@@ -1,8 +1,8 @@
-function follow () {
+function follow() {
   var request = $.ajax({
     url: '/ajax/follow/',
     method: 'POST',
-    data: {'username': username, 'token': token},
+    data: { 'username': username, 'token': token },
     dataType: 'json'
   })
   request.done(function (msg) {
@@ -17,11 +17,11 @@ function follow () {
   })
 }
 
-function unFollow () {
+function unFollow() {
   var request = $.ajax({
     url: '/ajax/unfollow/',
     method: 'POST',
-    data: {'username': username, 'token': token},
+    data: { 'username': username, 'token': token },
     dataType: 'json'
   })
   request.done(function (msg) {

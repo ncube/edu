@@ -3,7 +3,7 @@ if (request) {
     var request = $.ajax({
       url: '/ajax/messages/',
       method: 'POST',
-      data: {'username': recipient, 'token': token},
+      data: { 'username': recipient, 'token': token },
       dataType: 'json'
     })
     request.done(function (msg) {
@@ -20,7 +20,7 @@ if (request) {
   }, 3000)
 }
 
-function display (msgs) {
+function display(msgs) {
   $('#msgs').html('')
   if (msgs) {
     for (var value of msgs) {
@@ -41,7 +41,7 @@ $('#send-btn').click(function () {
   var send = $.ajax({
     url: '/ajax/messages/send/',
     method: 'POST',
-    data: {'username': recipient, 'token': token, 'msg': msg},
+    data: { 'username': recipient, 'token': token, 'msg': msg },
     dataType: 'json'
   })
 

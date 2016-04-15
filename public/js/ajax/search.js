@@ -3,11 +3,11 @@ $(document).ready(function () {
     var value = data.target.value
     search(value)
   })
-  function search (value) {
+  function search(value) {
     var request = $.ajax({
       url: '/ajax/ajaxsearch/',
       method: 'POST',
-      data: {'username': value},
+      data: { 'username': value },
       dataType: 'json'
     })
 
@@ -30,13 +30,13 @@ $(document).ready(function () {
 
 // TODO: Use Jquery for event handler.
 
-function resetMe () {
+function resetMe() {
   search.style.width = ''
   icon.style.marginRight = ''
   searchArea.style.display = ''
 }
 
-function event_handler (event) {
+function event_handler(event) {
   var id = event.target.id
   // var class_name = event.target.className
   // var tag_name = event.target.tagName
@@ -55,13 +55,13 @@ function event_handler (event) {
   if (id == 'close') {
     resetMe()
   }
-  
-    //   TODO: Seperate Event handler
-  
+
+  //   TODO: Seperate Event handler
+
   if (id == 'follow') {
     follow()
   }
-  
+
   if (id == 'unfollow') {
     unFollow()
   }
