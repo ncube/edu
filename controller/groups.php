@@ -30,12 +30,28 @@ class Groups extends Mvc {
                         echo 'Security Token Missing';
                     }
                 }
-            }
-            elseif($url[1] === 'accept') {
-                echo $url[0];
-            }
-            elseif($url[1] === 'reject') {
-                echo $url[0];
+            } elseif($url[1] === 'accept') {
+                if (!empty(Input::post('username'))) {
+                    if (Token::check(Input::post('token'))) {
+                        Group::acceptUser($url[0]);
+                        echo 'Accepted';
+                    } else {
+                        echo 'Security Token Missing';
+                    }
+                } else {
+                    echo 'Username Required';
+                }
+            } elseif($url[1] === 'reject') {
+                if (!empty(Input::post('username'))) {
+                    if (Token::check(Input::post('token'))) {
+                        Group::rejectUser($url[0]);
+                        echo 'Rejected';
+                    } else {
+                        echo 'Security Token Missing';
+                    }
+                } else {
+                    echo 'Username Required';
+                }
             } else {
                 // TODO: Check for existance of group.
                 self::init('GroupModel', 'group', $url);

@@ -46,4 +46,19 @@ class Group {
         }
         return $data;
     }
+
+    public function acceptUser($id) {
+        $data['user_id'] = User::getPublicUserId(Input::post('username'));
+        $data['group_id'] = $id;
+        DB::updateIf('group_user', array('status' => 1), $data);
+        return TRUE;
+    }
+
+    public function rejectUser($id) {
+        $data['user_id'] = User::getPublicUserId(Input::post('username'));
+        $data['group_id'] = $id;
+        $data['status'] = 0;
+        DB::deleteIf('group_user', $data);
+        return TRUE;
+    }
 }
