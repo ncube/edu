@@ -22,8 +22,16 @@ foreach($reqs as $value) {
                     </div>
                 </div>
                 <div class="col-md-4 req-btns">
-                    <a href="/groups/'.$data['grp_id'].'/accept" class="btn btn-secondary">Accept</a>
-                    <a href="/groups/'.$data['grp_id'].'/reject" " class="btn btn-error">Reject</a>
+                    <form action="/groups/'.$data['grp_id'].'/accept" method="post">
+                        <input type="hidden" value="'.$data['token'].'" name="token">
+                        <input type="hidden" name="username" value="'.$value['username'].'">
+                        <button type="submit" class="btn btn-secondary">Accept</button>
+                    </form>
+                    <form action="/groups/'.$data['grp_id'].'/reject" method="post">
+                        <input type="hidden" value="'.$data['token'].'" name="token">
+                        <input type="hidden" name="username" value="'.$value['username'].'">
+                        <button type="submit" class="btn btn-secondary">Reject</button>
+                    </form>
                 </div>
             </div>
         </div>
