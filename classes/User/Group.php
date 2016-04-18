@@ -61,4 +61,13 @@ class Group {
         DB::deleteIf('group_user', $data);
         return TRUE;
     }
+
+    public function publicGroupExists($id) {
+        $count = DB::fetchCount('group', array('group_id' => $id, 'public' => 1), 'group_id');
+        if ($count === 1) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 }

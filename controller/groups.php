@@ -3,58 +3,61 @@ class Groups extends Mvc {
     public function _index($url) {
         new Protect;
         if (!empty($url[0])) {
-            if ($url[1] === 'join') {
-                $post = Input::post();
-                $id = $url[0];
 
-                // TODO: Check for existance of group.
+            if (!Group::publicGroupExists($url[0])) {
+                // Set Header for 404
+                header("HTTP/1.0 404 Not Found");
+                echo 'Group Not Found or private group';
+            } else {
+                if ($url[1] === 'join') {
+                    $post = Input::post();
+                    $id = $url[0];
 
-                $token = Token::check($post['token']);
+                    $token = Token::check($post['token']);
 
-                if (!empty($post) && $token === TRUE) {
-                    if (Group::joinAsMember($id)) {
-                        echo 'Requested';
+                    if (!empty($post) && $token === TRUE) {
+                        if (Group::joinAsMember($id)) {
+                            echo 'Requested';
+                        } else {
+                            echo 'Already Requested';
+                        }
                     } else {
-                        echo 'Already Requested';
-                    }
-                } else {
-                    if (empty($post)) {
-                        echo '
+                        if (empty($post)) {
+                            echo '
                             <form method="post" action="">
                                 <input type="hidden" value="'.Token::generate().'" name="token">
                                 <button type="submit" class="btn btn-secondary"><i class="fa fa-user-plus"></i> Join</button>
                             </form>
                         ';
+                        } elseif($token === FALSE) {
+                            echo 'Security Token Missing';
+                        }
                     }
-                    elseif($token === FALSE) {
-                        echo 'Security Token Missing';
-                    }
-                }
-            } elseif($url[1] === 'accept') {
-                if (!empty(Input::post('username'))) {
-                    if (Token::check(Input::post('token'))) {
-                        Group::acceptUser($url[0]);
-                        echo 'Accepted';
+                } elseif($url[1] === 'accept') {
+                    if (!empty(Input::post('username'))) {
+                        if (Token::check(Input::post('token'))) {
+                            Group::acceptUser($url[0]);
+                            echo 'Accepted';
+                        } else {
+                            echo 'Security Token Missing';
+                        }
                     } else {
-                        echo 'Security Token Missing';
+                        echo 'Username Required';
+                    }
+                } elseif($url[1] === 'reject') {
+                    if (!empty(Input::post('username'))) {
+                        if (Token::check(Input::post('token'))) {
+                            Group::rejectUser($url[0]);
+                            echo 'Rejected';
+                        } else {
+                            echo 'Security Token Missing';
+                        }
+                    } else {
+                        echo 'Username Required';
                     }
                 } else {
-                    echo 'Username Required';
+                    self::init('GroupModel', 'group', $url);
                 }
-            } elseif($url[1] === 'reject') {
-                if (!empty(Input::post('username'))) {
-                    if (Token::check(Input::post('token'))) {
-                        Group::rejectUser($url[0]);
-                        echo 'Rejected';
-                    } else {
-                        echo 'Security Token Missing';
-                    }
-                } else {
-                    echo 'Username Required';
-                }
-            } else {
-                // TODO: Check for existance of group.
-                self::init('GroupModel', 'group', $url);
             }
         } else {
             self::init('GroupsListModel', 'groupsList', $url);
