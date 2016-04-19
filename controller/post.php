@@ -10,26 +10,28 @@ class Post extends Mvc {
             if (empty($data)) {
                 echo 'Not Found';
                 die();
-            }
-
-            if (!empty($url[1])) {
-                switch ($url[1]) {
-                    case 'comment':
-                        $post = Input::post();
-                        if (!empty($post)) {
-                            if (Token::check($post['token'])) {
-                                User::comment($url[0], $post['comment']);
-                                echo 'Commented';
+            } else {
+                if (!empty($url[1])) {
+                    switch ($url[1]) {
+                        case 'comment':
+                            $post = Input::post();
+                            if (!empty($post)) {
+                                if (Token::check($post['token'])) {
+                                    User::comment($url[0], $post['comment']);
+                                    echo 'Commented';
+                                } else {
+                                    echo 'Security token missing';
+                                }
                             } else {
-                                echo 'Security token missing';
+                                Redirect::to('/post/'.$url[0]);
                             }
-                        } else {
-                            Redirect::to('/post/'.$url[0]);
-                        }
-                        break;
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
+                } else {
+                    self::init('PostModel', 'post', $url);
                 }
             }
         } else {

@@ -261,6 +261,11 @@ class User {
         return PhpConvert::toArray($data);
     }
 
+    public function getPublicPost($id) {
+        $data = DB::fetch('post', array('unique_id' => $id));
+        return PhpConvert::toArray($data);
+    }
+
     public function getPublicPosts($id) {
         // TODO: Restrict to only public posts
         if (sizeof($id) !== 1) {
