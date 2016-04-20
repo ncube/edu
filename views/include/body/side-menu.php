@@ -3,7 +3,9 @@
         <div class="row">
             <div class="side-title">
                 <img src="<?=$data['profile_pic']?>" class="side-profile-pic" />
-                <strong><?=$data['first_name']?> <?=$data['last_name']?></strong>
+                <a href="/profile">
+                    <strong><?=$data['first_name']?> <?=$data['last_name']?></strong>
+                </a>
             </div>
         </div>
         <a href="/">
