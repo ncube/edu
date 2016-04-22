@@ -19,7 +19,18 @@
                 <button type="submit" class="btn-reset"><i class="fa fa-envelope"></i></button>
             </div>
             <div class="header-icon">
-                <button type="submit" class="btn-reset"><i class="fa fa-bell" id="bell"></i></button>
+                <button type="submit" class="btn-reset" id="notif"><i class="fa fa-bell" id="bell"></i></button>
+                <div class="notif" id="notif-content">
+                    <div class="notif-div">
+                        Notification 1
+                    </div>
+                    <div class="notif-div">
+                        Notification 2
+                    </div>
+                    <div class="notif-div">
+                        Notification 3
+                    </div>
+                </div>
             </div><?php
         } else {?>
             <div class="header-icon">

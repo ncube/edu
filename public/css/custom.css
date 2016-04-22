@@ -208,3 +208,39 @@ a:hover {
 .green {
     color: #5aca00;
 }
+
+
+/*Notification Menu*/
+
+.notif {
+    position: absolute;
+    border-radius: 3px;
+    background-color: white;
+    width: 220px;
+    display: none;
+}
+
+.notif:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-width: 10px;
+    border-style: solid;
+    /*border-color: red green blue yellow;*/
+    border-color: transparent transparent whitesmoke transparent;
+    top: -20px;
+    left: 45%;
+}
+
+.notif {
+    margin-left: -100px;
+    margin-top: 20px;
+    background-color: whitesmoke;
+}
+
+.notif-div {
+    width: 100%;
+    border-bottom: 2px solid gray;
+    padding: 10px;
+}
