@@ -15,7 +15,8 @@ class QuestionsModel {
         $this->data['side_active']['questions'] = ' side-menu-active';
 
         $this->data['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
-
+        
+        require_once 'include/header.php';
 
         $questions = Question::getPublicQuestions();
 

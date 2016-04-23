@@ -12,6 +12,8 @@ class MessagesModel {
         $this->data['side_active']['messages'] = ' side-menu-active';
         
         $this->data['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
+        
+        require_once 'include/header.php';
 
         $this->data['title'] = 'Messages - Ncube';
         $this->data['token'] = Token::generate();

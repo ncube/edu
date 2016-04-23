@@ -12,7 +12,8 @@ class SettingsModel {
         $this->data['username'] = $user_data['username'];
 
         $this->data['url'] = $url;
-
+        
+        require_once 'include/header.php';
 
         $this->data['side_active']['settings'] = ' side-menu-active';
         $this->data['active'] = NULL;

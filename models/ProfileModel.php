@@ -11,7 +11,8 @@ class ProfileModel {
         $this->data['token'] = Token::generate();
 
         $this->data['side_active']['profile'] = ' side-menu-active';
-
+        
+        require_once 'include/header.php';
 
 
         $this->data['first_name'] = ucwords($user_data['first_name']);

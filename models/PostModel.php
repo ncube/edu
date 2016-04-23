@@ -15,6 +15,8 @@ class PostModel {
         $this->data['side_active']['home'] = ' side-menu-active';
 
         $this->data['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
+        
+        require_once 'include/header.php';
 
         $feed = User::getPublicPost($url[0]);
         if (!empty($feed)) {

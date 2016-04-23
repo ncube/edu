@@ -1,3 +1,3 @@
 $("#notif").click(function () {
-    $("#notif-content").toggle();
+    $("#notif-div").toggle();
 });

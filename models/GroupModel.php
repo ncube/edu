@@ -19,5 +19,7 @@ class GroupModel {
         $this->data['grp_id'] = $this->data['grp_data']['group_id'];
 
         $this->data['grp_page'] = $url[1];
+
+        require_once 'include/header.php';
     }
 }

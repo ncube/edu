@@ -18,5 +18,7 @@ class GroupsListModel {
 
         $this->data['grp_list'] = User::getGroupsList();
         $this->data['grp_action'] = '/groups/create/';
+
+        require_once 'include/header.php';
     }
 }

@@ -19,16 +19,43 @@
                 <button type="submit" class="btn-reset"><i class="fa fa-envelope"></i></button>
             </div>
             <div class="header-icon">
-                <button type="submit" class="btn-reset" id="notif"><i class="fa fa-bell" id="bell"></i></button>
-                <div class="notif" id="notif-content">
-                    <div class="notif-div">
-                        Notification 1
-                    </div>
-                    <div class="notif-div">
-                        Notification 2
-                    </div>
-                    <div class="notif-div">
-                        Notification 3
+                <button type="submit" class="btn-reset" id="notif">
+                    <i class="fa fa-bell" id="bell"></i>
+                    <span class="badge"><?=$data['notif_count']?></span>
+                </button>
+                <div id="notif-div">
+                    <div class="arrow-b"></div>
+                    <div class="arrow-t"></div>
+                    <div class="notif">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    Notifications <a style="float:right; margin-right: 20px"><?=$data['notif_count']?></a>
+                                    <hr>
+                                </div>
+                            </div>
+                            <?php
+                                foreach ($data['notif'] as $value) {
+                                
+                                    echo '
+                                        <div class="row" style="border-bottom: 1px solid #eeeeee; padding: 5px;">
+                                            <div class="col-xs-2" style="">
+                                                <img class="notif-thumb" src="'.$value['profile_pic'].'">
+                                            </div>
+                                            <div class="col-xs-10" style="font-size: 14px;">
+                                                <b>'.ucwords($value['first_name']).' '.ucwords($value['last_name']).'</b> Type: <b>'.$value['type'].'</b>
+                                                <div class="notif-time">
+                                                    <a>'.date("d M h:i A", $value['time']).'</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ';
+                                }
+                            ?>
+                            <div class="row notif-footer">
+                                See All
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div><?php
