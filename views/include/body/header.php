@@ -38,22 +38,24 @@
                                 foreach ($data['notif'] as $value) {
                                 
                                     echo '
-                                        <div class="row" style="border-bottom: 1px solid #eeeeee; padding: 5px;">
-                                            <div class="col-xs-2" style="">
-                                                <img class="notif-thumb" src="'.$value['profile_pic'].'">
-                                            </div>
-                                            <div class="col-xs-10" style="font-size: 14px;">
-                                                <b>'.ucwords($value['first_name']).' '.ucwords($value['last_name']).'</b> Type: <b>'.$value['type'].'</b>
-                                                <div class="notif-time">
-                                                    <a>'.date("d M h:i A", $value['time']).'</a>
+                                        <a href="'.$value['link'].'">
+                                            <div class="row notif-content">
+                                                <div class="col-xs-2" style="">
+                                                    <img class="notif-thumb" src="'.$value['profile_pic'].'">
+                                                </div>
+                                                <div class="col-xs-10" style="font-size: 14px;">
+                                                    <b>'.ucwords($value['first_name']).' '.ucwords($value['last_name']).'</b> '.$value['msg'].'
+                                                    <div class="notif-time">
+                                                        <span>'.date("d M h:i A", $value['time']).'</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     ';
                                 }
                             ?>
                             <div class="row notif-footer">
-                                See All
+                                <a href="/notifications">See All</a>
                             </div>
                         </div>
                     </div>

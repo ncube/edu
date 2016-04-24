@@ -218,7 +218,10 @@ a:hover {
     background-color: red;
     margin-left: -50px;
     display: none;
+    cursor: auto;
+    background-color: gray;
 }
+
 .arrow-t {
     border-color: transparent;
     border-bottom-color: white;
@@ -261,6 +264,16 @@ a:hover {
     width: 320px;
     max-height: 500px;
     padding-top: 10px;
+}
+
+.notif-content {
+    border-bottom: 1px solid #eeeeee;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.notif-content:hover {
+    background-color: whitesmoke;
 }
 
 .notif-footer {

@@ -92,7 +92,7 @@ class User {
 
             if (empty($follow_id)) {
                 DB::insert('request', array('user_id' => Session::get('user_id'), 'other_user_id' => $user_id, 'type' => $post['type'], 'time' => time()));
-                self::raiseNotif($user_id, 'R');
+                self::raiseNotif($user_id, 'R'.$post['type']);
                 return TRUE;
             } else {
                 return 'Request already sent';
