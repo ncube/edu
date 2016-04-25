@@ -1,5 +1,11 @@
 <?php 
 class Notif {
+
+    public function raiseNotif($to_id, $type) {
+        $user_id = Session::get('user_id');
+        DB::insert('notification', array('user_id' => $user_id, 'to_id' => $to_id, 'type' => $type, 'time' => time()));
+    }
+
     public function getUnreadCount() {
         $user_id = Session::get('user_id');
         return DB::fetchcount('notification', array('to_id' => $user_id, 'status' => 0));
