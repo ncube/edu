@@ -1,5 +1,5 @@
 <?php 
-$notif = Notif::getUnreadData();
+$notif = Notif::getUnread();
 
 usort($notif, function($b, $a) {
     return $a['time'] - $b['time'];

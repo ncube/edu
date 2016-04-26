@@ -5,7 +5,7 @@ class Notifications extends Mvc {
 
         new Protect;
 
-        $data = Notif::getUnreadData();
+        $data = Notif::getUnread();
         echo '<pre>';
 
         echo 'Unread:';

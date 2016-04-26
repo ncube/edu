@@ -10,7 +10,7 @@ class Notif {
         $user_id = Session::get('user_id');
         return DB::fetchcount('notification', array('to_id' => $user_id, 'status' => 0));
     }
-    public function getUnreadData() {
+    public function getUnread() {
         $user_id = Session::get('user_id');
         $data = PhpConvert::toArray(DB::fetch('notification', array('to_id' => $user_id, 'status' => 0)));
         foreach($data as $key => $value) {
