@@ -7,14 +7,18 @@ class AjaxSearch {
         $post = Input::post();
 
         $token = Token::ajaxCheck($post['token']);
-        
+
         // TODO: Add Token Support
         $token = TRUE;
 
         $data['errors'] = NULL;
 
         if (!empty($post['username'] && $token === TRUE)) {
-            return Search::publicUsername($post['username']);
+            $t = Search::publicUsername($post['username']);
+            foreach($t as $key => $value) {
+                $t[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
+            }
+            return $t;
         } else {
             if (!$token) {
                 $data['errors'][] = 'Security Token Missing';

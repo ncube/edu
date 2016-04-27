@@ -15,7 +15,7 @@ $(document).ready(function () {
       $('#search-area').html('<div class="col-sm-2 col-sm-offset-10"><i class="fa fa-close" id="close"> Close</i></div>')
       if (!data.errors) {
         data.forEach(function (element) {
-          $('#search-area').append('<div class="results"><a href="/profile/' + element.username + '">' + element.username + '</a></div>')
+          $('#search-area').append('<div class="results"><a href="/profile/' + element.username + '"><img class="results-thumb" src="' + element.profile_pic + '"> &nbsp' + element.username + '</a></div>')
         })
       }
     })
