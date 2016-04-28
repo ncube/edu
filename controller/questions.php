@@ -4,7 +4,15 @@ class Questions extends Mvc {
     public function _index($url) {
         new Protect;
 
-        self::init('QuestionsModel', 'questions', $url);
+        if (!empty($url[0])) {
+            if (Question::exists($url[0])) {
+                self::init('QuestionsModel', 'questions', $url);
+            } else {
+                echo 'Question not found';
+            }
+        } else {
+            self::init('QuestionsListModel', 'questionsList', $url);
+        }
     }
 
     public function create() {

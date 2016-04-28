@@ -60,49 +60,25 @@
         <div class="container-hr">                                
             <div class="wrapper">
                 <div class="container-fluid">
-                    <a href="/questions/create" class="btn">Ask Question</a>
-                    <?php
-                        if (!empty($data['questions'])) {
-                            foreach ($data['questions'] as $value) {
-                                echo '
-                                    <div class="q-list">
-                                        <div class="row" id="'.$value['q_id'].'">
-                                            <div class="col-xs-3 q-left">
-                                                <i class="fa fa-thumbs-up fa-2x voteup '.$value['my_data']['vote_up_class'].'" id="'.$value['q_id'].'up'.'"></i> '.$value['up_count'].' &nbsp
-                                                <i class="fa fa-thumbs-down fa-2x votedown '.$value['my_data']['vote_down_class'].'" id="'.$value['q_id'].'down'.'"></i> '.$value['down_count'].'
-                                                <h5>'.$value['answers'].' Answers</h5>
-                                                '.$value['views'].' Views
-                                                <br>
-                                                <br>';
-                                                for ($i=0; $i < 5; $i++) {
-                                                    $a = (int) $value['level'];
-                                                    if ($i === $a && gettype($value['level']) === 'double') {
-                                                        echo '<i class="fa fa-star-half-full"></i> ';
-                                                    } elseif ($i < $value['level']) {
-                                                        echo '<i class="fa fa-star"></i> ';
-                                                    } else {
-                                                        echo '<i class="fa fa-star-o"></i> ';
-                                                    }
-                                                }
-                                            echo '&nbsp '.$value['level'].'
-                                                <br>
-                                                <img src="'.$value['pic'].'" class="q-img">
-                                                '.ucwords($value['user_data']['first_name']).' '.ucwords($value['user_data']['last_name']).'
-                                            </div>
-                                            <div class="col-xs-9">
-                                                <div class="q-name">
-                                                    <a href="#">'.$value['title'].'</a>
-                                                </div>
-                                                <div class="q-desp">
-                                                    '.$value['content'].'
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ';
-                            }
-                        }
-                    ?>
+                    <div class="col-xs-12">
+                        <div class="q-name">
+                            <?php
+                                $t = Question::getPublicQuestion($data['question']['id'])[0];
+                            ?>
+                            <a><?=$t['title']?></a>
+                        </div>
+                        <div class="q-desp">
+                            <?=$t['content']?>
+                            <!--<br>
+                            Views: <?=$t['views']?>
+                            <br>
+                            Difficulty: <?=$t['difficulty']?>
+                            <br>
+                            Time: <?=$t['time']?>
+                            <br>
+                            User Id: <?php print_r(User::getPublicUserData($t['user_id']))?>-->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

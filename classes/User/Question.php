@@ -17,6 +17,10 @@ class Question {
         return PhpConvert::toArray(DB::fetch(array('question'), array('public' => 1)));
     }
 
+    public function getPublicQuestion($id) {
+        return PhpConvert::toArray(DB::fetch(array('question'), array('q_id' => $id, 'public' => 1)));
+    }
+
     public function voteQuestion($id, $vote) {
         $user_id = Session::get('user_id');
         $count = DB::fetchcount('vote', array('user_id' => $user_id, 'q_id' => $id));
@@ -96,5 +100,13 @@ class Question {
     public function unVoteQuestion($id) {
         DB::deleteIf('vote', array('q_id' => $id, 'user_id' => Session::get('user_id')));
         return TRUE;
+    }
+
+    public function exists($id) {
+        if (DB::fetchCount('question', array('q_id' => $id)) === 1) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 }
