@@ -18,6 +18,11 @@
                 <i class="fa fa-user" style="color: darkslategray">&nbsp</i> Profile
             </div>
         </a>
+        <a href="/requests">
+            <div class="side-items<?=$data['side_active']['requests']?>">
+                <i class="fa fa-user-plus" style="color: darkslategray">&nbsp</i> Requests
+            </div>
+        </a>
         <a href="/messages">
             <div class="side-items<?=$data['side_active']['messages']?>">
                 <i class="fa fa-envelope" style="color: darkslategray">&nbsp</i> Messages
