@@ -156,19 +156,22 @@
 <script type="text/javascript" src="/public/js/jquery-2.2.1.min.js"></script>
 <script type="text/javascript" src="/public/js/search.js"></script>
 <script type="text/javascript" src="/public/js/notif.js"></script>
+<script>
+    var token = "<?=$data['token']?>";
+</script>
 <script type="text/javascript">
     <?php
         if (!empty($data['recipient'])) {
             echo '
                 request = true;
                 recipient = "'.$data['recipient'].'";
-                token = "'.$data['token'].'";
             ';
         } else {
             echo 'request = false;';
         }
     ?>
 </script>
+<script type="text/javascript" src="/public/js/ajax/notif.js"></script>
 <script type="text/javascript" src="/public/js/ajax/messages.js"></script>
 
 </html>

@@ -91,5 +91,6 @@
 <script>
     var token = "<?=$data['token']?>";
 </script>
+<script type="text/javascript" src="/public/js/ajax/notif.js"></script>
 <script type="text/javascript" src="/public/js/ajax/questions.js"></script>
 </html>

@@ -44,6 +44,10 @@
 <script type="text/javascript" src="/public/js/search.js"></script>
 <script type="text/javascript" src="/public/js/notif.js"></script>
 <script>
+    var token = "<?=$data['token']?>";
+</script>
+<script type="text/javascript" src="/public/js/ajax/notif.js"></script>
+<script>
     function toggleCmnt(id) {
         $("#"+id).toggle();
     }

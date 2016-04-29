@@ -59,6 +59,7 @@ $notifMsg = Notif::getUnreadMsg();
 
 foreach ($notifMsg as $key => $value) {
     $notifMsg[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
+    $notifMsg[$key]['time'] = date("d M h:i A", $value['time']);
 }
 
 $this->data['notif_msg'] = $notifMsg;

@@ -25,8 +25,10 @@
                 <button type="submit" class="btn-reset" id="notif-msg">
                     <i class="fa fa-envelope"></i>
                     <?php
-                        if (!empty($data['notif_msg_count']) && $data['notif_count'] !== 0) {
+                        if (!empty($data['notif_msg_count']) && $data['notif_msg_count'] !== 0) {
                             echo '<span class="badge" id="notif-msg-count">'.$data['notif_msg_count'].'</span>';
+                        } else {
+                            echo '<span class="badge" id="notif-msg-count" style="display: none">'.$data['notif_msg_count'].'</span>';
                         }
                     ?>
                 </button>
@@ -37,14 +39,12 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    Messages <a style="float:right; margin-right: 20px"><?=$data['notif_msg_count']?></a>
+                                    Messages <a style="float:right; margin-right: 20px" id="notif-msg-count-inner"><?=$data['notif_msg_count']?></a>
                                     <hr>
                                 </div>
                             </div>
-                            <?php
-                            
-                           
-                            
+                            <span id="notif-msg-container">
+                            <?php     
                             if (!empty($data['notif_msg'])) {
                                 
                                 foreach ($data['notif_msg'] as $value) {
@@ -52,13 +52,13 @@
                                     echo '
                                         <a href="/messages/'.$value['username'].'">
                                             <div class="row notif-content">
-                                                <div class="col-xs-2" style="">
+                                                <div class="col-xs-2">
                                                     <img class="notif-thumb" src="'.$value['profile_pic'].'">
                                                 </div>
                                                 <div class="col-xs-10" style="font-size: 14px;">
-                                                    <b>'.ucwords($value['first_name']).' '.ucwords($value['last_name']).'</b> '.$value['msg'].' sent you a message
+                                                    <b>'.ucwords($value['first_name']).' '.ucwords($value['last_name']).'</b> sent you a message
                                                     <div class="notif-time">
-                                                        <span>'.date("d M h:i A", $value['time']).'</span>
+                                                        <span>'.$value['time'].'</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -67,6 +67,7 @@
                                 }
                             }
                             ?>
+                            </span>
                             <div class="row notif-footer">
                                 <a href="/messages">See All</a>
                             </div>
@@ -88,6 +89,8 @@
                     <?php
                         if (!empty($data['notif_count']) && $data['notif_count'] !== 0) {
                             echo '<span class="badge" id="notif-count">'.$data['notif_count'].'</span>';
+                        } else {
+                            echo '<span class="badge" id="notif-count" style="display: none">'.$data['notif_count'].'</span>';
                         }
                     ?>
                 </button>
@@ -98,17 +101,18 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    Notifications <a style="float:right; margin-right: 20px"><?=$data['notif_count']?></a>
+                                    Notifications <a style="float:right; margin-right: 20px" id="notif-count-inner"><?=$data['notif_count']?></a>
                                     <hr>
                                 </div>
                             </div>
+                            <span id="notif-container">
                             <?php
                                 foreach ($data['notif'] as $value) {
                                 
                                     echo '
                                         <a href="'.$value['link'].'">
                                             <div class="row notif-content">
-                                                <div class="col-xs-2" style="">
+                                                <div class="col-xs-2">
                                                     <img class="notif-thumb" src="'.$value['profile_pic'].'">
                                                 </div>
                                                 <div class="col-xs-10" style="font-size: 14px;">
@@ -122,6 +126,7 @@
                                     ';
                                 }
                             ?>
+                            </span>
                             <div class="row notif-footer">
                                 <a href="/notifications">See All</a>
                             </div>

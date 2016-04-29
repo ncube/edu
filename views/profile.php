@@ -121,5 +121,6 @@
     var token = "<?=$data['token']?>";
     var username = "<?=$data['profile_data']['username']?>";
 </script>
+<script type="text/javascript" src="/public/js/ajax/notif.js"></script>
 <script type="text/javascript" src="/public/js/ajax/profile.js"></script>
 </html>
