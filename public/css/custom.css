@@ -216,7 +216,15 @@ a:hover {
 #notif-div {
     position: absolute;
     min-width: 222px;
-    background-color: red;
+    margin-left: -50px;
+    display: none;
+    cursor: auto;
+    background-color: gray;
+}
+
+#notif-msg-div {
+    position: absolute;
+    min-width: 222px;
     margin-left: -50px;
     display: none;
     cursor: auto;
@@ -265,6 +273,10 @@ a:hover {
     width: 320px;
     max-height: 500px;
     padding-top: 10px;
+}
+
+.notif-msg {
+    right: 50px;
 }
 
 .notif-content {

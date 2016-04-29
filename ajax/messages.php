@@ -15,6 +15,9 @@ class Messages {
                 $msgs[$key]['time'] = date("d-M h:i A", $value['time']);
             }
             $data['msgs'] = $msgs;
+            Message::read(User::getPublicUserId($post['username']));
+            //TODO: Replace with function
+            DB::updateIf('msg_notif', array('status' => 1), array('user_id' => User::getPublicUserId($post['username']), 'to_id' => Session::get('user_id')));
 
             if ($follow === TRUE) {
                 $data['success'] = TRUE;
@@ -40,9 +43,12 @@ class Messages {
         if (Input::exists()) {
             if (Token::ajaxCheck(Input::post('token'))) {
                 // TODO: Check for empty messages, Validate messages
+
+                $username = Input::post('username');
                 $msg = Input::post('msg');
-                if (!empty(Input::post('username'))) {
-                    User::sendMessage(Input::post('username'), $msg);
+                if (!empty($username)) {
+                    User::sendMessage($username, $msg);
+                    Notif::raiseMsgNotif(User::getPublicUserId($username));
                 } else {
                     return 'Username Required';
                 }

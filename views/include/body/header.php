@@ -15,9 +15,69 @@
             <div class="header-icon">
                 <a href="/settings"><button type="submit" class="btn-reset"><i class="fa fa-cogs"></i></button></a>
             </div>
+            
+            
+            
+            
+            
+            
             <div class="header-icon">
-                <button type="submit" class="btn-reset"><i class="fa fa-envelope"></i></button>
+                <button type="submit" class="btn-reset" id="notif-msg">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge"><?=$data['notif_msg_count']?></span>
+                </button>
+                <div id="notif-msg-div">
+                    <div class="arrow-b"></div>
+                    <div class="arrow-t"></div>
+                    <div class="notif notif-msg">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    Messages <a style="float:right; margin-right: 20px"><?=$data['notif_msg_count']?></a>
+                                    <hr>
+                                </div>
+                            </div>
+                            <?php
+                            
+                           
+                            
+                            if (!empty($data['notif_msg'])) {
+                                
+                                foreach ($data['notif_msg'] as $value) {
+                                
+                                    echo '
+                                        <a href="/messages/'.$value['username'].'">
+                                            <div class="row notif-content">
+                                                <div class="col-xs-2" style="">
+                                                    <img class="notif-thumb" src="'.$value['profile_pic'].'">
+                                                </div>
+                                                <div class="col-xs-10" style="font-size: 14px;">
+                                                    <b>'.ucwords($value['first_name']).' '.ucwords($value['last_name']).'</b> '.$value['msg'].' sent you a message
+                                                    <div class="notif-time">
+                                                        <span>'.date("d M h:i A", $value['time']).'</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    ';
+                                }
+                            }
+                            ?>
+                            <div class="row notif-footer">
+                                <a href="/messages">See All</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
+            
+            
+            
+            
+            
+            
+            
             <div class="header-icon">
                 <button type="submit" class="btn-reset" id="notif">
                     <i class="fa fa-bell" id="bell"></i>

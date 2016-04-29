@@ -54,3 +54,12 @@ foreach($notif as $key => $value) {
 
 $this->data['notif'] = $notif;
 $this->data['notif_count'] = Notif::getUnreadCount();
+
+$notifMsg = Notif::getUnreadMsg();
+
+foreach ($notifMsg as $key => $value) {
+    $notifMsg[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
+}
+
+$this->data['notif_msg'] = $notifMsg;
+$this->data['notif_msg_count'] = Notif::getUnreadMsgCount();
