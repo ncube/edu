@@ -27,9 +27,9 @@
                 <div class="col-md-4">
                     <i class="fa fa-heart"></i> Like
                 </div>
-                <div class="col-md-4">
-                    <a class="comment"><i class="fa fa-comment"></i> Comment</a>
-                </div>
+                    <div class="col-md-4" style="cursor: pointer">
+                        <a class="comment"><i class="fa fa-comment"></i> Comment</a>
+                    </div>
                 <div class="col-md-4">
                     <i class="fa fa-share"></i> Share
                 </div>
