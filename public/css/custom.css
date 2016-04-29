@@ -325,6 +325,7 @@ a:hover {
     white-space: nowrap;
     margin-left: -13px;
     padding: 3px 6px;
-    position: relative;
-    top: -12px;
+    position: absolute;
+    margin-top: -9px;
+    margin-left: -8px;
 }

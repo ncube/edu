@@ -24,7 +24,11 @@
             <div class="header-icon">
                 <button type="submit" class="btn-reset" id="notif-msg">
                     <i class="fa fa-envelope"></i>
-                    <span class="badge"><?=$data['notif_msg_count']?></span>
+                    <?php
+                        if (!empty($data['notif_msg_count']) && $data['notif_count'] !== 0) {
+                            echo '<span class="badge" id="notif-msg-count">'.$data['notif_msg_count'].'</span>';
+                        }
+                    ?>
                 </button>
                 <div id="notif-msg-div">
                     <div class="arrow-b"></div>
@@ -81,7 +85,11 @@
             <div class="header-icon">
                 <button type="submit" class="btn-reset" id="notif">
                     <i class="fa fa-bell" id="bell"></i>
-                    <span class="badge"><?=$data['notif_count']?></span>
+                    <?php
+                        if (!empty($data['notif_count']) && $data['notif_count'] !== 0) {
+                            echo '<span class="badge" id="notif-count">'.$data['notif_count'].'</span>';
+                        }
+                    ?>
                 </button>
                 <div id="notif-div">
                     <div class="arrow-b"></div>
