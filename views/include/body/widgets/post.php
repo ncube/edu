@@ -1,3 +1,8 @@
+<style>
+    .cmnts-container {
+        display: none;
+    }
+</style>
 <div class="col-xs-12">
     <div class="col-md-12 post">
         <br>
@@ -23,13 +28,14 @@
                     <i class="fa fa-heart"></i> Like
                 </div>
                 <div class="col-md-4">
-                    <a href="#" id="comment"><i class="fa fa-comment"></i> Comment</a>
+                    <a class="comment"><i class="fa fa-comment"></i> Comment</a>
                 </div>
                 <div class="col-md-4">
                     <i class="fa fa-share"></i> Share
                 </div>
             </div>
         </div>
+        <div class="cmnts-container" id="<?=$value['unique_id']?>">
             <div class="row cmnts">
                 <form method="post" action="/post/<?=$value['unique_id']?>/comment">
                     <div class="col-xs-2">
@@ -62,6 +68,7 @@
                         ';
                     }
                 ?>
+            </div>
         </div>
     </div>
 </div>

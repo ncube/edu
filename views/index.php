@@ -43,4 +43,13 @@
 <script type="text/javascript" src="/public/js/jquery-2.2.1.min.js"></script>
 <script type="text/javascript" src="/public/js/search.js"></script>
 <script type="text/javascript" src="/public/js/notif.js"></script>
+<script>
+    function toggleCmnt(id) {
+        $("#"+id).toggle();
+    }
+    $(".comment").click(function (event) {
+        var id = event.currentTarget.parentElement.parentElement.parentElement.parentElement.children[4].id;
+        toggleCmnt(id);
+    });
+</script>
 </html>
