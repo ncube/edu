@@ -94,22 +94,22 @@ a:hover {
 }
 
 #search-area {
-    margin-top: 55px;
+    padding-top: 55px;
     background-color: white;
     height: 100%;
     position: fixed;
     width: 100%;
     z-index: 1000;
-    text-align: center;
     background-color: rgba(0, 0, 0, 0.7);
     display: none;
+    overflow-y: auto;
 }
 
 .results {
     font-size: 25px;
     width: 95%;
     height: auto;
-    margin: 20px auto;
+    margin-left: 40px;
     padding: 20px;
     color: white;
     font-weight: bold;
@@ -120,6 +120,7 @@ a:hover {
     margin-top: 20px;
     font-size: 20px;
     cursor: pointer;
+    position: fixed;
 }
 
 .btn-reset {
