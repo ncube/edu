@@ -10,7 +10,7 @@
             <div class="col-md-4 post-head">
                 <img class="profile_pic">
                 <img class="post-thumb" src="<?=$value['profile_pic']?>" alt="@<?=$value['username']?>"/>
-                <b>&nbsp @<?=$value['username']?></b>
+                <a href="/profile/<?=$value['username']?>"><b>&nbsp @<?=$value['username']?></b></a>
             </div>
             <div class="col-md-3 post-time">
                 <?=date("d M h:i A", $value['time'])?>
@@ -58,7 +58,7 @@
                             <div class="row cmnts">
                                 <div class="col-xs-3">
                                     <img src="'.$value2['profile_pic'].'" class="cmnts-content-img">
-                                    <a>'.$value2['username'].'</a>
+                                    <a href="/profile/'.$value2['username'].'">'.$value2['username'].'</a>
                                 </div>
                                 <div class="col-xs-9">
                                     <p style="margin-top: 10px;">'.$value2['content'].'</p>

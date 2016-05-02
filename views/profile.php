@@ -123,4 +123,13 @@
 </script>
 <script type="text/javascript" src="/public/js/ajax/notif.js"></script>
 <script type="text/javascript" src="/public/js/ajax/profile.js"></script>
+<script>
+    function toggleCmnt(id) {
+        $("#"+id).toggle();
+    }
+    $(".comment").click(function (event) {
+        var id = event.currentTarget.parentElement.parentElement.parentElement.parentElement.children[4].id;
+        toggleCmnt(id);
+    });
+</script>
 </html>
