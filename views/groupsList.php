@@ -83,7 +83,7 @@
                             } else {
                                 $img = '<i class="fa fa-group fa-2x grp-img grp-img-icon"></i>';
                             }
-                            
+
                             echo '
                                 <div class="grp-list">
                                     <div class="grp-head">
@@ -92,7 +92,7 @@
                                             <a href="/groups/'.$value['group_id'].'">'.$value['group_name'].'</a>
                                         </div>
                                         <div class="grp-cap">
-                                            Members: NA
+                                            Members: '.$value['members'].'
                                         </div>
                                     </div>
                                     <div class="grp-desp">

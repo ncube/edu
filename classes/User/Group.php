@@ -46,6 +46,10 @@ class Group {
         }
         return $data;
     }
+    
+    public function getMembersCount($id) {
+        return DB::fetchCount('group_user', array('group_id' => $id, 'status' => 1));
+    }
 
     public function acceptUser($id) {
         $data['user_id'] = User::getPublicUserId(Input::post('username'));

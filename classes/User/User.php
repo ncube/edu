@@ -336,6 +336,7 @@ class User {
         $data = NULL;
         foreach($ids as $key => $value) {
             $data[] = self::getGroupData($value['group_id'])[0];
+            $data[$key]['members'] = Group::getMembersCount($value['group_id']);
         }
 
         return $data;
