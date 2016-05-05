@@ -16,7 +16,7 @@ class GroupsListModel {
         $this->data['title'] = 'Groups - Ncube';
         $this->data['token'] = Token::generate();
 
-        $this->data['grp_list'] = User::getGroupsList();
+        $this->data['grp_list'] = Group::getGroupsList();
         $this->data['grp_action'] = '/groups/create/';
 
         require_once 'include/header.php';

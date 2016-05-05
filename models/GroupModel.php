@@ -15,7 +15,7 @@ class GroupModel {
         $this->data['title'] = 'Group - Ncube';
         $this->data['token'] = Token::generate();
 
-        $this->data['grp_data'] = User::getGroupData($url[0])[0];
+        $this->data['grp_data'] = Group::getGroupData($url[0])[0];
         $this->data['grp_id'] = $this->data['grp_data']['group_id'];
 
         $this->data['grp_page'] = $url[1];

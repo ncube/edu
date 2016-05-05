@@ -46,7 +46,7 @@ class Group {
         }
         return $data;
     }
-    
+
     public function getMembersCount($id) {
         return DB::fetchCount('group_user', array('group_id' => $id, 'status' => 1));
     }
@@ -73,5 +73,25 @@ class Group {
         } else {
             return FALSE;
         }
+    }
+
+    public function getGroupsIds() {
+        return PhpConvert::toArray(DB::fetch('group_user', array('user_id' => Session::get('user_id'), 'status' => 1)));
+    }
+
+    public function getGroupData($id) {
+        return PhpConvert::toArray(DB::fetch(array('group' => ['group_id', 'group_name', 'desp', 'group_pic', 'time']), array('group_id' => $id)));
+    }
+
+    public function getGroupsList() {
+        $ids = self::getGroupsIds();
+
+        $data = NULL;
+        foreach($ids as $key => $value) {
+            $data[] = self::getGroupData($value['group_id'])[0];
+            $data[$key]['members'] = Group::getMembersCount($value['group_id']);
+        }
+
+        return $data;
     }
 }
