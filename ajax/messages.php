@@ -10,7 +10,7 @@ class Messages {
         $data['errors'] = NULL;
 
         if (!empty($post['username'] && $token === TRUE)) {
-            $msgs = User::getMessages($post['username']);
+            $msgs = Message::getMessages($post['username']);
             foreach($msgs as $key => $value) {
                 $msgs[$key]['time'] = date("d-M h:i A", $value['time']);
             }
@@ -47,7 +47,7 @@ class Messages {
                 $username = Input::post('username');
                 $msg = Input::post('msg');
                 if (!empty($username)) {
-                    User::sendMessage($username, $msg);
+                    Message::sendMessage($username, $msg);
                     Notif::raiseMsgNotif(User::getPublicUserId($username));
                 } else {
                     return 'Username Required';
