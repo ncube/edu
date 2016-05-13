@@ -15,7 +15,7 @@ class Message {
     }
 
     public function getMessages($username) {
-        $id = self::getPublicUserId($username);
+        $id = User::getPublicUserId($username);
         $user_id = Session::get('user_id');
 
         $data1 = (array) DB::fetch(array('msg' => ['msg', 'time']), array('from_id' => $id, 'to_id' => $user_id));
