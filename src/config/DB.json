@@ -1,6 +1,6 @@
 {
-    "host": "127.0.0.1",
+    "host": "ncube-db",
     "username": "root",
-    "password": "",
+    "password": "p@55w@rD",
     "db" : "edu"
 }
