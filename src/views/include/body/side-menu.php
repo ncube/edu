@@ -1,47 +1,28 @@
-<div class="side-container">
-    <div class="side-body">
-        <div class="row">
-            <div class="side-title">
-                <img src="<?=$data['profile_pic']?>" class="side-profile-pic" />
-                <a href="/profile">
-                    <strong><?=$data['first_name']?> <?=$data['last_name']?></strong>
-                </a>
-            </div>
-        </div>
-        <a href="/">
-            <div class="side-items<?=$data['side_active']['home']?>">
-                <i class="fa fa-home" style="color: darkslategray">&nbsp</i> Home
-            </div>
-        </a>
-        <a href="/profile">
-            <div class="side-items<?=$data['side_active']['profile']?>">
-                <i class="fa fa-user" style="color: darkslategray">&nbsp</i> Profile
-            </div>
-        </a>
-        <a href="/requests">
-            <div class="side-items<?=$data['side_active']['requests']?>">
-                <i class="fa fa-user-plus" style="color: darkslategray">&nbsp</i> Requests
-            </div>
-        </a>
-        <a href="/messages">
-            <div class="side-items<?=$data['side_active']['messages']?>">
-                <i class="fa fa-envelope" style="color: darkslategray">&nbsp</i> Messages
-            </div>
-        </a>
-        <a href="/groups">
-            <div class="side-items<?=$data['side_active']['groups']?>">
-                <i class="fa fa-group" style="color: darkslategray">&nbsp</i> Groups
-            </div>
-        </a>
-        <a href="/questions">
-            <div class="side-items<?=$data['side_active']['questions']?>">
-                <i class="fa fa-question" style="color: darkslategray">&nbsp</i> Questions
-            </div>
-        </a>
-        <a href="/settings">
-            <div class="side-items<?=$data['side_active']['settings']?>">
-                <i class="fa fa-cogs" style="color: darkslategray">&nbsp</i> Settings
-            </div>
-        </a>
+<div class="flex-column-fixed hidden-sm-down" id="side-menu">
+    <div class="navbar-v-fluid">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="nav-item">
+                <a href="/" class="nav-link<?=$data['side_active']['home']?>"><i class="fa fa-home nav-icon"></i> Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link<?=$data['side_active']['profile']?>" href="/profile"><i class="fa fa-user nav-icon"></i> <span> Profile</span> </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link<?=$data['side_active']['requests']?>" href="/requests"><i class="fa fa-user-plus nav-icon"></i> <span> Requests</span> </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link<?=$data['side_active']['messages']?>" href="/messages"><i class="fa fa-envelope nav-icon"></i> <span> Inbox</span> </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link<?=$data['side_active']['questions']?>" href="/questions"><i class="fa fa-question nav-icon"></i> <span> Questions</span> </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link<?=$data['side_active']['settings']?>" href="/settings"><i class="fa fa-cogs nav-icon"></i> <span> Settings</span> </a>
+            </li>
+        </ul>
     </div>
 </div>

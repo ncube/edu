@@ -6,7 +6,7 @@ class Message {
     }
 
     public function sendMessage($recipient, $msg) {
-        $recipient_id = self::getPublicUserId($recipient);
+        $recipient_id = User::getPublicUserId($recipient);
         $user_id = Session::get('user_id');
 
         // TODO: Check if recipient is private or blocked and check if username is empty

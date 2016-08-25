@@ -16,6 +16,7 @@ class Questions extends Mvc {
     }
 
     public function create() {
+        new Protect;
         $post = Input::post();
         echo '<pre>';
         if (!empty($post)) {

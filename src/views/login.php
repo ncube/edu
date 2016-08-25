@@ -66,33 +66,33 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-field" placeholder="First Name" name="first_name">
+                                            <input type="text" class="form-control" placeholder="First Name" name="first_name">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-field" placeholder="Last Name" name="last_name">
+                                            <input type="text" class="form-control" placeholder="Last Name" name="last_name">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="username" class="form-field" placeholder="Username" name="username">
+                                    <input type="username" class="form-control" placeholder="Username" name="username">
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6">
-                                        <input type="password" class="form-field" placeholder="Password" name="password">
+                                        <input type="password" class="form-control" placeholder="Password" name="password">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input type="password" class="form-field" placeholder="Re-Enter Password" name="password_again">
+                                        <input type="password" class="form-control" placeholder="Re-Enter Password" name="password_again">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-field" placeholder="Email" name="email">
+                                    <input type="email" class="form-control" placeholder="Email" name="email">
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <select class="form-field" name="day">
+                                            <select class="form-control" name="day">
                                                 <option value="" selected disabled>Day</option>
                                                 <option value="1">01</option>
                                                 <option value="2">02</option>
@@ -128,7 +128,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <select class="form-field" name="month">
+                                            <select class="form-control" name="month">
                                                 <option value="" selected disabled>Month</option>
                                                 <option value="1">January</option>
                                                 <option value="2">Febuary</option>
@@ -145,12 +145,12 @@
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="year" class="form-field" placeholder="Year" name="year">
+                                            <input type="year" class="form-control" placeholder="Year" name="year">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-field" name="gender">
+                                    <select class="form-control" name="gender">
                                         <option value="" selected disabled>Select Gender</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
@@ -158,7 +158,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-field" name="country">
+                                    <select class="form-control" name="country">
                                         <option value="" selected disabled>Select Country</option>
                                         <option value="AF">Afghanistan</option>
                                         <option value="AX">Aland Islands</option>
@@ -427,10 +427,10 @@
                                 <br>
                                 <form method="post" action="<?=$data['loginAction']?>">
                                     <div class="form-group">
-                                        <input type="username" class="form-field form-field-lg" placeholder="Username" name="username">
+                                        <input type="username" class="form-control form-control-lg" placeholder="Username" name="username">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-field form-field-red form-field-lg" placeholder="Password" name="password">
+                                        <input type="password" class="form-control form-control-red form-control-lg" placeholder="Password" name="password">
                                     </div>
                                     <div class="form-group">
                                         <input type="hidden" name="token" value="<?=$data['token']?>">

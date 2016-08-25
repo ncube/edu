@@ -10,7 +10,7 @@ class ProfileModel {
         $this->data['username'] = $user_data['username'];
         $this->data['token'] = Token::generate();
 
-        $this->data['side_active']['profile'] = ' side-menu-active';
+        $this->data['side_active']['profile'] = ' active';
         
         require_once 'include/header.php';
 
@@ -60,56 +60,5 @@ class ProfileModel {
             default:
                 break;
         }
-
-        if ($profile_id === $user_id) {
-            $posts = User::getPost();
-            foreach($posts as $key => $value) {
-                $profile_id = $value['user_id'];
-                $temp = User::getPublicUserData($profile_id, ['username', 'profile_pic'])[0];
-
-                foreach($temp as $key2 => $value2) {
-                    $posts[$key][$key2] = $value2;
-                }
-
-                if ($posts[$key]['profile_pic'] === NULL) {
-                    $posts[$key]['profile_pic'] = '/public/images/profile-pic.png';
-                } else {
-                    $posts[$key]['profile_pic'] = '/data/images/profile/'.$posts[$key]['profile_pic'].'.jpg';
-                }
-
-                $comments = PhpConvert::toArray(DB::fetch('comment', array('post_id' => $value['unique_id'])));
-                foreach($comments as $key2 => $value2) {
-                    $user_data = User::getPublicUserData($value2['user_id'])[0];
-                    $comments[$key2]['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
-                    $comments[$key2]['username'] = $user_data['username'];
-                }
-                $posts[$key]['comments'] = $comments;
-            }
-        } else {
-            $posts = User::getPublicPosts($profile_id);
-            foreach($posts as $key => $value) {
-                $profile_id = $value['user_id'];
-                $temp = User::getPublicUserData($profile_id, ['username', 'profile_pic'])[0];
-
-                foreach($temp as $key2 => $value2) {
-                    $posts[$key][$key2] = $value2;
-                }
-
-                if ($posts[$key]['profile_pic'] === NULL) {
-                    $posts[$key]['profile_pic'] = '/public/images/profile-pic.png';
-                } else {
-                    $posts[$key]['profile_pic'] = '/data/images/profile/'.$posts[$key]['profile_pic'].'.jpg';
-                }
-
-                $comments = PhpConvert::toArray(DB::fetch('comment', array('post_id' => $value['unique_id'])));
-                foreach($comments as $key2 => $value2) {
-                    $user_data = User::getPublicUserData($value2['user_id'])[0];
-                    $comments[$key2]['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
-                    $comments[$key2]['username'] = $user_data['username'];
-                }
-                $posts[$key]['comments'] = $comments;
-            }
-        }
-        $this->data['post'] = $posts;
     }
 }

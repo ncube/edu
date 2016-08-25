@@ -9,7 +9,7 @@ class MessagesModel {
         $this->data['first_name'] = ucwords($user_data['first_name']);
         $this->data['last_name'] = ucwords($user_data['last_name']);
         
-        $this->data['side_active']['messages'] = ' side-menu-active';
+        $this->data['side_active']['messages'] = ' active';
         
         $this->data['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
         

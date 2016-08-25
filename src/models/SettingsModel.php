@@ -15,7 +15,7 @@ class SettingsModel {
         
         require_once 'include/header.php';
 
-        $this->data['side_active']['settings'] = ' side-menu-active';
+        $this->data['side_active']['settings'] = ' active';
         $this->data['active'] = NULL;
         if (!empty($url[0])) {
             $this->data['active'][$url[0]] = ' stngs-menu-item-active';

@@ -12,7 +12,7 @@ class QuestionsListModel {
         $this->data['token'] = Token::generate();
         $this->data['username'] = $user_data['username'];
 
-        $this->data['side_active']['questions'] = ' side-menu-active';
+        $this->data['side_active']['questions'] = ' active';
 
         $this->data['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
 

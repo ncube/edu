@@ -15,7 +15,7 @@ class RequestsModel {
 
         require_once 'include/header.php';
 
-        $this->data['side_active']['requests'] = ' side-menu-active';
+        $this->data['side_active']['requests'] = ' active';
 
         $this->data['profile_pic'] = User::getProfilePic($user_data['profile_pic']);
 

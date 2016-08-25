@@ -1,4 +1,4 @@
-<div class="col-xs-10 stngs-content">
+<div class="col-xs-9 stngs-content">
     <h4>General Settings</h4>
     <hr>
     <div class="row stngs-content-items">

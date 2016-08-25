@@ -45,11 +45,6 @@ class Notifications {
                     $link = '/requests/';
                     break;
 
-                case 'GR':
-                    $msg = 'wants to add to one of your Group';
-                    $link = '/groups/';
-                    break;
-
                 default:
                     $msg = '';
                     $link = '#';

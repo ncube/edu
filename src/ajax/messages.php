@@ -11,6 +11,7 @@ class Messages {
 
         if (!empty($post['username'] && $token === TRUE)) {
             $msgs = Message::getMessages($post['username']);
+            $data['success'] = TRUE;
             foreach($msgs as $key => $value) {
                 $msgs[$key]['time'] = date("d-M h:i A", $value['time']);
             }
@@ -18,12 +19,6 @@ class Messages {
             Message::read(User::getPublicUserId($post['username']));
             //TODO: Replace with function
             DB::updateIf('msg_notif', array('status' => 1), array('user_id' => User::getPublicUserId($post['username']), 'to_id' => Session::get('user_id')));
-
-            if ($follow === TRUE) {
-                $data['success'] = TRUE;
-            } else {
-                $data['errors'][] = $follow;
-            }
         } else {
             if (!$token) {
                 $data['errors'][] = 'Security Token Missing';

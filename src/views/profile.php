@@ -1,40 +1,46 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title><?=$data['username']?> - Profile</title>
-    <link rel="stylesheet" type="text/css" href="/public/css/ncube-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/custom.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/widgets/posts.css">
+  <?php include 'include/head/common.php'; ?>
 </head>
 
-<body onclick="event_handler(event)">
+<body>
     
+    <div class="init-flex">
     <?php include 'include/body/header.php'; ?>
-    <?php include 'include/body/search.php'; ?>
+    <div class="flex-container">
     <?php include 'include/body/side-menu.php'; ?>
 
-    <div class="has-side-header">
-        <div class="container-hr">
-            <div class="wrapper">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-5 profile-div">
-                            <img src="<?=$data['profile_data']['profile_pic']?>" alt="@<?=$data['profile_data']['username']?>" class="profile_pic">
-                            <?php
+    <div class="flex-column-fluid">
+        <div class="container-hr-fluid">            
+            <div class="card card-block col-lg-7">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <img src="<?=$data['profile_data']['profile_pic']?>" alt="@<?=$data['profile_data']['username']?>" class="img-thumb-lg">
+                        <?php
                                 if (User::getPublicUserId($data['profile_data']['username']) === Session::get('user_id')) {
                                     echo '
+
+
                                         <form enctype="multipart/form-data" action="/profile/upload" method="post">
                                             <input type="hidden" name="token" value="'.$data['token'].'" />
                                             <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-                                            Choose a file to upload: <input name="uploaded_file" type="file" />
-                                            <input type="submit" value="Upload" />
+
+                                            <label class="file">
+                                            <input name="uploaded_file" type="file">
+                                            <span class="file-custom"></span>
+                                        </label>
+
+
+                                            
+                                            <input type="submit" class="btn btn-primary" value="Upload" />
                                         </form>
                                     ';
                                 }
                             ?>
-                        </div>
-                        <div class="col-sm-7">
+                    </div>
+                    <div class="col-sm-7">
                             <div class="row">
                                 <h3><?=$data['profile_data']['first_name']?> <?=$data['profile_data']['last_name']?></h3>
                                 <h4 style="color: gray">@ <?=$data['profile_data']['username']?></h4>
@@ -66,70 +72,49 @@
                                     ';
                                 }
                             ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="aboutme">
+                            <h4>About</h4>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Gender</td>
+                                        <td><?=$data['profile_data']['gender']?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Age</td>
+                                        <td><?=$data['profile_data']['age']?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of birth</td>
+                                        <td><?=$data['profile_data']['dob']?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country</td>
+                                        <td><?=$data['profile_data']['country']?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td><?=$data['profile_data']['email']?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div id="aboutme">
-                                <h4>About</h4>
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Gender</td>
-                                            <td><?=$data['profile_data']['gender']?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Age</td>
-                                            <td><?=$data['profile_data']['age']?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Date of birth</td>
-                                            <td><?=$data['profile_data']['dob']?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Country</td>
-                                            <td><?=$data['profile_data']['country']?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Email</td>
-                                            <td><?=$data['profile_data']['email']?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <?php
-                            if (!empty($data['post'])) {
-                                foreach ($data['post'] as $value) {
-                                    include 'include/body/widgets/post.php';
-                                }
-                            }
-                        ?>
-                    </div>
+                </div>
+            </div>            
                 </div>
             </div>
         </div>
     </div>
-    <?php include 'include/body/footer.php'; ?>
+
+    <?php include '/include/js/common.php'; ?>
 </body>
-<script type="text/javascript" src="/public/js/jquery-2.2.1.min.js"></script>
-<script type="text/javascript" src="/public/js/search.js"></script>
-<script type="text/javascript" src="/public/js/notif.js"></script>
-<script>
-    var token = "<?=$data['token']?>";
-    var username = "<?=$data['profile_data']['username']?>";
-</script>
-<script type="text/javascript" src="/public/js/ajax/notif.js"></script>
+
+<?php include 'include/js/common.php'; ?>
 <script type="text/javascript" src="/public/js/ajax/profile.js"></script>
-<script>
-    function toggleCmnt(id) {
-        $("#"+id).toggle();
-    }
-    $(".comment").click(function (event) {
-        var id = event.currentTarget.parentElement.parentElement.parentElement.parentElement.children[4].id;
-        toggleCmnt(id);
-    });
-</script>
+
 </html>
