@@ -1,10 +1,9 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title><?=$data['title']?></title>
-    <link rel="stylesheet" type="text/css" href="/public/css/ncube-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/custom.css">
+  <?php include 'include/head/common.php'; ?>
+
     <style>
         .q-list {
             margin-top: 20px;
@@ -50,47 +49,43 @@
     </style>
 </head>
 
-<body onclick="event_handler(event)">
-    
+<body>
+
+
+<div class="init-flex">
     <?php include 'include/body/header.php'; ?>
-    <?php include 'include/body/search.php'; ?>
-    <?php include 'include/body/side-menu.php'; ?>
-    
-    <div class="has-side-header">
-        <div class="container-hr">                                
-            <div class="wrapper">
-                <div class="container-fluid">
-                    <div class="col-xs-12">
-                        <div class="q-name">
-                            <?php
-                                $t = Question::getPublicQuestion($data['question']['id'])[0];
-                            ?>
-                            <a><?=$t['title']?></a>
-                        </div>
-                        <div class="q-desp">
-                            <?=$t['content']?>
-                            <!--<br>
-                            Views: <?=$t['views']?>
-                            <br>
-                            Difficulty: <?=$t['difficulty']?>
-                            <br>
-                            Time: <?=$t['time']?>
-                            <br>
-                            User Id: <?php print_r(User::getPublicUserData($t['user_id']))?>-->
-                        </div>
+      <div class="flex-container">
+        <?php include 'include/body/side-menu.php'; ?>
+
+          <div class="flex-column-fluid">
+            <div class="container-hr-fluid">
+              <div class="col-xs-12">
+                    <div class="q-name">
+                        <?php
+                            $t = Question::getPublicQuestion($data['question']['id'])[0];
+                        ?>
+                        <a><?=$t['title']?></a>
+                    </div>
+                    <div class="q-desp">
+                        <?=$t['content']?>
+                        <!--<br>
+                        Views: <?=$t['views']?>
+                        <br>
+                        Difficulty: <?=$t['difficulty']?>
+                        <br>
+                        Time: <?=$t['time']?>
+                        <br>
+                        User Id: <?php print_r(User::getPublicUserData($t['user_id']))?>-->
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <?php include 'include/body/footer.php'; ?>
+
+          </div>
+      </div>
+  </div>
+
 </body>
-<script type="text/javascript" src="/public/js/jquery-2.2.1.min.js"></script>
-<script type="text/javascript" src="/public/js/search.js"></script>
-<script type="text/javascript" src="/public/js/notif.js"></script>
-<script>
-    var token = "<?=$data['token']?>";
-</script>
-<script type="text/javascript" src="/public/js/ajax/notif.js"></script>
+
+<?php include 'include/js/common.php'; ?>
 <script type="text/javascript" src="/public/js/ajax/questions.js"></script>
 </html>
