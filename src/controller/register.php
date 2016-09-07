@@ -24,7 +24,7 @@ class Register extends Mvc {
                 header('Location: /');
                 exit();
             }
-            self::init('LoginModel', 'login', $arg);
+            self::init('RegisterModel', 'register', $arg);
         }
 
     }
