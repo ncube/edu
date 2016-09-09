@@ -109,7 +109,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <select id="da_y" class="form-control" name="day">
-                                                <option value="" selected disabled">Select Day</option>
+                                                <option value="" selected disabled>Select Day</option>
                                                 <option value="1">01</option>
                                                 <option value="2">02</option>
                                                 <option value="3">03</option>
@@ -146,7 +146,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <select id="mon_th" class="form-control" name="month">
-                                                <option value="" selected disabled">Select Month</option>
+                                                <option value="" selected disabled>Select Month</option>
                                                 <option value="1">January</option>
                                                 <option value="2">Febuary</option>
                                                 <option value="3">March</option>
@@ -173,8 +173,16 @@
                                 </div>
                                 </div>
                                 <div class="form-group">
+                                    <select class="form-control" name="gender">
+                                        <option value="" selected disabled>Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Others</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <select class="form-control" id="coun_try" name="country">
-                                        <option value="" selected disabled">Select Country</option>
+                                        <option value="" selected disabled>Select Country</option>
                                         <option value="AF">Afghanistan</option>
                                         <option value="AX">Aland Islands</option>
                                         <option value="AL">Albania</option>
