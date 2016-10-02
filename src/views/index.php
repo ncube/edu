@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="index">
 
 <head>
+  <script src="/public/js/angular/angular.min.js"></script>
+  <script src="/public/views/app.js"></script>
+  <script src="/public/views/controllers/controllers.js"></script>
   <?php include 'include/head/common.php'; ?>
 </head>
 
-<body>
+<body ng-keydown="keyController($event)" ng-controller="main">
 
   <div class="init-flex">
-    <?php include 'include/body/header.php'; ?>
+    <section ng-controller="header" ng-include="template.header"></section>
       <div class="flex-container">
         <?php include 'include/body/side-menu.php'; ?>
 
@@ -22,7 +25,9 @@
   </div>
 
 </body>
-
-<?php include 'include/js/common.php'; ?>
+<script>
+  var token = '<?=$data['token']?>';
+</script>
+<?php include 'include/js/common.html'; ?>
 
 </html>

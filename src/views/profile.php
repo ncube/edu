@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="index">
 
 <head>
+  <script src="/public/js/angular/angular.min.js"></script>
+  <script src="/public/views/app.js"></script>
+  <script src="/public/views/controllers/controllers.js"></script>
   <?php include 'include/head/common.php'; ?>
 </head>
 
-<body>
-    
-    <div class="init-flex">
-    <?php include 'include/body/header.php'; ?>
-    <div class="flex-container">
-    <?php include 'include/body/side-menu.php'; ?>
+<body ng-keydown="keyController($event)" ng-controller="main">
 
-    <div class="flex-column-fluid">
-        <div class="container-hr-fluid">            
-            <div class="card card-block col-lg-7">
+  <div class="init-flex">
+    <section ng-controller="header" ng-include="template.header"></section>
+      <div class="flex-container">
+        <?php include 'include/body/side-menu.php'; ?>
+
+          <div class="flex-column-fluid">
+            <div class="container-hr-fluid">
+              <div class="card card-block col-lg-7">
                 <div class="row">
                     <div class="col-sm-5">
                         <img src="<?=$data['profile_data']['profile_pic']?>" alt="@<?=$data['profile_data']['username']?>" class="img-thumb-lg">
@@ -105,16 +108,20 @@
                         </div>
                     </div>
                 </div>
-            </div>            
-                </div>
             </div>
-        </div>
-    </div>
+            </div>
 
-    <?php include '/include/js/common.php'; ?>
+          </div>
+      </div>
+  </div>
+
 </body>
 
-<?php include 'include/js/common.php'; ?>
+<script>
+  var token = '<?=$data['token']?>';
+</script>
+
+<?php include 'include/js/common.html'; ?>
 <script type="text/javascript" src="/public/js/ajax/profile.js"></script>
 
 </html>

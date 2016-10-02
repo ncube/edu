@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="index">
 
 <head>
-    <?php include 'include/head/common.php'; ?>
+  <script src="/public/js/angular/angular.min.js"></script>
+  <script src="/public/views/app.js"></script>
+  <script src="/public/views/controllers/controllers.js"></script>
+  <?php include 'include/head/common.php'; ?>
 </head>
 
-<body>
+<body ng-keydown="keyController($event)" ng-controller="main">
 
-    <div class="init-flex">
-    <?php include 'include/body/header.php'; ?>
-    <!--<?php include 'include/body/search.php'; ?>-->
-    <div class="flex-container">
-    <?php include 'include/body/side-menu.php'; ?>
+  <div class="init-flex">
+    <section ng-controller="header" ng-include="template.header"></section>
+      <div class="flex-container">
+        <?php include 'include/body/side-menu.php'; ?>
 
-    <div class="flex-column-fluid">
-        <div class="container-hr-fluid">            
-            <?php
+          <div class="flex-column-fluid">
+            <div class="container-hr-fluid">
+              <?php
                 foreach($data['requests'] as $value) {
                     echo '
                     <div class="card card-block col-md-4">
@@ -36,11 +38,18 @@
                     ';
                 }
             ?>
-        </div>
-    </div>
+            </div>
 
-  </body>
+          </div>
+      </div>
+  </div>
 
-<?php include 'include/js/common.php'; ?>
+</body>
+
+<script>
+  var token = '<?=$data['token']?>';
+</script>
+
+<?php include 'include/js/common.html'; ?>
 
 </html>
