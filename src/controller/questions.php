@@ -7,6 +7,7 @@ class Questions extends Mvc {
         if (!empty($url[0])) {
             if (Question::exists($url[0])) {
                 self::init('QuestionsModel', 'questions', $url);
+                Question::countQuestionViews($url[0]);
             } else {
                 echo 'Question not found';
             }

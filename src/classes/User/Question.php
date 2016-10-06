@@ -48,8 +48,9 @@ class Question {
     }
 
     public function countQuestionViews($id) {
-        $count = DB::fetch(array('question' => ['views']), array('q_id' => $id))[0]->views;
+        $count = DB::fetch(array('question' => ['views']), array('q_id' => $id))[0];
         if (!empty($count)) {
+            $count = $count->views;
             $count++;
             DB::updateIf('question', array('views' => $count), array('q_id' => $id));
             return TRUE;
