@@ -6,8 +6,25 @@ class Questions extends Mvc {
 
         if (!empty($url[0])) {
             if (Question::exists($url[0])) {
-                self::init('QuestionsModel', 'questions', $url);
-                Question::countQuestionViews($url[0]);
+                if($url[1] === 'answer') {
+                    if(!empty(Input::post())) {
+                        $content = Input::post()['content'];
+                        $id = $url[0];
+                        Question::postAnswer($content, $id);
+                        echo 'Posted';
+                    } else {                    
+                        echo '
+                            Post Answer
+                            <form method="post" action="">
+                                <input type="text" placeholder="Answer" name="content">
+                                <input type="submit" value="submit">
+                            </form>
+                        ';
+                    }
+                } else {
+                    self::init('QuestionsModel', 'questions', $url);
+                    Question::countQuestionViews($url[0]); 
+                }
             } else {
                 echo 'Question not found';
             }

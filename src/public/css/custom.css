@@ -328,3 +328,26 @@ a:hover {
 .stngs-content hr {
     margin-top: 15px;
 }
+
+
+/*Question*/
+
+.q-name {
+    margin-top: 8px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: orange;
+}
+
+.q-desp {
+    color: darkslategray;
+}
+
+.vote-up-active {
+    color: #4CAF50;
+}
+
+.vote-down-active {
+    color: #F44336;
+}
