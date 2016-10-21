@@ -20,28 +20,31 @@
               <div class="card card-block col-lg-7">
                 <div class="row">
                     <div class="col-sm-5">
-                        <img src="<?=$data['profile_data']['profile_pic']?>" alt="@<?=$data['profile_data']['username']?>" class="img-thumb-lg">
+                        <a href="#">
+                            <div class="img-upload"><img src="<?=$data['profile_data']['profile_pic']?>" alt="@<?=$data['profile_data']['username']?>"/><span><i class="fa fa-upload fa-2x"></i><br>Change Picture</span></div>
+                        </a>
+                        <!--<img src="<?=$data['profile_data']['profile_pic']?>" alt="@<?=$data['profile_data']['username']?>" class="img-thumb-lg">-->
                         <?php
-                                if (User::getPublicUserId($data['profile_data']['username']) === Session::get('user_id')) {
-                                    echo '
+                            // if (User::getPublicUserId($data['profile_data']['username']) === Session::get('user_id')) {
+                            //     echo '
 
 
-                                        <form enctype="multipart/form-data" action="/profile/upload" method="post">
-                                            <input type="hidden" name="token" value="'.$data['token'].'" />
-                                            <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+                            //         <form enctype="multipart/form-data" action="/profile/upload" method="post">
+                            //             <input type="hidden" name="token" value="'.$data['token'].'" />
+                            //             <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 
-                                            <label class="file">
-                                            <input name="uploaded_file" type="file">
-                                            <span class="file-custom"></span>
-                                        </label>
+                            //             <label class="file">
+                            //             <input name="uploaded_file" type="file">
+                            //             <span class="file-custom"></span>
+                            //         </label>
 
 
-                                            
-                                            <input type="submit" class="btn btn-primary" value="Upload" />
-                                        </form>
-                                    ';
-                                }
-                            ?>
+                                        
+                            //             <input type="submit" class="btn btn-primary" value="Upload" />
+                            //         </form>
+                            //     ';
+                            // }
+                        ?>
                     </div>
                     <div class="col-sm-7">
                             <div class="row">

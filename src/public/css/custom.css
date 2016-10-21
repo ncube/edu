@@ -351,3 +351,55 @@ a:hover {
 .vote-down-active {
     color: #F44336;
 }
+
+
+/*Image Upload*/
+
+.img-upload {
+    line-height: 1.5em;
+    font-weight: bolder;
+    font-size: 20px;
+    color: white;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    background: black;
+}
+
+.img-upload,
+.img-upload img {
+    border-radius: 7px;
+}
+
+.img-upload img {
+    position: absolute;
+    opacity: 1;
+}
+
+.img-upload:hover img {
+    opacity: .6;
+}
+
+.img-upload span {
+    position: absolute;
+    z-index: 200;
+    opacity: 0;
+    text-align: center;
+}
+
+.img-upload img,
+.img-upload span {
+    width: inherit;
+    height: inherit;
+    -webkit-transition: .15s ease;
+    transition: .15s ease;
+}
+
+.img-upload span i {
+    margin-top: 70px;
+    color: white;
+}
+
+.img-upload span:hover {
+    opacity: 1;
+}
