@@ -20,9 +20,16 @@
               <div class="card card-block col-lg-7">
                 <div class="row">
                     <div class="col-sm-5">
-                        <a href="#">
-                            <div class="img-upload"><img src="<?=$data['profile_data']['profile_pic']?>" alt="@<?=$data['profile_data']['username']?>"/><span><i class="fa fa-upload fa-2x"></i><br>Change Picture</span></div>
-                        </a>
+                        <?php
+                            if (User::getPublicUserId($data['profile_data']['username']) === Session::get('user_id')) {
+                                echo '
+                                <a href="#">
+                                    <div class="img-upload"><img src="'.$data['profile_data']['profile_pic'].'" alt="'.$data['profile_data']['username'].'"/><span><i class="fa fa-upload fa-2x"></i><br>Change Picture</span></div>
+                                </a>';
+                            } else {
+                                echo '<img src="'.$data['profile_data']['profile_pic'].'" alt="@'.$data['profile_data']['username'].'" class="img-thumb-lg">';
+                            }
+                        ?>
                         <!--<img src="<?=$data['profile_data']['profile_pic']?>" alt="@<?=$data['profile_data']['username']?>" class="img-thumb-lg">-->
                         <?php
                             // if (User::getPublicUserId($data['profile_data']['username']) === Session::get('user_id')) {
