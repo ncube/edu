@@ -1,12 +1,12 @@
 <?php
 
-$files = ['DB', 'logs', 'server'];
+$files = ['DB', 'logs', 'server', 'libs', 'content', 'pages', 'routes'];
 
-global $CONFIG;
-
-foreach($files as $values) {
-    $file = file_get_contents(__DIR__.'/'.$values.'.json');
-    $config[$values] = json_decode($file, TRUE);
+foreach($files as $value) {
+    require_once(__DIR__.'/'.$value.'.php');
 }
 
 $GLOBALS['config'] = $config;
+$GLOBALS['pages'] = $pages;
+$GLOBALS['content'] = $content;
+$GLOBALS['routes'] = $routes;

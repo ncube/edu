@@ -20,7 +20,18 @@ class App {
             }
         });
 
-        // Load Controller
-        LoadController::init();
+        // Parse Url
+        $url = Input::get('url');
+        $url_array = Utils::parseUrl($url);
+        $url_array[0] = ($url_array[0] === 'index.php') ? 'index' : $url_array[0];
+
+        // Load Global Variables
+        $GLOBALS['url'] = $url;
+        $GLOBALS['url_array'] = $url_array;
+
+        // Load Controller        
+        require_once 'controller.php';
+
+        new Controller;
     }
 }

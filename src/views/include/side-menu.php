@@ -13,7 +13,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link<?=$data['side_active']['messages']?>" href="/messages"><i class="fa fa-envelope nav-icon"></i> <span> Inbox</span> </a>
+                <a class="nav-link<?=$data['side_active']['inbox']?>" href="/inbox"><i class="fa fa-envelope nav-icon"></i> <span> Inbox</span> </a>
             </li>
 
             <li class="nav-item">

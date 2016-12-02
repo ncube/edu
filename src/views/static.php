@@ -16,9 +16,9 @@
       <div class="flex-container">
         <?php include 'include/side-menu.php'; ?>
 
-          <div class="flex-column-fluid">
-            <div class="container-hr-fluid" <?=$var['ng-controller']?>>
-              <?=Core::loadContent('-main-', $data)?>
+          <div class="flex-column-fluid" style="padding: 10px; overflow: hidden;">
+            <div class="container-fluid" style="width: 100%;">
+              <?=Core::loadContent('-main-', $data, $url)?>
             </div>
 
           </div>
