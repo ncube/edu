@@ -1,5 +1,5 @@
 <?php
-// TODO: Add register page and logout function page
+// TODO: Add register page
 $pages = array(
     'home' => array(
         'protect' => TRUE,
@@ -127,5 +127,7 @@ $pages = array(
     'login' => array(
         'function' => 'login'
     ),
-
+    'logout' => array(
+        'function' => 'logout'
+    ),
 );
