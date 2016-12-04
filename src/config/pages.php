@@ -130,4 +130,7 @@ $pages = array(
     'logout' => array(
         'function' => 'logout'
     ),
+    'favicon.ico' => array(
+        'function' => 'favicon'
+    ),
 );
