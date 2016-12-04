@@ -73,26 +73,6 @@ class Validate {
                             'max' => 32),
                 'email' => array(
                             'required' => TRUE),
-                'day' => array(
-                            'required' => TRUE,
-                            'min' => 1,
-                            'max' => 2),
-                'month' => array(
-                            'required' => TRUE,
-                            'min' => 1,
-                            'max' => 2),
-                'year' => array(
-                            'required' => TRUE,
-                            'min' => 4,
-                            'max' => 4),
-                'gender' => array(
-                            'required' => TRUE,
-                            'min' => 1,
-                            'max' => 1),
-                'country' => array(
-                            'required' => TRUE,
-                            'min' => 2,
-                            'max' => 2),
             )
         );
     }

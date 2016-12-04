@@ -67,6 +67,7 @@ class Funcs {
                 }
             }
             if (!empty($errors)) {
+                // TODO: redirect to requested page
                 Session::errors($errors, '/');
             }
     }
@@ -113,5 +114,44 @@ class Funcs {
         header('Content-Type:'.$type);
         header('Content-Length: ' . filesize($file));
         readfile($file);
+    }
+
+    public function register() {
+
+        if (Session::exists('user_id')) {
+            header('Location: /');
+            exit();
+        }
+        
+        $errors = Session::errors('errors');
+        if (gettype($errors) === 'string') {
+            $errors = array($errors);
+        }
+
+
+
+        $post = Input::post();
+
+        if (!empty(($post)) && empty($errors)) {
+            $validate = Validate::register($post);
+            $token = Token::check($post['token']);
+            if ($validate === TRUE && $token === TRUE) {
+                User::addUser($post);
+                echo 'Registered';
+            } else {
+                if (!$token) {
+                    $errors[] = 'Security Token is missing';
+                } else {
+                    $errors = $validate;
+                }
+                Session::errors($errors, '/register');
+            }
+        } else {
+            $data['title'] = 'Register - NCube School';
+            $data['loginAction'] = '/login';
+            $data['token'] = Token::generate();
+            $data['errors'] = $errors;
+            include 'views/register.php';
+        }
     }
 }

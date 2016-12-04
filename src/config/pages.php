@@ -1,5 +1,4 @@
 <?php
-// TODO: Add register page
 $pages = array(
     'home' => array(
         'protect' => TRUE,
@@ -132,5 +131,8 @@ $pages = array(
     ),
     'favicon.ico' => array(
         'function' => 'favicon'
+    ),
+    'register' => array(
+        'function' => 'register'
     ),
 );
