@@ -57,6 +57,34 @@ class Core {
         return $code;
     }
 
+    function loadJsTop() {
+        $name = $this->page_name;
+        if($name[0].$name[strlen($name)-1] === '--') {
+            $libs = $GLOBALS['views'][explode('-', $name)[1]]['includes']['js']['top'];
+        } else {
+            $libs = $GLOBALS['pages'][$name]['includes']['js']['top'];
+        }
+        $js = $GLOBALS['config']['js'];
+        foreach ($libs as $value) {
+            if(gettype($js[$value]) === 'string') {
+                if (substr($value, 0, 3) === 'ng-') {
+                    $code .= '<script type="text/javascript" ng-src="/public/js/'.$js[$value].'"></script>';
+                } else {
+                    $code .= '<script type="text/javascript" src="/public/js/'.$js[$value].'"></script>';
+                }
+            } else {
+                foreach ($js[$value] as $value2) {
+                    if (substr($value2, 0, 3) === 'ng-') {
+                        $code .= '<script type="text/javascript" ng-src="/public/js/'.$js[$value2].'"></script>';
+                    } else {
+                        $code .= '<script type="text/javascript" src="/public/js/'.$js[$value2].'"></script>';
+                    }
+                }
+            }
+        }
+        return $code;
+    }
+
     function loadContent($name, $data = NULL, $url = NULL) {
         $type = $name[0].$name[strlen($name)-1];
         if ($type === '--') {
