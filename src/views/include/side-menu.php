@@ -9,10 +9,6 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link<?=$data['side_active']['requests']?>" href="/requests"><i class="fa fa-user-plus nav-icon"></i> <span> Requests</span> </a>
-            </li>
-
-            <li class="nav-item">
                 <a class="nav-link<?=$data['side_active']['inbox']?>" href="/inbox"><i class="fa fa-envelope nav-icon"></i> <span> Inbox</span> </a>
             </li>
 

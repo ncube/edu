@@ -6,7 +6,7 @@
   <script src="/public/js/angular/angular.min.js"></script>
   <script src="/public/views/app.js"></script>
   <script src="/public/views/controllers/controllers.js"></script>
-  <?=Core::loadCss()?>
+  <?=Core::loadCss(['common'])?>
 </head>
 
 <body ng-keydown="keyController($event)" ng-controller="main">
@@ -29,6 +29,6 @@
 <script>
   var token = '<?=$data['token']?>';
 </script>
-<?=Core::loadJsBottom()?>
+<?=Core::loadJsBottom(['common'])?>
 
 </html>

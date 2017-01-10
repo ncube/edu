@@ -9,13 +9,12 @@ class Core {
         $this->page = $page_url;
     }
 
-    function loadCss() {
+    function loadCss($libs) {
         $name = $this->page_name;
-        if($name[0].$name[strlen($name)-1] === '--') {
-            $libs = $GLOBALS['views'][explode('-', $name)[1]]['includes']['css'];
-        } else {
-            $libs = $GLOBALS['pages'][$name]['includes']['css'];
-        }
+
+        $ex_libs = $GLOBALS['routes'][$name]['includes']['css'];
+        $libs = empty($ex_libs) ? $libs : array_merge($libs, $ex_libs);
+
         $css = $GLOBALS['config']['css'];
         foreach ($libs as $value) {
             if(gettype($css[$value]) === 'string') {
@@ -29,13 +28,10 @@ class Core {
         return $code;
     }
 
-    function loadJsBottom() {
+    function loadJsBottom($libs) {
         $name = $this->page_name;
-        if($name[0].$name[strlen($name)-1] === '--') {
-            $libs = $GLOBALS['views'][explode('-', $name)[1]]['includes']['js']['bottom'];
-        } else {
-            $libs = $GLOBALS['pages'][$name]['includes']['js']['bottom'];
-        }
+        $ex_libs = $GLOBALS['routes'][$name]['includes']['js']['bottom'];
+        $libs = empty($ex_libs) ? $libs : array_merge($libs, $ex_libs);
         $js = $GLOBALS['config']['js'];
         foreach ($libs as $value) {
             if(gettype($js[$value]) === 'string') {
@@ -57,13 +53,10 @@ class Core {
         return $code;
     }
 
-    function loadJsTop() {
+    function loadJsTop($libs) {
         $name = $this->page_name;
-        if($name[0].$name[strlen($name)-1] === '--') {
-            $libs = $GLOBALS['views'][explode('-', $name)[1]]['includes']['js']['top'];
-        } else {
-            $libs = $GLOBALS['pages'][$name]['includes']['js']['top'];
-        }
+        $ex_libs = $GLOBALS['routes'][$name]['includes']['js']['top'];
+        $libs = empty($ex_libs) ? $libs : array_merge($libs, $ex_libs);
         $js = $GLOBALS['config']['js'];
         foreach ($libs as $value) {
             if(gettype($js[$value]) === 'string') {
@@ -88,7 +81,7 @@ class Core {
     function loadContent($name, $data = NULL, $url = NULL) {
         $type = $name[0].$name[strlen($name)-1];
         if ($type === '--') {
-            $content = $GLOBALS['pages'][$this->page_name]['content'][$name];
+            $content = $GLOBALS['routes'][$this->page_name]['content'][$name];
             if (gettype($content) === 'array') {
                 $content_data = $content[1]['data'];
                 foreach($content_data as $value) {
@@ -120,12 +113,17 @@ class Core {
     
     function serve() {
         $name = $this->page_name;
+        $page = $GLOBALS['routes'][$name];
 
-        $page = $GLOBALS['pages'][$name];
+        if(isset($page['redirect'])) {
+            Redirect::to($page['redirect']);
+        }
 
-        if(empty($page)) {
-            echo 'Page not configured properly';
-            die;
+        if($page['parent']) {
+            end($GLOBALS['url_array']);
+            $name = prev($GLOBALS['url_array']);
+            $this->page_name = $name;
+            $page = $GLOBALS['routes'][$name];
         }
 
         if(!empty($page['template'])) {

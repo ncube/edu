@@ -36,7 +36,6 @@ if($GLOBALS['url'] === 'questions/create') {
                     <div class="col-md-12">
                         <div class="pull-left" style="padding: 10px; font-size: 17px;" id="{{item.q_id}}">
                             <i class="fa fa-caret-up voteup {{item.my_data.vote_up_class}}"></i> <?=$data['question']['up_count']?> &nbsp
-                            <i class="fa fa-caret-down votedown {{item.my_data.vote_down_class}}"></i> <?=$data['question']['down_count']?> &nbsp
                             <i class="fa fa-comments"></i> <?=$data['question']['answers_count']?> &nbsp
                             <i class="fa fa-eye"></i> <?=$data['question']['views']?> &nbsp
                         </div>

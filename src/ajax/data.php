@@ -22,31 +22,6 @@ class Data {
                     $link = '/profile/'.$value['username'];
                     break;
                 
-                case 'RC':
-                    $msg = 'wants to add you as Classmate';
-                    $link = '/requests/';
-                    break;
-                
-                case 'RT':
-                    $msg = 'wants to add you as Teacher';
-                    $link = '/requests/';
-                    break;
-                
-                case 'RS':
-                    $msg = 'wants to add you as Student';
-                    $link = '/requests/';
-                    break;
-                
-                case 'RF':
-                    $msg = 'wants to add you as Friend';
-                    $link = '/requests/';
-                    break;
-                
-                case 'RP':
-                    $msg = 'wants to add you as Parent or Guardian';
-                    $link = '/requests/';
-                    break;
-                
                 default:
                     $msg = '';
                     $link = '#';

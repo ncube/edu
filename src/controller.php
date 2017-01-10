@@ -2,7 +2,7 @@
 class Controller {
     public function __construct() {
         $url = $GLOBALS['url_array'];
-        $route = new Route($url);
+        $route = new Route;
         $name = $route->page;
 
         // TODO: Change ajax architecture
@@ -34,6 +34,5 @@ class Controller {
             $page = new Core($name, $url, $page);
             $page->serve();
         }
-        
     }
 }

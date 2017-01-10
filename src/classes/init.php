@@ -21,7 +21,7 @@ class App {
         });
 
         // Parse Url
-        $url = Input::get('url');
+        $url = rtrim(Input::get('url'), '/');
         $url_array = Utils::parseUrl($url);
         $url_array[0] = ($url_array[0] === 'index.php') ? 'index' : $url_array[0];
 

@@ -1,6 +1,8 @@
 <div class="card">
     <div class="card-block">
-        <a href="/questions/{{item.q_id}}" style="color: inherit; text-decoration: none;"><h5><strong>{{item.title}}</strong></h5></a>
+        <a href="/questions/{{item.q_id}}" style="color: inherit; text-decoration: none;">
+            <h5><strong>{{item.title}}</strong></h5>
+        </a>
         <p>
             {{item.content}}
         </p>
@@ -10,7 +12,6 @@
             <div class="col-md-8">
                 <div class="pull-left" style="padding: 10px; font-size: 17px;" id="{{item.q_id}}">
                     <i class="fa fa-caret-up voteup {{item.my_data.vote_up_class}}"></i> {{item.up_count}} &nbsp
-                    <i class="fa fa-caret-down votedown {{item.my_data.vote_down_class}}"></i> {{item.down_count}} &nbsp
                     <i class="fa fa-comments"></i> {{item.answers}} &nbsp
                     <i class="fa fa-eye"></i> {{item.views}} &nbsp
                 </div>
