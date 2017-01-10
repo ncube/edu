@@ -1,16 +1,9 @@
 <?php 
-class AjaxSearch {
-    public function _index() {
-        // Deny access if not logged in
-        new Protect('ajax');
-
+class Ajax {
+    public $data;
+    public function __construct() {
         $post = Input::post();
-
         $token = Token::ajaxCheck($post['token']);
-
-        // TODO: Add Token Support
-        $token = TRUE;
-
         $data['errors'] = NULL;
 
         if (!empty($post['username'] && $token === TRUE)) {
@@ -18,7 +11,7 @@ class AjaxSearch {
             foreach($t as $key => $value) {
                 $t[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
             }
-            return $t;
+            $data = $t;
         } else {
             if (!$token) {
                 $data['errors'][] = 'Security Token Missing';
@@ -27,9 +20,9 @@ class AjaxSearch {
             }
         }
         if (!empty($data)) {
-            return $data;
+            $this->data = $data;
         } else {
-            return FALSE;
+            $this->data = FALSE;
         }
     }
 }

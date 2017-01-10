@@ -1,9 +1,7 @@
 <?php 
-class Follow {
-    public function _index() {
-        // Deny access if not logged in
-        new Protect('ajax');
-
+class Ajax {
+    public $data;
+    public function __construct() {
         $post = Input::post();
 
         $token = Token::ajaxCheck($post['token']);

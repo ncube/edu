@@ -1,14 +1,29 @@
-<?php 
-class Notifications {
-    public function _index() {
-        new Protect('ajax');
+<?php
+class Ajax {
+    public $data;
+    public function __construct() {
+        switch (Input::get('type')) {
+            case 'msgs':
+                self::msgs();
+                break;
+            
+            case 'notif':
+                self::notif();
+                break;
+            
+            default:
+                $this->data = FALSE;
+                break;
+        }
+    }
 
+    public function notif() {
         $notif = Notif::getUnread();
-
+        
         usort($notif, function($b, $a) {
             return $a['time'] - $b['time'];
         });
-
+        
         foreach($notif as $key => $value) {
             $notif[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
             $notif[$key]['time'] = date("d M h:i A", $value['time']);
@@ -19,7 +34,7 @@ class Notifications {
                     $msg = 'is following you';
                     $link = '/profile/'.$value['username'];
                     break;
-
+                
                 default:
                     $msg = '';
                     $link = '#';
@@ -32,6 +47,26 @@ class Notifications {
         $data['data'] = $notif;
         $data['count'] = Notif::getUnreadCount();
 
-        return $data;
+        $this->data = $data;
+    }
+
+    public function msgs() {
+        $notifMsg = Notif::getUnreadMsg();
+
+        foreach($notifMsg as $key => $value) {
+            $notifMsg[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
+            $notifMsg[$key]['first_name'] = ucwords($value['first_name']);
+            $notifMsg[$key]['last_name'] = ucwords($value['last_name']);
+            $notifMsg[$key]['time'] = date("d M h:i A", $value['time']);
+        }
+
+        $data['data'] = $notifMsg;
+        $data['count'] = Notif::getUnreadMsgCount();
+
+        usort($notifMsg, function($b, $a) {
+            return $a['time'] - $b['time'];
+        });
+
+        $this->data = $data;
     }
 }

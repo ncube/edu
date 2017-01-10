@@ -1,8 +1,7 @@
 <?php
-class Data {
-    public function _index() {
-        new Protect;
-        
+class Ajax {
+    public $data;
+    public function __construct() {
         // Add Token Check
         
         $notif = Notif::getUnread();
@@ -78,6 +77,6 @@ class Data {
     
     $data['questions'] = $questions;
     
-    return $data;
+    $this->data = $data;
 }
 }

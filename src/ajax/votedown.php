@@ -1,7 +1,7 @@
 <?php 
-class VoteDown {
-    public function _index() {
-        new Protect('ajax');
+class Ajax {
+    public $data;
+    public function __construct() {
         $data['success'] = FALSE;
         $data['errors'] = NULL;
 

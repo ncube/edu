@@ -1,7 +1,7 @@
 if (request) {
     setInterval(function() {
         var request = $.ajax({
-            url: '/ajax/messages/',
+            url: '/ajax/user/inbox/get',
             method: 'POST',
             data: { 'username': recipient, 'token': token },
             dataType: 'json'
@@ -39,7 +39,7 @@ $('#send-btn').click(function() {
     msg = $('#msg').val()
     $('#msg').val('')
     var send = $.ajax({
-        url: '/ajax/messages/send/',
+        url: '/ajax/user/inbox/send',
         method: 'POST',
         data: { 'username': recipient, 'token': token, 'msg': msg },
         dataType: 'json'

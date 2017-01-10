@@ -10,13 +10,17 @@ class Route {
         $this->url_array = $GLOBALS['url_array'];
         $this->view = NULL;
         $this->page = '404';
+        $type =  $this->url_array[0] === 'ajax' ? 'ajax' : NULL;
 
-        self::check();
-        // TODO: Redirect Feature
+        self::check($type);
     }
     
-    private function check() {
-        $routes = $GLOBALS['routes'];
+    private function check($type) {
+        if ($type === 'ajax') {
+            $routes = $GLOBALS['routes_ajax'];
+        } else {
+            $routes = $GLOBALS['routes'];
+        }
         $url_array = $this->url_array;
         $url_len = count($this->url_array);
         

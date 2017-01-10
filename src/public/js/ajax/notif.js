@@ -2,7 +2,7 @@ if (token) {
 
     setInterval(function() {
         var request = $.ajax({
-            url: '/ajax/notifications/',
+            url: '/ajax/user/notifications/get?type=notif',
             method: 'POST',
             data: { 'token': token },
             dataType: 'json'
@@ -18,7 +18,7 @@ if (token) {
 
     setInterval(function() {
         var request = $.ajax({
-            url: '/ajax/msgnotifications/',
+            url: '/ajax/user/notifications/get?type=msgs',
             method: 'POST',
             data: { 'token': token },
             dataType: 'json'

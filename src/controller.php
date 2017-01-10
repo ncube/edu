@@ -7,26 +7,15 @@ class Controller {
 
         // TODO: Change ajax architecture
         if($url[0] === 'ajax') {
-            $controller = 'NotFound';
-
-            $method = '_index';
-
-            $controller = $url[0];
-            unset($url[0]);
-            require_once 'controller/'.$controller.'.php';
-
-            $controller = new $controller;
-
-            if (isset($url[1])) {
-                if (method_exists($controller, $url[1])) {
-                    $method = $url[1];
-                    unset($url[1]);
-                }
+            $route = $GLOBALS['routes_ajax'][$name];
+            if ($route['protect']) {
+                new Protect('ajax');
             }
+            include 'ajax/'.$route['file'].'.php';
+            $ajax = new Ajax;
 
-            $url = $url ? array_values($url) : [];
-
-            call_user_func_array([$controller, $method], array($url));
+            header('Content-Type: application/json');
+            echo json_encode($ajax->data);
         } else {
             $page = $url[0];
             unset($url[0]);

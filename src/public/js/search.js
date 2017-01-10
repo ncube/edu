@@ -6,9 +6,9 @@ $(document).ready(function() {
 
     function search(value) {
         var request = $.ajax({
-            url: '/ajax/ajaxsearch/',
+            url: '/ajax/search/',
             method: 'POST',
-            data: { 'username': value },
+            data: { 'username': value, 'token': token },
             dataType: 'json'
         })
 
