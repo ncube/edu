@@ -71,8 +71,10 @@ class Ajax {
         } else if ($vote == 0) {
             $questions[$key]['my_data']['vote_down_class'] = 'vote-down-active';
         }
+        $time = new Time($value['time']);
+        $questions[$key]['time'] = $time->hrf;
     }
-    
+
     $data['questions'] = $questions;
     
     $this->data = $data;

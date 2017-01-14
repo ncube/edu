@@ -47,7 +47,8 @@ class Ajax {
             $msgs = Message::getMessages($post['username']);
             $data['success'] = TRUE;
             foreach($msgs as $key => $value) {
-                $msgs[$key]['time'] = date("d-M h:i A", $value['time']);
+                $time = new Time($value['time']);
+                $msgs[$key]['time'] = $time->hrf;
             }
             $data['msgs'] = $msgs;
             Message::read(User::getPublicUserId($post['username']));

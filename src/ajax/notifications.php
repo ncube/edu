@@ -26,7 +26,8 @@ class Ajax {
         
         foreach($notif as $key => $value) {
             $notif[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
-            $notif[$key]['time'] = date("d M h:i A", $value['time']);
+            $time = new Time($value['time']);
+            $notif[$key]['time'] = $time->hrf;
             $notif[$key]['first_name'] = ucwords($value['first_name']);
             $notif[$key]['last_name'] = ucwords($value['last_name']);
             switch ($value['type']) {
@@ -57,7 +58,8 @@ class Ajax {
             $notifMsg[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
             $notifMsg[$key]['first_name'] = ucwords($value['first_name']);
             $notifMsg[$key]['last_name'] = ucwords($value['last_name']);
-            $notifMsg[$key]['time'] = date("d M h:i A", $value['time']);
+            $time = new Time($value['time']);
+            $notifMsg[$key]['time'] = $time->hrf;
         }
 
         $data['data'] = $notifMsg;

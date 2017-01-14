@@ -2,6 +2,7 @@
 if($GLOBALS['url'] === 'questions/create') {
     echo 'Under Construction';
 } else {
+    $q_time = new Time($data['question']['time']);
 ?>
 <div class="container-hr-fluid">
     <div class="col-lg-6 col-md-12">
@@ -16,7 +17,7 @@ if($GLOBALS['url'] === 'questions/create') {
                         <div class="post-head">
                             <a href="/profile/"><b class="ng-binding"><?=$data['q_user']['first_name']?> <?=$data['q_user']['last_name']?></b></a>
                             <br>
-                            <span class="time ng-binding"><?=$data['question']['time']?></span>
+                            <span class="time ng-binding"><?=$q_time->hrf?></span>
                         </div>
                     </div>
                 </div>
@@ -47,7 +48,8 @@ if($GLOBALS['url'] === 'questions/create') {
     </div>
     <div class="col-lg-6 col-md-12">
         <?php
-            foreach($data['answers'] as $value) {
+            foreach($data['answers'] as $key => $value) {
+                $time = new Time($value['time']);
         ?>
         <div class="card">
             <div style="padding-top: 20px; padding-left: 25px; padding-bottom: 10px; border-bottom: 1px solid lightgray;">
@@ -59,7 +61,7 @@ if($GLOBALS['url'] === 'questions/create') {
                         <div class="post-head">
                             <a href="/profile/<?=$value['user']['username']?>"><b class="ng-binding"><?=$value['user']['first_name']?> <?=$value['user']['last_name']?></b></a>
                             <br>
-                            <span class="time ng-binding"><?=$value['time']?></span>
+                            <span class="time ng-binding"><?=$time->hrf?></span>
                         </div>
                     </div>
                 </div>
