@@ -1,8 +1,7 @@
 <?php
-if (empty($url['args'])) {
+$username = $GLOBALS['url_array'][1];
+if (empty($username)) {
     $username = $data['username'];
-} else {
-    $username = $url['args'][0];
 }
 
 $profile_id = User::getPublicUserId($username);
