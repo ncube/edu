@@ -48,19 +48,6 @@ class Question {
         }
     }
     
-    public function questionDifficulty($id, $level) {
-        $user_id = Session::get('user_id');
-        $count = DB::fetchcount('difficulty', array('user_id' => $user_id, 'q_id' => $id));
-        if (!empty($id)) {
-            if (!$count == 0) {
-                DB::updateIf('difficulty', array('level' => $level), array('user_id' => $user_id, 'q_id' => $id));
-            } else {
-                DB::insert('difficulty', array('user_id' => $user_id, 'q_id' => $id, 'level' => $level, 'time' => time()));
-            }
-            return TRUE;
-        }
-    }
-    
     public function countQuestionViews($id) {
         $count = DB::fetch(array('question' => ['views']), array('q_id' => $id))[0];
         if (!empty($count)) {
@@ -79,21 +66,6 @@ class Question {
     
     public function getVoteUpCount($id) {
         return DB::fetchCount('vote', array('q_id' => $id, 'vote' => 1));
-    }
-    
-    public function getVoteDownCount($id) {
-        return DB::fetchCount('vote', array('q_id' => $id, 'vote' => 0));
-    }
-    
-    public function getDifficultyLevel($id) {
-        $data = PhpConvert::toArray(DB::fetch(array('difficulty' => ['level']), array('q_id' => $id)));
-        if (empty($data)) {
-            return 0;
-        }
-        foreach($data as $key => $value) {
-            $data[$key] = $value['level'];
-        }
-        return array_sum($data) / count($data);
     }
     
     public function getAnswersCount($id) {

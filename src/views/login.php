@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="/public/css/ncube-ui.min.css">
     <link rel="stylesheet" type="text/css" href="/public/css/font-awesome.min.css">
 </head>
-</head>
 <style>
     body {
         background-color: currentcolor;

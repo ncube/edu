@@ -93,6 +93,11 @@ $routes = array(
         'function' => 'register'
     ),
     'login' => array(
+        'title' => 'Login - NCube School',
+        'template' => 'login',
+        'data' => ['login']
+    ),
+    'login-process' => array(
         'function' => 'login'
     ),
     'logout' => array(

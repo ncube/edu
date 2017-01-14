@@ -17,10 +17,10 @@ class Controller {
             header('Content-Type: application/json');
             echo json_encode($ajax->data);
         } else {
-            $page = $url[0];
-            unset($url[0]);
-            $url = $url ? array_values($url) : [];
-            $page = new Core($name, $url, $page);
+            if ($GLOBALS['routes'][$name]['protect']) {
+                new Protect;
+            }
+            $page = new Core($name);
             $page->serve();
         }
     }

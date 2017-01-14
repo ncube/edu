@@ -4,7 +4,8 @@ class Protect {
         switch ($type) {
             case NULL:
                 if (!Session::exists('user_id')) {
-                    Mvc::init('LoginModel', 'login', $args);
+                    $page = new Core('login');
+                    $page->serve();
                     die();
                 }
                 break;

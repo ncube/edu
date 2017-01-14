@@ -1,9 +1,7 @@
 <?php
 if($GLOBALS['url'] === 'questions/create') {
-    // TODO: add wildcard and variable check to route
     echo 'Under Construction';
-    die;
-}
+} else {
 ?>
 <div class="container-hr-fluid">
     <div class="col-lg-6 col-md-12">
@@ -75,3 +73,5 @@ if($GLOBALS['url'] === 'questions/create') {
         <?php } ?>
     </div>
 </div>
+<?php
+}

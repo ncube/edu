@@ -1,12 +1,9 @@
 <?php
 class Core {
     public $page_name;
-    public $url;
     
-    function __construct($page_name, $url, $page_url) {
+    function __construct($page_name) {
         $this->page_name = $page_name;
-        $this->url = $url;
-        $this->page = $page_url;
     }
 
     function loadCss($libs) {
@@ -103,11 +100,14 @@ class Core {
         }
     }
 
-    function loadView($name, $data = NULL, $url = NULL) {
-        if(!empty($url['args'])) {
-            require_once "views/include/$this->page/".$url['args'][explode('-', $name)[1]].'.php'; 
-        } elseif(file_exists("views/include/$this->page/index.php")) {
-            require_once "views/include/$this->page/index.php";
+    function loadView($name, $data = NULL) {
+        $page = $GLOBALS['url_array'][0];
+        $args = $GLOBALS['url_array'];
+        unset($args[0]);
+        if(!empty($args)) {
+            require_once "views/include/$page/".$args[explode('-', $name)[1]].'.php'; 
+        } elseif(file_exists("views/include/$page/index.php")) {
+            require_once "views/include/$page/index.php";
         }
     }
     
@@ -143,7 +143,6 @@ class Core {
 
         $title = $page['title'];
         $url['path'] = Input::get('url');
-        $url['args'] = $this->url;
 
         if (!empty($page['data'])) {
             foreach($page['data'] as $value) {
@@ -151,9 +150,6 @@ class Core {
             }
         }
         $path = 'views/'.$view.'.php';
-        if ($page['protect'] == TRUE) {
-            new Protect;
-        }
         require_once $path;
     }
 }

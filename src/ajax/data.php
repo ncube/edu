@@ -62,8 +62,6 @@ class Ajax {
     
     foreach($questions as $key => $value) {
         $questions[$key]['up_count'] = Question::getVoteUpCount($value['q_id']);
-        $questions[$key]['down_count'] = Question::getVoteDownCount($value['q_id']);
-        $questions[$key]['level'] = Question::getDifficultyLevel($value['q_id']);
         $questions[$key]['user_data'] = User::getPublicUserData($value['user_id'], ['profile_pic', 'first_name', 'last_name'])[0];
         $questions[$key]['answers'] = Question::getAnswersCount($value['q_id']);
         $questions[$key]['pic'] = User::getProfilePic($questions[$key]['user_data']['profile_pic']);

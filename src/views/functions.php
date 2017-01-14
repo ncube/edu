@@ -1,46 +1,5 @@
 <?php
-class Funcs {
-    public function profileRequest() {
-        new Protect;
-
-        echo 'Request Code Goes Here';
-        
-        // $post = Input::post();
-        // $token = Token::check($post['token']);
-        
-        // if (isset($post['type']) && !empty($post['type'] && $token === TRUE)) {
-        //     $request = User::request($post);
-        //     if ($request !== TRUE) {
-        //         echo $request;
-        //     } else {
-        //         echo TRUE;
-        //     }
-        // } else {
-        //     if (!empty($post['username'] && $token === TRUE)) {
-        //         echo '
-        //         <form action="/profile/'.$post['username'].'/request" method="post">
-        //         <input type="hidden" name="token" value="'.Token::generate().'">
-        //         <input type="hidden" name="username" value="'.$post['username'].'">
-        //         <select name="type">
-        //         <option value="C">Classmate</option>
-        //         <option value="T">Teacher</option>
-        //         <option value="S">Student</option>
-        //         <option value="F">Friend</option>
-        //         <option value="P">Parent or Guardian</option>
-        //         </select>
-        //         <input type="submit" value="Send Request">
-        //         </form>
-        //         ';
-        //     } else {
-        //         if (!$token) {
-        //             echo 'Security Token Missing';
-        //         } else {
-        //             Redirect::to('/profile');
-        //         }
-        //     }
-        // }
-    }
-
+class Funcs {    
     public function login() {
             $post = Input::post();
 
@@ -148,7 +107,7 @@ class Funcs {
             }
         } else {
             $data['title'] = 'Register - NCube School';
-            $data['loginAction'] = '/login';
+            $data['loginAction'] = '/login-process';
             $data['token'] = Token::generate();
             $data['errors'] = $errors;
             include 'views/register.php';
