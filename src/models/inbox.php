@@ -1,13 +1,14 @@
 <?php
-$data['active_username'] = $url[0];
+$url = $GLOBALS['url_array'];
+$data['active_username'] = $url[1];
 $data['list_data'] = User::getAcceptedUsersData();
 
 if (!empty($url[0])) {
-    $data = Message::getMessages($url[0]);
-    foreach($data as $key => $value) {
-        $data[$key]['time'] = date("h:i A", $value['time']);
+    $msgs = Message::getMessages($url[1]);
+    foreach($msgs as $key => $value) {
+        $msgs[$key]['time'] = date("h:i A", $value['time']);
     }
-    $data['msgs'] = $data;
+    $data['msgs'] = $msgs;
 }
 
-$data['recipient'] = $url['args'][0];
+$data['recipient'] = $url[1];
