@@ -10,7 +10,7 @@ class App {
         spl_autoload_register(function($class) {
 
             // TODO: Move paths to config file.
-            $paths = ['controller/', 'classes/', 'classes/DB/', 'models/', 'classes/Php/', 'classes/User/'];
+            $paths = ['classes/', 'classes/DB/', 'models/', 'classes/Php/', 'classes/User/'];
 
             foreach($paths as $path) {
                 $file = $path.$class.'.php';
