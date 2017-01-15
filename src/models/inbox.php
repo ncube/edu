@@ -1,7 +1,8 @@
 <?php
 $url = $GLOBALS['url_array'];
 $data['active_username'] = $url[1];
-$data['list_data'] = User::getAcceptedUsersData();
+// TODO: Replace with Following list
+// $data['list_data'] = User::getAcceptedUsersData();
 
 if (!empty($url[0])) {
     $msgs = Message::getMessages($url[1]);
