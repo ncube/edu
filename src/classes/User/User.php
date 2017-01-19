@@ -217,9 +217,14 @@ class User {
 
     public function getProfilePic($name) {
         if (empty($name)) {
-            return '/public/images/profile-pic.png';
+            $gender = self::getPublicUserData(Session::get('user_id'))[0]['gender'];
+            if($gender == 'F') {
+                return 'default_female';
+            } else {
+                return 'default_male';
+            }
         } else {
-            return '/data/images/profile/'.$name.'.jpg';
+            return $name;
         }
     }
 

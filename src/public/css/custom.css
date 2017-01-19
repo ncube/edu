@@ -363,7 +363,7 @@ a:hover {
     width: 200px;
     height: 200px;
     overflow: hidden;
-    background: black;
+    /*background: black;*/
 }
 
 .img-upload,

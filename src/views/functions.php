@@ -113,4 +113,44 @@ class Funcs {
             include 'views/register.php';
         }
     }
+
+    public function changepic() {
+        $input = Input::get();
+        $token = Token::generate();
+        if($input['crop']) {
+            $src = Session::get('ppic_path');
+            $name = Session::get('ppic_name');
+            
+            $image = new Image($src);
+            $image->crop($input['x'], $input['y'], $input['width'], $input['height']);
+
+            $image->scale(200, 200);
+            $image->save('data/images/profile/200/'.$name);
+
+            $image->scale(35, 35);
+            $image->save('data/images/profile/35/'.$name);
+
+            $image->destroy();
+
+            echo $image->saved ? 'Uploaded' : 'Can\'t upload please try again later';
+        } elseif(!empty(Input::files())) {
+            $name = Input::files()['uploaded_files']['name'];
+            $src = new Upload;
+            $src->profilePic(Input::files());
+            $path = $src->path;
+            $name = $src->name;
+            Session::create('ppic_path', $path);
+            Session::create('ppic_name', $name);
+            include 'crop.php';
+        } else {
+            echo '
+                <form enctype="multipart/form-data" action="" method="post">
+                    <input type="hidden" name="token" value="'.$token.'" />
+                    <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+                    <input name="uploaded_file" type="file">
+                    <input type="submit" class="btn btn-primary" value="Upload" />
+                </form>
+            ';
+        }
+    }
 }

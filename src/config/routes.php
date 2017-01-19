@@ -40,6 +40,10 @@ $routes = array(
         ),
         'data' => ['common', 'profile']
     ),
+    'profile/changepic' => array(
+        'function' => 'changepic',
+        'data' => ['common']
+    ),
     'profile/*' => array(
         'parent' => TRUE
     ),

@@ -4,11 +4,11 @@
             <?php
                 if (User::getPublicUserId($data['profile_data']['username']) === Session::get('user_id')) {
                     echo '
-                    <a href="#">
-                        <div class="img-upload"><img src="'.$data['profile_data']['profile_pic'].'" alt="'.$data['profile_data']['username'].'"/><span><i class="fa fa-upload fa-2x"></i><br>Change Picture</span></div>
+                    <a href="/profile/changepic">
+                        <div class="img-upload"><img src="/data/images/profile/200/'.$data['profile_data']['profile_pic'].'.jpg" alt="'.$data['profile_data']['username'].'"/><span><i class="fa fa-upload fa-2x"></i><br>Change Picture</span></div>
                     </a>';
                 } else {
-                    echo '<img src="'.$data['profile_data']['profile_pic'].'" alt="@'.$data['profile_data']['username'].'" class="img-thumb-lg">';
+                    echo '<img src="/data/images/profile/200/'.$data['profile_data']['profile_pic'].'.jpg" alt="@'.$data['profile_data']['username'].'" class="img-thumb-lg">';
                 }
             ?>
         </div>

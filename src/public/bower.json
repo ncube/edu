@@ -1,0 +1,21 @@
+{
+  "name": "ncube-libs",
+  "homepage": "https://github.com/ncube/edu",
+  "authors": [
+    "Nutan Nara <nutan@ncubeschool.org>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "CC-BY-SA-4.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "cropperjs": "0.8.1"
+  }
+}

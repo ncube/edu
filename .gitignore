@@ -22,6 +22,7 @@ src/*.komodoproject
 # Folders to ignore
 src/logs
 src/data
+src/public/bower_components
 
 # Mysql Workbench bak file
 db/*.bak
