@@ -1,17 +1,17 @@
 <?php
 $config['css'] = array(
     'common' => ['ncube-ui', 'font-awesome', 'custom'],
-    'ncube-ui' => 'ncube-ui.min.css',
-    'font-awesome' => 'font-awesome.min.css',
-    'custom' => 'custom.css',
+    'ncube-ui' => 'css/ncube-ui.min.css',
+    'font-awesome' => 'bower_components/font-awesome/css/font-awesome.min.css',
+    'custom' => 'css/custom.css',
 );
 
 $config['js'] = array(
     'common' => ['jquery', 'ng-search', 'ng-notif', 'ng-notif-ajax'],
-    'jquery' => 'jquery-2.2.1.min.js',
-    'ng-search' => 'search.js',
-    'ng-notif' => 'notif.js',
-    'ng-notif-ajax' => 'ajax/notif.js',
-    'inbox-ajax' => 'ajax/messages.js',
-    'profile-ajax' => 'ajax/profile.js',
+    'jquery' => 'bower_components/jquery/dist/jquery.min.js',
+    'ng-search' => 'js/search.js',
+    'ng-notif' => 'js/notif.js',
+    'ng-notif-ajax' => 'js/ajax/notif.js',
+    'inbox-ajax' => 'js/ajax/messages.js',
+    'profile-ajax' => 'js/ajax/profile.js',
 );

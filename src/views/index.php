@@ -3,7 +3,7 @@
 
 <head>
   <title><?=$title?></title>
-  <script src="/public/js/angular/angular.min.js"></script>
+  <script src="/public/bower_components/angular/angular.min.js"></script>
   <script src="/public/views/app.js"></script>
   <script src="/public/views/controllers/controllers.js"></script>
   <?=Core::loadCss(['common'])?>

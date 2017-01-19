@@ -15,10 +15,10 @@ class Core {
         $css = $GLOBALS['config']['css'];
         foreach ($libs as $value) {
             if(gettype($css[$value]) === 'string') {
-                $code .= '<link rel="stylesheet" type="text/css" href="/public/css/'.$css[$value].'">';
+                $code .= '<link rel="stylesheet" type="text/css" href="/public/'.$css[$value].'">';
             } else {
                 foreach ($css[$value] as $value2) {
-                    $code .= '<link rel="stylesheet" type="text/css" href="/public/css/'.$css[$value2].'">';
+                    $code .= '<link rel="stylesheet" type="text/css" href="/public/'.$css[$value2].'">';
                 }
             }
         }
@@ -33,16 +33,16 @@ class Core {
         foreach ($libs as $value) {
             if(gettype($js[$value]) === 'string') {
                 if (substr($value, 0, 3) === 'ng-') {
-                    $code .= '<script type="text/javascript" ng-src="/public/js/'.$js[$value].'"></script>';
+                    $code .= '<script type="text/javascript" ng-src="/public/'.$js[$value].'"></script>';
                 } else {
-                    $code .= '<script type="text/javascript" src="/public/js/'.$js[$value].'"></script>';
+                    $code .= '<script type="text/javascript" src="/public/'.$js[$value].'"></script>';
                 }
             } else {
                 foreach ($js[$value] as $value2) {
                     if (substr($value2, 0, 3) === 'ng-') {
-                        $code .= '<script type="text/javascript" ng-src="/public/js/'.$js[$value2].'"></script>';
+                        $code .= '<script type="text/javascript" ng-src="/public/'.$js[$value2].'"></script>';
                     } else {
-                        $code .= '<script type="text/javascript" src="/public/js/'.$js[$value2].'"></script>';
+                        $code .= '<script type="text/javascript" src="/public/'.$js[$value2].'"></script>';
                     }
                 }
             }
@@ -58,16 +58,16 @@ class Core {
         foreach ($libs as $value) {
             if(gettype($js[$value]) === 'string') {
                 if (substr($value, 0, 3) === 'ng-') {
-                    $code .= '<script type="text/javascript" ng-src="/public/js/'.$js[$value].'"></script>';
+                    $code .= '<script type="text/javascript" ng-src="/public/'.$js[$value].'"></script>';
                 } else {
-                    $code .= '<script type="text/javascript" src="/public/js/'.$js[$value].'"></script>';
+                    $code .= '<script type="text/javascript" src="/public/'.$js[$value].'"></script>';
                 }
             } else {
                 foreach ($js[$value] as $value2) {
                     if (substr($value2, 0, 3) === 'ng-') {
-                        $code .= '<script type="text/javascript" ng-src="/public/js/'.$js[$value2].'"></script>';
+                        $code .= '<script type="text/javascript" ng-src="/public/'.$js[$value2].'"></script>';
                     } else {
-                        $code .= '<script type="text/javascript" src="/public/js/'.$js[$value2].'"></script>';
+                        $code .= '<script type="text/javascript" src="/public/'.$js[$value2].'"></script>';
                     }
                 }
             }

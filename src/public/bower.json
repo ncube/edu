@@ -1,21 +1,24 @@
 {
-  "name": "ncube-libs",
-  "homepage": "https://github.com/ncube/edu",
-  "authors": [
-    "Nutan Nara <nutan@ncubeschool.org>"
-  ],
-  "description": "",
-  "main": "",
-  "license": "CC-BY-SA-4.0",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "cropperjs": "0.8.1"
-  }
+    "name": "ncube-libs",
+    "homepage": "https://github.com/ncube/edu",
+    "authors": [
+        "Nutan Nara <nutan@ncubeschool.org>"
+    ],
+    "description": "",
+    "main": "",
+    "license": "CC-BY-SA-4.0",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "1.5.8",
+        "jquery": "^3.1.1",
+        "font-awesome": "^4.7.0",
+        "cropperjs": "0.8.1"
+    }
 }
