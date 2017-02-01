@@ -9,7 +9,9 @@ class Ajax {
         if (!empty($post['username'] && $token === TRUE)) {
             $t = Search::publicUsername($post['username']);
             foreach($t as $key => $value) {
-                $t[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
+                $user_data = new User($value['user_id']);
+                $user_data->getPublicData();
+                $t[$key]['profile_pic'] = $user_data->getProfilePic();
             }
             $data = $t;
         } else {

@@ -1,20 +1,24 @@
 <?php 
 class Group {
     public function isMember($id) {
-        return (DB::fetchCount('group_user', array('user_id' => Session::get('user_id'), 'group_id' => $id, 'status' => 1)) === 1) ? TRUE : FALSE;
+        $db = DB::connect();
+        return ($db->fetchCount('group_user', array('user_id' => Session::get('user_id'), 'group_id' => $id, 'status' => 1)) === 1) ? TRUE : FALSE;
     }
 
     public function isAdmin($id) {
-        return (DB::fetchCount('group_user', array('user_id' => Session::get('user_id'), 'group_id' => $id, 'type' => 'A', 'status' => 1)) === 1) ? TRUE : FALSE;
+        $db = DB::connect();
+        return ($db->fetchCount('group_user', array('user_id' => Session::get('user_id'), 'group_id' => $id, 'type' => 'A', 'status' => 1)) === 1) ? TRUE : FALSE;
     }
 
     public function checkRequest($id) {
-        return (DB::fetchCount('group_user', array('user_id' => Session::get('user_id'), 'group_id' => $id)) === 1) ? TRUE : FALSE;
+        $db = DB::connect();
+        return ($db->fetchCount('group_user', array('user_id' => Session::get('user_id'), 'group_id' => $id)) === 1) ? TRUE : FALSE;
     }
 
     public function joinAsMember($id) {
         if (!self::checkRequest($id)) {
-            DB::insert('group_user', array('user_id' => Session::get('user_id'), 'group_id' => $id, 'type' => 'M', 'time' => time()));
+            $db = DB::connect();
+            $db->insert('group_user', array('user_id' => Session::get('user_id'), 'group_id' => $id, 'type' => 'M', 'time' => time()));
             Notif::raiseNotif($id, 'GR');
             return TRUE;
         }
@@ -22,7 +26,7 @@ class Group {
     }
 
     public function getRequestsIds($id) {
-        return PhpConvert::toArray(DB::fetch(array('group_user' => ['user_id', 'time']), array('group_id' => $id, 'status' => 0)));
+        return PhpConvert::toArray($db->fetch(array('group_user' => ['user_id', 'time']), array('group_id' => $id, 'status' => 0)));
     }
 
     public function getRequests($id) {
@@ -35,7 +39,7 @@ class Group {
     }
 
     public function getMembersIds($id) {
-        return PhpConvert::toArray(DB::fetch('group_user', array('group_id' => $id, 'status' => 1)));
+        return PhpConvert::toArray($db->fetch('group_user', array('group_id' => $id, 'status' => 1)));
     }
 
     public function getMembers($id) {
@@ -48,13 +52,14 @@ class Group {
     }
 
     public function getMembersCount($id) {
-        return DB::fetchCount('group_user', array('group_id' => $id, 'status' => 1));
+        return $db->fetchCount('group_user', array('group_id' => $id, 'status' => 1));
     }
 
     public function acceptUser($id) {
         $data['user_id'] = User::getPublicUserId(Input::post('username'));
         $data['group_id'] = $id;
-        DB::updateIf('group_user', array('status' => 1), $data);
+        $db = DB::connect();
+        $db->updateIf('group_user', array('status' => 1), $data);
         return TRUE;
     }
 
@@ -62,12 +67,13 @@ class Group {
         $data['user_id'] = User::getPublicUserId(Input::post('username'));
         $data['group_id'] = $id;
         $data['status'] = 0;
-        DB::deleteIf('group_user', $data);
+        $db = DB::connect();
+        $db->deleteIf('group_user', $data);
         return TRUE;
     }
 
     public function publicGroupExists($id) {
-        $count = DB::fetchCount('group', array('group_id' => $id, 'public' => 1), 'group_id');
+        $count = $db->fetchCount('group', array('group_id' => $id, 'public' => 1), 'group_id');
         if ($count === 1) {
             return TRUE;
         } else {
@@ -76,11 +82,11 @@ class Group {
     }
 
     public function getGroupsIds() {
-        return PhpConvert::toArray(DB::fetch('group_user', array('user_id' => Session::get('user_id'), 'status' => 1)));
+        return PhpConvert::toArray($db->fetch('group_user', array('user_id' => Session::get('user_id'), 'status' => 1)));
     }
 
     public function getGroupData($id) {
-        return PhpConvert::toArray(DB::fetch(array('group' => ['group_id', 'group_name', 'desp', 'group_pic', 'time']), array('group_id' => $id)));
+        return PhpConvert::toArray($db->fetch(array('group' => ['group_id', 'group_name', 'desp', 'group_pic', 'time']), array('group_id' => $id)));
     }
 
     public function getGroupsList() {

@@ -1,16 +1,23 @@
 <?php 
 class User {
-    public $userData = NULL;
+    public $user_data;
+    public $public_data;
+    public $user_id;
 
-    public function login($username, $password) {
+    public function __construct($id = NULL) {
+        $this->user_id = ($id === NULL) ? Session::get('user_id') : $id;
+        $this->public_data = NULL;
+    }
 
-        $results = DB::fetch(array('user' => ['user_id', 'password']), array('username' => $username));
+    public static function login($username, $password) {
+        $db = DB::connect();
+        $results = $db->fetch(array('user' => ['user_id', 'password']), array('username' => $username));
         $results = $results[0];
 
         if (count($results) === 1) {
             if (Hash::verify($password, $results->password)) {
                 Session::login($results->user_id);
-                DB::updateIf('user', array('last_login' => time()), array('user_id' => Session::get('user_id')));
+                $db->updateIf('user', array('last_login' => time()), array('user_id' => Session::get('user_id')));
                 Redirect::ref();
                 return TRUE;
             } else {
@@ -21,18 +28,19 @@ class User {
         }
     }
 
-    public function addUser($data) {
-        $safe_data['user_id'] = md5(uniqid(mt_rand, TRUE));
+    public static function addUser($data) {
+        $safe_data['user_id'] = md5(uniqid(mt_rand(), TRUE));
         $safe_data['password'] = Hash::generate($data['password']);
         $safe_data['username'] = $data['username'];
         $safe_data['first_name'] = $data['first_name'];
         $safe_data['last_name'] = $data['last_name'];
         $safe_data['email'] = $data['email'];
 
-        DB::insert('user', $safe_data);
+        $db = DB::connect();
+        $db->insert('user', $safe_data);
     }
 
-    public function follow($username) {
+    public static function follow($username) {
         $user_id = self::getPublicUserId($username);
 
         if (empty($user_id)) {
@@ -41,11 +49,11 @@ class User {
             if ($user_id === Session::get('user_id')) {
                 return 'Sorry you cannot follow your own profile';
             } else {
-
-                $follow_id = DB::fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
+                $db = DB::connect();
+                $follow_id = $db->fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
 
                 if (empty($follow_id)) {
-                    DB::insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id, 'time' => time()));
+                    $dbinsert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id, 'time' => time()));
                     Notif::raiseNotif($user_id, 'F');
                     return TRUE;
                 } else {
@@ -55,16 +63,18 @@ class User {
         }
     }
 
-    public function unFollow($username) {
+    public static function unFollow($username) {
         $user_id = self::getPublicUserId($username);
-        DB::deleteIf('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
+        $db = DB::connect();
+        $db->deleteIf('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
         return TRUE;
     }
 
-    public function checkFollow($username) {
+    public static function checkFollow($username) {
         $user_id = self::getPublicUserId($username);
 
-        $follow_id = DB::fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
+        $db = DB::connect();
+        $follow_id = $db->fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
         if (!empty($follow_id)) {
             return TRUE;
         } else {
@@ -72,66 +82,20 @@ class User {
         }
     }
 
-    public function accept($post) {
-        $user_id = User::getPublicUserId($post['username']);
-        DB::updateIf('request', array('status' => 1), array('user_id' => $user_id));
-        return 'Accepted';
-    }
-
-    public function request($post) {
-        $user_id = User::getPublicUserId($post['username']);
-
-        if ($user_id === Session::get('user_id')) {
-            return 'Sorry you cannot Request to your own profile';
-        } else {
-
-            $follow_id = DB::fetch(array('request' => 'request_id'), array('user_id' => Session::get('user_id'), 'other_user_id' => $user_id));
-
-            if (empty($follow_id)) {
-                DB::insert('request', array('user_id' => Session::get('user_id'), 'other_user_id' => $user_id, 'type' => $post['type'], 'time' => time()));
-                Notif::raiseNotif($user_id, 'R'.$post['type']);
-                return TRUE;
-            } else {
-                return 'Request already sent';
-            }
-        }
-    }
-
-    public function getRequests($status = false) {
-        if ($status === TRUE) {
-            $data = DB::fetch(array('request' => ['user_id', 'type', 'time']), array('other_user_id' => Session::get('user_id'), 'status' => 1));
-            return PhpConvert::toArray($data);
-        } elseif($status === FALSE) {
-            $data = DB::fetch(array('request' => ['user_id', 'type', 'time']), array('other_user_id' => Session::get('user_id'), 'status' => 0));
-            return PhpConvert::toArray($data);
-        } else {
-            return FALSE;
-        }
-    }
-
-    public function getRequested($status = true) {
-        if ($status === TRUE) {
-            $data = DB::fetch(array('request' => ['other_user_id', 'type', 'time']), array('user_id' => Session::get('user_id'), 'status' => 1));
-            return PhpConvert::toArray($data);
-        } elseif($status === FALSE) {
-            $data = DB::fetch(array('request' => ['other_user_id', 'type', 'time']), array('user_id' => Session::get('user_id'), 'status' => 0));
-            return PhpConvert::toArray($data);
-        } else {
-            return FALSE;
-        }
-    }
-
-    public function getFollowingIds() {
-        $data = DB::fetch(array('follow' => ['following_id', 'time']), array('user_id' => Session::get('user_id')));
+    public static function getFollowingIds() {
+        $db = DB::connect();
+        $data = $db->fetch(array('follow' => ['following_id', 'time']), array('user_id' => Session::get('user_id')));
         return PhpConvert::toArray($data);
     }
 
-    public function followingCount() {
-        return DB::fetchCount('follow', array('user_id' => Session::get('user_id')));
+    public static function followingCount() {
+        $db = DB::connect();
+        return $db->fetchCount('follow', array('user_id' => Session::get('user_id')));
     }
 
-    public function followerCount() {
-        return DB::fetchCount('follow', array('following_id' => Session::get('user_id')));
+    public static function followerCount() {
+        $db = DB::connect();
+        return $db->fetchCount('follow', array('following_id' => Session::get('user_id')));
     }
 
     public function getUserData($fields = NULL) {
@@ -142,69 +106,78 @@ class User {
             $table = array('user' => $fields);
         }
 
-        $this->userData = DB::fetch($table, array('user_id' => Session::get('user_id')));
+        $db = DB::connect();
+        $this->userData = $db->fetch($table, array('user_id' => $this->user_id));
 
-        // For Count
-        $count = new ArrayObject($this->userData);
-        $count = $count->count();
+        // // For Count
+        // $count = new ArrayObject($this->userData);
+        // $count = $count->count();
 
-        $this->userData = PhpConvert::toArray($this->userData);
-        return $this->userData;
+        $this->user_data = PhpConvert::toArray($this->userData);
     }
 
-    public function getPublicUserData($id, $fields = NULL) {
+    public function getPublicData($fields = NULL) {
+
+        $id = $this->user_id;
 
         if (empty($id)) {
-            return FALSE;
-        }
+            $this->public_data = FALSE;
+        } else {
 
-        $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob', 'country', 'profile_pic'];
+            $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob', 'country', 'profile_pic'];
 
-        // TODO: Replace with restrict function.
+            // TODO: Replace with restrict function.
 
-        if ($fields !== NULL) {
-            foreach($fields as $key => $field) {
-                foreach($allowed as $value) {
-                    if ($field === $value) {
-                        $safe[] = $field;
+            if ($fields !== NULL) {
+                foreach($fields as $key => $field) {
+                    foreach($allowed as $value) {
+                        if ($field === $value) {
+                            $safe[] = $field;
+                        }
                     }
                 }
+                if (empty($safe)) {
+                    return FALSE;
+                } else {
+                    $fields = $safe;
+                }
             }
-            if (empty($safe)) {
-                return FALSE;
+
+            if ($fields === NULL) {
+                $table = array('user' => $allowed);
             } else {
-                $fields = $safe;
+                $table = array('user' => $fields);
             }
+
+            $db = DB::connect();
+            $this->public_data = $db->fetch($table, array('user_id' => $id));
+
+            // For Count
+            $count = new ArrayObject($this->public_data);
+            $count = $count->count();
+
+            $this->public_data = PhpConvert::toArray($this->public_data)[0];
+
+            // Profile Pic
+            $this->public_data['profile_pic'] = self::getProfilePic();
         }
-
-        if ($fields === NULL) {
-            $table = array('user' => $allowed);
-        } else {
-            $table = array('user' => $fields);
-        }
-
-        $this->userData = DB::fetch($table, array('user_id' => $id));
-
-        // For Count
-        $count = new ArrayObject($this->userData);
-        $count = $count->count();
-
-        return PhpConvert::toArray($this->userData);;
     }
 
-    public function getPublicUserId($username) {
-        $this->userData = DB::fetch(array('user' => 'user_id'), array('public' => '1', 'username' => $username));
-        $this->userData = $this->userData[0];
-        if (!empty($this->userData)) {
-            return $this->userData->user_id;
+    public static function getPublicUserId($username) {
+        $db = DB::connect();
+        $userData = $db->fetch(array('user' => 'user_id'), array('public' => '1', 'username' => $username));
+        $userData = $userData[0];
+        if (!empty($userData)) {
+            return $userData->user_id;
         }
         return FALSE;
     }
 
-    public function getAcceptedUsersData() {
+    public static function getAcceptedUsersData() {
         $id = Session::get('user_id');
-        $sent = DB::fetch(array('request' => 'other_user_id'), array('user_id' => $id, 'status' => 1));
-        $received = DB::fetch(array('request' => 'user_id'), array('other_user_id' => $id, 'status' => 1));
+        $db = DB::connect();
+        $sent = $db->fetch(array('request' => 'other_user_id'), array('user_id' => $id, 'status' => 1));
+        $received = $db->fetch(array('request' => 'user_id'), array('other_user_id' => $id, 'status' => 1));
 
         $ids = array_merge($sent, $received);
         foreach($ids as $value) {
@@ -215,9 +188,10 @@ class User {
         return PhpConvert::toArray($data);
     }
 
-    public function getProfilePic($name) {
+    public function getProfilePic() {
+        $name = $this->public_data['profile_pic'];
         if (empty($name)) {
-            $gender = self::getPublicUserData(Session::get('user_id'))[0]['gender'];
+            $gender = $this->public_data['gender'];
             if($gender == 'F') {
                 return 'default_female';
             } else {
@@ -228,21 +202,23 @@ class User {
         }
     }
 
-    public function comment($id, $content) {
+    public static function comment($id, $content) {
         $user_id = Session::get('user_id');
-        DB::insert('comment', array('user_id' => $user_id, 'post_id' => $id, 'content' => $content, 'time' => time()));
+        $db = DB::connect();
+        $db->insert('comment', array('user_id' => $user_id, 'post_id' => $id, 'content' => $content, 'time' => time()));
         return TRUE;
     }
     
-    public function likePost($post_id) {
+    public static function likePost($post_id) {
         $user = Session::get('user_id');
         if (!empty($user)) {
-            DB::insert('post_likes', array('user_id' => $user, 'post_id' => $post_id, 'time' => time()));
+            $db = DB::connect();
+            $db->insert('post_likes', array('user_id' => $user, 'post_id' => $post_id, 'time' => time()));
         }
     }
 
-    public function getLikesCount() {
-        $data = DB::fetchcount('post_likes', array('user_id' => Session::get('user_id')));
-        return $data;
+    public static function getLikesCount() {
+        $db = DB::connect();
+        return $db->fetchcount('post_likes', array('user_id' => Session::get('user_id')));
     }
 }

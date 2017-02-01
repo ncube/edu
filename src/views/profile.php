@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-5">
             <?php
-                if (User::getPublicUserId($data['profile_data']['username']) === Session::get('user_id')) {
+                if ($data['profile_data']['username'] === $data['username']) {
                     echo '
                     <a href="/profile/changepic">
                         <div class="img-upload"><img src="/data/images/profile/200/'.$data['profile_data']['profile_pic'].'.jpg" alt="'.$data['profile_data']['username'].'"/><span><i class="fa fa-upload fa-2x"></i><br>Change Picture</span></div>
@@ -25,7 +25,7 @@
                 <a style="color: black">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam varius tellus vulputate sapien pellentesque scelerisque. Interdum et malesuada fames ac ante ipsum primis in faucibus. .</a>
             </div>
             <?php
-                if (User::getPublicUserId($data['profile_data']['username']) !== Session::get('user_id')) {
+                if ($data['profile_data']['username'] !== $data['username']) {
                     echo '<div class="row">';
                     echo '<div class="col-md-4" id="follow-btn">';
                     if ($data['profile_data']['follow'] === TRUE) {

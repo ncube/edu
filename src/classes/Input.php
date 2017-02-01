@@ -15,7 +15,9 @@ class Input {
     }
 
     public static function get($item = NULL) {
-        $safe_data = Sanitize::nonDatabase();
+        $sanitize = new Sanitize;
+        $sanitize->nonDatabase();
+        $safe_data = $sanitize->safe_data;
 
         if ($item === NULL) {
             return $safe_data['get'];
@@ -26,7 +28,9 @@ class Input {
     }
 
     public static function post($item = NULL) {
-        $safe_data = Sanitize::nonDatabase();
+        $sanitize = new Sanitize;
+        $sanitize->nonDatabase();
+        $safe_data = $sanitize->safe_data;
 
         if ($item === NULL) {
             return $safe_data['post'];
@@ -37,7 +41,9 @@ class Input {
     }
 
     public static function files($item = NULL) {
-        $safe_data = Sanitize::nonDatabase();
+        $sanitize = new Sanitize;
+        $sanitize->nonDatabase();
+        $safe_data = $sanitize->safe_data;
 
         if ($item === NULL) {
             return $safe_data['files'];

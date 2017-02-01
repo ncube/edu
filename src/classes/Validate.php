@@ -1,43 +1,50 @@
 <?php
 class Validate {
-    private $_errors = array();
+    private $data = NULL;
+    public $errors = FALSE;
 
-    public function check($source, $items = array()) {
+    public function __construct($data) {
+        $this->data = $data;
+    }
+
+    public function check($items = array()) {
+        $source = $this->data;
         foreach($items as $item => $rules) {
             foreach($rules as $rule => $rule_value) {
 
                 $value = trim($source[$item]);
 
                 if ($rule === 'required' && empty($value)) {
-                    $this->_errors[] = "{$item} is required";
+                    $this->errors[] = "{$item} is required";
                 } else if (!empty($value)) {
                     switch ($rule) {
                         case 'min':
                             if (strlen($value) < $rule_value) {
-                                $this->_errors[] = "{$item} must be a minimum of {$rule_value} characters.";
+                                $this->errors[] = "{$item} must be a minimum of {$rule_value} characters.";
                             }
                             break;
 
                         case 'max':
                             if (strlen($value) > $rule_value) {
-                                $this->_errors[] = "{$item} must be a maximum of {$rule_value} characters.";
+                                $this->errors[] = "{$item} must be a maximum of {$rule_value} characters.";
                             }
                             break;
 
                         case 'matches':
                             if ($value != $source[$rule_value]) {
-                                $this->_errors[] = "{$rule_value} must match {$item}";
+                                $this->errors[] = "{$rule_value} must match {$item}";
                             }
                             break;
                             // TODO: Allow only unique username
                             // case 'unique':
                             //     // $check = $this->_db->get($rule_value, array($item,'=',$value));
                             //     if($check->count()) {
-                            //         $this->_errors[] = "{$item} already exists.";
+                            //         $this->errors[] = "{$item} already exists.";
                             //     }
                             //     break;
 
                         default:
+                        $this->errors = NULL;
                             break;
                     }
                 }
@@ -51,9 +58,9 @@ class Validate {
         return $this->_errors;
     }
 
-    public function register($post) {
+    public function register() {
         return self::check(
-            $post, array(
+            array(
                 'username' => array(
                             'required' => TRUE,
                             'min' => 3,
@@ -77,9 +84,9 @@ class Validate {
         );
     }
     
-    public function login($post) {
+    public function login() {
         return self::check(
-            $post, array(
+            array(
                 'username' => array(
                             'required' => TRUE),
                 'password' => array(

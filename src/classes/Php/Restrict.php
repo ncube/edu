@@ -1,6 +1,6 @@
 <?php 
 class Restrict {
-    public function data($data, $allowed, $type = 'key') {
+    public static function data($data, $allowed, $type = 'key') {
         foreach($allowed as $value) {
             if (in_array($value, array_keys($data))) {
                 $safe_data[$value] = $data[$value];

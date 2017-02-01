@@ -18,18 +18,20 @@ class Ajax {
     }
 
     public function notif() {
-        $notif = Notif::getUnread();
+        $notif = new Notif;
+        $notif->getUnread();
         
-        usort($notif, function($b, $a) {
+        $unread = $notif->unread;
+        usort($unread, function($b, $a) {
             return $a['time'] - $b['time'];
         });
         
-        foreach($notif as $key => $value) {
-            $notif[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
+        foreach($unread as $key => $value) {
+            $unread[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
             $time = new Time($value['time']);
-            $notif[$key]['time'] = $time->hrf;
-            $notif[$key]['first_name'] = ucwords($value['first_name']);
-            $notif[$key]['last_name'] = ucwords($value['last_name']);
+            $unread[$key]['time'] = $time->hrf;
+            $unread[$key]['first_name'] = ucwords($value['first_name']);
+            $unread[$key]['last_name'] = ucwords($value['last_name']);
             switch ($value['type']) {
                 case 'F':
                     $msg = 'is following you';
@@ -41,18 +43,20 @@ class Ajax {
                     $link = '#';
                     break;
             }
-            $notif[$key]['msg'] = $msg;
-            $notif[$key]['link'] = $link;
+            $unread[$key]['msg'] = $msg;
+            $unread[$key]['link'] = $link;
         }
 
-        $data['data'] = $notif;
-        $data['count'] = Notif::getUnreadCount();
+        $data['data'] = $unread;
+        $data['count'] = $notif->unread_count;
 
         $this->data = $data;
     }
 
     public function msgs() {
-        $notifMsg = Notif::getUnreadMsg();
+        $notif = new Notif;
+        $notif->getUnreadMsgs();
+        $notifMsg = $notif->unread_msgs;
 
         foreach($notifMsg as $key => $value) {
             $notifMsg[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
@@ -63,7 +67,7 @@ class Ajax {
         }
 
         $data['data'] = $notifMsg;
-        $data['count'] = Notif::getUnreadMsgCount();
+        $data['count'] = $notif->unread_msgs_count;
 
         usort($notifMsg, function($b, $a) {
             return $a['time'] - $b['time'];

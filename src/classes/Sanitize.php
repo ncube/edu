@@ -2,19 +2,26 @@
 // Warning: Input array keys are not sanitized
 // TODO: strip get and post before sanitize
 class Sanitize {
-    public function nonDatabase() {
 
-        // TODO: Clean and sanitize $_FILES
-        $safe_data['files'] = $_FILES;
+    private $raw_data;
+    public $safe_data;
 
+    public function __construct($data = NULL) {
+        $raw_data['files'] = $_FILES;
         // $safe_data['cookie'] = $_COOKIE;
-        $safe_data['get'] = $_GET;
-        $safe_data['post'] = $_POST;
+        $raw_data['get'] = $_GET;
+        $raw_data['post'] = $_POST;
 
-        array_walk_recursive($safe_data, function(&$value) {
+        $this->raw_data = ($data === NULL) ? $raw_data : $data;
+        $this->safe_data = NULL;
+    }
+
+    public function nonDatabase() {
+        $raw_data = $this->raw_data;
+        array_walk_recursive($raw_data, function(&$value) {
             $value = filter_var($value, FILTER_SANITIZE_MAGIC_QUOTES);
             $value = htmlspecialchars($value);
         });
-        return $safe_data;
+        $this->safe_data = $raw_data;
     }
 }

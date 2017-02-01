@@ -33,7 +33,8 @@ class Upload {
                 $newname = $path.$filename.'.'.$ext;
                 $this->name = $filename.'.'.$ext;
                 $this->path = $newname;
-                DB::updateIf('user', array('profile_pic' => $filename), array('user_id' => Session::get('user_id')));
+                $db = DB::connect();
+                $db->updateIf('user', array('profile_pic' => $filename), array('user_id' => Session::get('user_id')));
                 if (!file_exists($newname)) {
                     if ((move_uploaded_file($files['uploaded_file']['tmp_name'], $newname))) {
                         $this->uploaded = TRUE;

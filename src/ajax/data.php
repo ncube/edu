@@ -4,17 +4,19 @@ class Ajax {
     public function __construct() {
         // Add Token Check
         
-        $notif = Notif::getUnread();
+        $notif = new Notif;
+        $notif->getUnread();
         
-        usort($notif, function($b, $a) {
+        $unread = $notif->unread;
+        usort($unread, function($b, $a) {
             return $a['time'] - $b['time'];
         });
         
-        foreach($notif as $key => $value) {
-            $notif[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
-            $notif[$key]['time'] = date("d M h:i A", $value['time']);
-            $notif[$key]['first_name'] = ucwords($value['first_name']);
-            $notif[$key]['last_name'] = ucwords($value['last_name']);
+        foreach($unread as $key => $value) {
+            $unread[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
+            $unread[$key]['time'] = date("d M h:i A", $value['time']);
+            $unread[$key]['first_name'] = ucwords($value['first_name']);
+            $unread[$key]['last_name'] = ucwords($value['last_name']);
             switch ($value['type']) {
                 case 'F':
                     $msg = 'is following you';
@@ -26,16 +28,16 @@ class Ajax {
                     $link = '#';
                     break;
         }
-        $notif[$key]['msg'] = $msg;
-        $notif[$key]['link'] = $link;
+        $unread[$key]['msg'] = $msg;
+        $unread[$key]['link'] = $link;
     }
     
-    $data['notif'] = $notif;
-    $data['notif_count'] = Notif::getUnreadCount();
+    $data['notif'] = $unread;
+    $data['notif_count'] = $notif->unread_count;
     
     // Messages
-    
-    $notifMsg = Notif::getUnreadMsg();
+    $notif->getUnreadMsgs();
+    $notifMsg = $notif->unread_msgs;
     
     foreach($notifMsg as $key => $value) {
         $notifMsg[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
@@ -49,16 +51,20 @@ class Ajax {
     });
     
     $data['notif_msg'] = $notifMsg;
-    $data['notif_msg_count'] = Notif::getUnreadMsgCount();
+    $data['notif_msg_count'] = $notif->unread_msgs_count;
     
     // User Data
+    $user = new User;
+    $user->getUserData(['first_name', 'last_name', 'profile_pic'])[0];
     
-    $data['user'] = User::getUserData(['first_name', 'last_name', 'profile_pic'])[0];
-    $data['user']['profile_pic'] = User::getProfilePic($data['user']['profile_pic']);
+    $data['user'] = $user->user_data[0];
+    // $data['user']['profile_pic'] = User::getProfilePic($data['user']['profile_pic']);
     
     // Questions
-    
-    $questions = Question::getPublicQuestions();
+    $questions = new Question;
+    $questions->getPublicQuestions();
+
+    $questions = (isset($questions->public_questions)) ? $questions->public_questions : [];
     
     foreach($questions as $key => $value) {
         $questions[$key]['up_count'] = Question::getVoteUpCount($value['q_id']);

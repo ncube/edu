@@ -59,7 +59,7 @@ class DB {
 
     public function insert($table, $fields = array()) {
         $keys = array_keys($fields);
-        $value = '';
+        $values = '';
         $x = 1;
 
         foreach($fields as $field) {

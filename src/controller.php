@@ -17,7 +17,8 @@ class Controller {
             header('Content-Type: application/json');
             echo json_encode($ajax->data);
         } else {
-            if ($GLOBALS['routes'][$name]['protect']) {
+            $protect = (isset($GLOBALS['routes'][$name]['protect'])) ? TRUE : FALSE;
+            if ($protect) {
                 new Protect;
             }
             $page = new Core($name);

@@ -9,8 +9,9 @@ class Core {
     function loadCss($libs) {
         $name = $this->page_name;
 
-        $ex_libs = $GLOBALS['routes'][$name]['includes']['css'];
+        $ex_libs = isset($GLOBALS['routes'][$name]['includes']['css']) ? $GLOBALS['routes'][$name]['includes']['css'] : FALSE;
         $libs = empty($ex_libs) ? $libs : array_merge($libs, $ex_libs);
+        $code = NULL;
 
         $css = $GLOBALS['config']['css'];
         foreach ($libs as $value) {
@@ -27,9 +28,10 @@ class Core {
 
     function loadJsBottom($libs) {
         $name = $this->page_name;
-        $ex_libs = $GLOBALS['routes'][$name]['includes']['js']['bottom'];
+        $ex_libs = isset($GLOBALS['routes'][$name]['includes']['js']['bottom']) ? $GLOBALS['routes'][$name]['includes']['js']['bottom'] : NULL;
         $libs = empty($ex_libs) ? $libs : array_merge($libs, $ex_libs);
         $js = $GLOBALS['config']['js'];
+        $code = NULL;
         foreach ($libs as $value) {
             if(gettype($js[$value]) === 'string') {
                 if (substr($value, 0, 3) === 'ng-') {
@@ -80,7 +82,7 @@ class Core {
         if ($type === '--') {
             $content = $GLOBALS['routes'][$this->page_name]['content'][$name];
             if (gettype($content) === 'array') {
-                $content_data = $content[1]['data'];
+                $content_data = isset($content[1]['data']) ? $content[1]['data'] : [];
                 foreach($content_data as $value) {
                     require_once 'models/'.$value.'.php';
                 }
@@ -119,7 +121,7 @@ class Core {
             Redirect::to($page['redirect']);
         }
 
-        if($page['parent']) {
+        if(isset($page['parent']) && $page['parent'] === TRUE) {
             end($GLOBALS['url_array']);
             $name = prev($GLOBALS['url_array']);
             $this->page_name = $name;
@@ -139,7 +141,7 @@ class Core {
             die;
         }
 
-        $var = $page['var'];
+        $var = (isset($page['var'])) ? $page['var'] : NULL;
 
         $title = $page['title'];
         $url['path'] = Input::get('url');

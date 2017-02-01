@@ -12,7 +12,7 @@ class Image {
         $this->image = imagecreatefromjpeg($path);
         $this->simage = NULL;
         $this->saved = FALSE;
-        list($this->width, $this->height) = getimagesize($src);;
+        list($this->width, $this->height) = getimagesize($path);;
     }
 
     public function crop($x, $y, $width, $height) {

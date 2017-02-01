@@ -1,6 +1,6 @@
 <?php 
 class PhpConvert {
-    public function toArray($data) {
+    public static function toArray($data) {
         $data = (array) $data;
         array_walk_recursive($data, function(&$value) {
             $type = gettype($value);

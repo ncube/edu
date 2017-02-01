@@ -14,9 +14,9 @@ $(document).ready(function() {
 
         request.done(function(data) {
             $('#search-content').html('')
-            if (!data.errors) {
+            if (!data.errors && data) {
                 data.forEach(function(element) {
-                    $('#search-content').append('<div class="search-results"><a href="/profile/' + element.username + '"><img class="img-thumb-sm" src="' + element.profile_pic + '"> &nbsp' + element.username + '</a></div>')
+                    $('#search-content').append('<div class="search-results"><a href="/profile/' + element.username + '"><img class="img-thumb-sm" src="/data/images/profile/35/' + element.profile_pic + '.jpg"> &nbsp' + element.username + '</a></div>')
                 })
             }
         })

@@ -53,7 +53,8 @@ class Ajax {
             $data['msgs'] = $msgs;
             Message::read(User::getPublicUserId($post['username']));
             //TODO: Replace with function
-            DB::updateIf('msg_notif', array('status' => 1), array('user_id' => User::getPublicUserId($post['username']), 'to_id' => Session::get('user_id')));
+            $db = DB::connect();
+            $db->updateIf('msg_notif', array('status' => 1), array('user_id' => User::getPublicUserId($post['username']), 'to_id' => Session::get('user_id')));
         } else {
             if (!$token) {
                 $data['errors'][] = 'Security Token Missing';

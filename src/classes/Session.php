@@ -29,12 +29,11 @@ class Session {
         return FALSE;
     }
     
-    public function login($user_id) {
+    public static function login($user_id) {
         self::create('user_id', $user_id);
     }
     
-    public function errors($errors, $to = NULL) {
-        
+    public static function errors($errors, $to = NULL) {
         if ($to === NULL) {
             return self::flash('errors');
         } else {
