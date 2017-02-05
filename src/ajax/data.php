@@ -13,7 +13,10 @@ class Ajax {
         });
         
         foreach($unread as $key => $value) {
-            $unread[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
+            $user_data = new User($value['user_id']);
+            $user_data->getPublicData();
+            $user_data->getProfilePic();
+            $unread[$key]['profile_pic'] = $user_data->user_data['profile_pic'];
             $unread[$key]['time'] = date("d M h:i A", $value['time']);
             $unread[$key]['first_name'] = ucwords($value['first_name']);
             $unread[$key]['last_name'] = ucwords($value['last_name']);
@@ -40,7 +43,10 @@ class Ajax {
     $notifMsg = $notif->unread_msgs;
     
     foreach($notifMsg as $key => $value) {
-        $notifMsg[$key]['profile_pic'] = User::getProfilePic($value['profile_pic']);
+        $user = new User($value['user_id']);
+        $user->getUserData(['first_name', 'last_name', 'gender',  'profile_pic']);
+        $user->getProfilePic();
+        $notifMsg[$key]['profile_pic'] = $user->user_data;
         $notifMsg[$key]['first_name'] = ucwords($value['first_name']);
         $notifMsg[$key]['last_name'] = ucwords($value['last_name']);
         $notifMsg[$key]['time'] = date("d M h:i A", $value['time']);
@@ -55,9 +61,10 @@ class Ajax {
     
     // User Data
     $user = new User;
-    $user->getUserData(['first_name', 'last_name', 'profile_pic'])[0];
+    $user->getUserData(['first_name', 'last_name', 'gender',  'profile_pic']);
+    $user->getProfilePic();
     
-    $data['user'] = $user->user_data[0];
+    $data['user'] = $user->user_data;
     // $data['user']['profile_pic'] = User::getProfilePic($data['user']['profile_pic']);
     
     // Questions
@@ -68,9 +75,11 @@ class Ajax {
     
     foreach($questions as $key => $value) {
         $questions[$key]['up_count'] = Question::getVoteUpCount($value['q_id']);
-        $questions[$key]['user_data'] = User::getPublicUserData($value['user_id'], ['profile_pic', 'first_name', 'last_name'])[0];
+        $user_data = new User($value['user_id']);
+        $user_data->getPublicData(['profile_pic', 'first_name', 'last_name']);
+        $user_data->getProfilePic();
+        $questions[$key]['user_data'] = $user_data->user_data;
         $questions[$key]['answers'] = Question::getAnswersCount($value['q_id']);
-        $questions[$key]['pic'] = User::getProfilePic($questions[$key]['user_data']['profile_pic']);
         $vote = Question::getVote($value['q_id']);
         if ($vote == 1) {
             $questions[$key]['my_data']['vote_up_class'] = 'vote-up-active';
@@ -82,6 +91,9 @@ class Ajax {
     }
 
     $data['questions'] = $questions;
+
+    // Groups
+    $data['groups'] = Group::getPublicGroups();
     
     $this->data = $data;
 }

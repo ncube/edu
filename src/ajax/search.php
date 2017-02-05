@@ -11,7 +11,8 @@ class Ajax {
             foreach($t as $key => $value) {
                 $user_data = new User($value['user_id']);
                 $user_data->getPublicData();
-                $t[$key]['profile_pic'] = $user_data->getProfilePic();
+                $user_data->getProfilePic();
+                $t[$key]['profile_pic'] = $user_data->user_data['profile_pic'];
             }
             $data = $t;
         } else {

@@ -2,10 +2,13 @@
 $data['user_id'] = Session::get('user_id');
 $user = new User;
 $user->getPublicData();
-$data['user_data'] = $user->public_data;
+$user->getProfilePic();
+$data['user_data'] = $user->user_data;
 $data['username'] = $data['user_data']['username'];
 $data['token'] = Token::generate();
-$data['side_active'][explode('/',$url['path'])[0]] = ' active';
+$base_url = $GLOBALS['url_array'];
+$base_url = isset($base_url[0]) ? $base_url[0]: 'index';
+$data['side_active'][$base_url] = ' active';
 
 $data['first_name'] = ucwords($data['user_data']['first_name']);
 $data['last_name'] = ucwords($data['user_data']['last_name']);

@@ -105,6 +105,8 @@ class Core {
     function loadView($name, $data = NULL) {
         $page = $GLOBALS['url_array'][0];
         $args = $GLOBALS['url_array'];
+        $key = explode('-', $name)[1];
+        $args[$key] = isset($args[$key]) ? $args[$key] : 'index';
         unset($args[0]);
         if(!empty($args)) {
             require_once "views/include/$page/".$args[explode('-', $name)[1]].'.php'; 
@@ -122,8 +124,17 @@ class Core {
         }
 
         if(isset($page['parent']) && $page['parent'] === TRUE) {
-            end($GLOBALS['url_array']);
-            $name = prev($GLOBALS['url_array']);
+            $url = Utils::parseUrl($name);
+
+            array_pop($url);
+            $name = '';
+
+            foreach($url as $value) {
+                $name = $name.$value.'/';
+            }
+
+            $name = trim($name, '/');
+
             $this->page_name = $name;
             $page = $GLOBALS['routes'][$name];
         }

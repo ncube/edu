@@ -46,6 +46,12 @@ homeControllers.controller('questionsList', ['$scope', '$http', function($scope,
         $scope.questions = data.questions;
     });
 
-    $scope.template.questions = '/public/views/templates/widgets/questions.html'
+}]);
+
+homeControllers.controller('groupsList', ['$scope', '$http', function($scope, $http) {
+
+    $http.get('/ajax/data').success(function(data) {
+        $scope.groups = data.groups;
+    });
 
 }]);

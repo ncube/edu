@@ -363,7 +363,7 @@ a:hover {
     width: 200px;
     height: 200px;
     overflow: hidden;
-    /*background: black;*/
+    background: black;
 }
 
 .img-upload,
@@ -402,4 +402,22 @@ a:hover {
 
 .img-upload span:hover {
     opacity: 1;
+}
+
+
+/*Groups*/
+
+.groups-menu {
+    background-color: whitesmoke;
+    padding-top: 15px;
+}
+
+.groups-menu .nav-tabs {
+    /*border-bottom: 1px solid lightblue;*/
+}
+
+.groups-menu .nav-tabs .nav-link.active {
+    /*background-color: whitesmoke;*/
+    /*border-radius: 5px;*/
+    border-color: #ddd #ddd transparent;
 }

@@ -1,18 +1,19 @@
 <?php 
 class User {
+    // TODO: check user_data, public_data arrays
     public $user_data;
     public $public_data;
     public $user_id;
 
     public function __construct($id = NULL) {
         $this->user_id = ($id === NULL) ? Session::get('user_id') : $id;
-        $this->public_data = NULL;
+        $this->user_data = NULL;
     }
 
     public static function login($username, $password) {
         $db = DB::connect();
         $results = $db->fetch(array('user' => ['user_id', 'password']), array('username' => $username));
-        $results = $results[0];
+        $results = isset($results[0]) ? $results[0] : NULL;
 
         if (count($results) === 1) {
             if (Hash::verify($password, $results->password)) {
@@ -107,13 +108,13 @@ class User {
         }
 
         $db = DB::connect();
-        $this->userData = $db->fetch($table, array('user_id' => $this->user_id));
+        $this->user_data = $db->fetch($table, array('user_id' => $this->user_id));
 
         // // For Count
-        // $count = new ArrayObject($this->userData);
+        // $count = new ArrayObject($this->user_data);
         // $count = $count->count();
 
-        $this->user_data = PhpConvert::toArray($this->userData);
+        $this->user_data = PhpConvert::toArray($this->user_data)[0];
     }
 
     public function getPublicData($fields = NULL) {
@@ -121,7 +122,7 @@ class User {
         $id = $this->user_id;
 
         if (empty($id)) {
-            $this->public_data = FALSE;
+            $this->user_data = FALSE;
         } else {
 
             $allowed = ['user_id', 'username', 'first_name', 'last_name', 'email', 'gender', 'dob', 'country', 'profile_pic'];
@@ -150,16 +151,16 @@ class User {
             }
 
             $db = DB::connect();
-            $this->public_data = $db->fetch($table, array('user_id' => $id));
+            $this->user_data = $db->fetch($table, array('user_id' => $id));
 
             // For Count
-            $count = new ArrayObject($this->public_data);
+            $count = new ArrayObject($this->user_data);
             $count = $count->count();
 
-            $this->public_data = PhpConvert::toArray($this->public_data)[0];
+            $this->user_data = PhpConvert::toArray($this->user_data)[0];
 
             // Profile Pic
-            $this->public_data['profile_pic'] = self::getProfilePic();
+            $this->user_data['profile_pic'] = self::getProfilePic();
         }
     }
 
@@ -189,13 +190,13 @@ class User {
     }
 
     public function getProfilePic() {
-        $name = $this->public_data['profile_pic'];
+        $name = $this->user_data['profile_pic'];
         if (empty($name)) {
-            $gender = $this->public_data['gender'];
+            $gender = $this->user_data['gender'];
             if($gender == 'F') {
-                return 'default_female';
+                $this->user_data['profile_pic'] = 'default_female';
             } else {
-                return 'default_male';
+                $this->user_data['profile_pic'] = 'default_male';
             }
         } else {
             return $name;

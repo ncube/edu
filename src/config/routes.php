@@ -119,4 +119,36 @@ $routes = array(
         'title' => 'Page Not Found - Ncube School',
         'template' => '404'
     ),
+    'groups' => array(
+        'title' => 'Groups - NCubeSchool',
+        'template' => 'index',
+        'content' => array(
+            '-main-' => ['groups.php']
+        ),
+        'data' => ['common'],
+        'var' => array(
+            'ng-controller' => 'ng-controller="groupsList"',
+        ),
+    ),
+    'groups/create' => array(
+        'function' => 'createGroup'
+    ),
+    'groups/*' => array(
+        'protect' => TRUE,
+        'template' => 'static',
+        'title' => 'Group - NCubeSchool',
+        'content' => array(
+            '-main-' => ['group.php']
+        ),
+        'data' => ['common', 'groups']
+    ),
+    'groups/*/members' => array(
+        'parent' => TRUE
+    ),
+    'groups/*/settings' => array(
+        'parent' => TRUE
+    ),
+    'groups/*/profile' => array(
+        'parent' => TRUE
+    ),
 );

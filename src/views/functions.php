@@ -162,4 +162,34 @@ class Funcs {
             ';
         }
     }
+
+    public static function createGroup() {
+        $input = Input::post();
+        if(!empty($input)) {
+            if (!empty($input['name'] && isset($input['public']))) {
+                $group = new Group;
+                $group->create($input);
+                echo $group->group_created ? 'Group Created' : 'Unable to create group';
+            } else {
+                echo 'Group name and group type is required';
+            }
+        } else {
+            echo '
+                <form method="post" action="">
+                    <input type="text" name="name" placeholder="Group Name"/>
+                    <br><br>
+                    <input type="text" name="description" placeholder="Group Description"/>
+                    <br><br>
+                    <input type="text" name="parent" placeholder="Parent Group ID"/>
+                    <br><br>
+                    <select name="public">
+                        <option selected disabled value="">Public</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                    <input type="submit" value="Submit">
+                </form>
+            ';
+        }
+    }
 }
