@@ -39,7 +39,6 @@ if(!$member) {
 
 if(!$admin) {
     $data['showIfAdmin'] = 'hidden';
-    $data['hideIfMember'] = NULL;
 }
 
 // Requests

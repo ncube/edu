@@ -1,6 +1,6 @@
 var homeControllers = angular.module('indexControllers', []);
 
-homeControllers.controller('main', ['$scope', function($scope, $http) {
+homeControllers.controller('main', ['$scope', function($scope) {
 
     $scope.keyController = function(key) {
         function reset() {
@@ -24,12 +24,15 @@ homeControllers.controller('header', ['$scope', '$http', function($scope, $http)
 
     $scope.toggleSideMenu = function() {
         $("#side-menu").toggle();
-        $("#side-menu").toggleClass('hidden-sm-down display-flex');
+        $("#side-menu").toggleClass('hidden-sm-down');
     }
 
-    $http.get('/ajax/data').success(function(data) {
+    $http.get('/ajax/data').then(function(response) {
+        data = response.data
         $scope.header = data;
         $scope.user = data.user;
+    }, function() {
+        console.log('Failed to get data');
     });
 
     $scope.hideSearchResults = function() {
@@ -42,16 +45,18 @@ homeControllers.controller('header', ['$scope', '$http', function($scope, $http)
 
 homeControllers.controller('questionsList', ['$scope', '$http', function($scope, $http) {
 
-    $http.get('/ajax/data').success(function(data) {
-        $scope.questions = data.questions;
+    $http.get('/ajax/data').then(function(response) {
+        $scope.questions = response.data.questions;
     });
 
 }]);
 
 homeControllers.controller('groupsList', ['$scope', '$http', function($scope, $http) {
 
-    $http.get('/ajax/data').success(function(data) {
-        $scope.groups = data.groups;
+    $http.get('/ajax/data').then(function(response) {
+        $scope.groups = response.data.groups;
+    }, function() {
+        console.log('Failed to get data');
     });
 
 }]);
