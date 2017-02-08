@@ -26,3 +26,6 @@ src/public/bower_components
 
 # Mysql Workbench bak file
 db/*.bak
+
+# Apache Logs
+src/apache_logs/*

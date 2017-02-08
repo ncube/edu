@@ -28,6 +28,7 @@
 </body>
 <script>
   var token = '<?=$data['token']?>';
+  var url_array = <?=json_encode($GLOBALS['url_array'])?>;
 </script>
 <?=Core::loadJsBottom(['common'])?>
 

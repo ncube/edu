@@ -23,4 +23,16 @@ $routes_ajax = array(
         'protect' => TRUE,
         'file' => 'inbox'
     ),
+    'ajax/group/join' => array(
+        'protect' => TRUE,
+        'file' => 'group/join'
+    ),
+    'ajax/group/accept' => array(
+        'protect' => TRUE,
+        'file' => 'group/accept'
+    ),
+    'ajax/group/reject' => array(
+        'protect' => TRUE,
+        'file' => 'group/reject'
+    ),
 );

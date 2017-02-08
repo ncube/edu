@@ -55,3 +55,65 @@ homeControllers.controller('groupsList', ['$scope', '$http', function($scope, $h
     });
 
 }]);
+
+homeControllers.controller('group', ['$scope', '$http', '$httpParamSerializerJQLike', function($scope, $http, $httpParamSerializerJQLike) {
+
+    $scope.joinGroup = function() {
+        var data = {}
+        data.token = token
+        data.id = url_array[1]
+        $http({
+                url: '/ajax/group/join',
+                method: 'POST',
+                data: $httpParamSerializerJQLike(data),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .then(function(response) {
+                    console.log(response.data);
+                },
+                function(response) {
+                    console.log('Request Failed: ' + response)
+                });
+    }
+
+    $scope.accept = function(user_id) {
+        var data = {}
+        data.token = token
+        data.id = url_array[1]
+        data.user_id = user_id
+        $http({
+                url: '/ajax/group/accept',
+                method: 'POST',
+                data: $httpParamSerializerJQLike(data),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .then(function(response) {
+                    console.log(response.data);
+                },
+                function(response) {
+                    console.log('Request Failed: ' + response)
+                });
+        console.log("Accept " + user_id);
+    }
+
+    $scope.reject = function(user_id) {
+        var data = {}
+        data.token = token
+        data.id = url_array[1]
+        data.user_id = user_id
+        $http({
+                url: '/ajax/group/reject',
+                method: 'POST',
+                data: $httpParamSerializerJQLike(data),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .then(function(response) {
+                    console.log(response.data);
+                },
+                function(response) {
+                    console.log('Request Failed: ' + response)
+                });
+        console.log("Reject " + user_id)
+    }
+
+}]);

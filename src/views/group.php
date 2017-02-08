@@ -1,32 +1,24 @@
-<?php
-$id = $GLOBALS['url_array'][1];
-$group = new Group($id);
-$group->getPublicData();
-$data['group_data'] = $group->public_data;
-
-function nav_active($item, $data) {
-    $active = isset($data['groups_nav_active'][$item]) ? $data['groups_nav_active'][$item] : NULL;
-    return $active;
-}
-?>
-
-<div class="card" style="height: 100%;">
+<div class="card" style="height: 100%;" ng-controller="group">
     <div class="init-flex">
-    <section ng-controller="header">
+    <section>
         <nav class="groups-menu">
-            <a class="navbar-brand" href="/groups/<?=$GLOBALS['url_array']['1']?>" style="margin-left: 20px;"><?=$data['group_data']['name']?></a>
+            <a class="navbar-brand" href="/groups/<?=$GLOBALS['url_array']['1']?>"><?=$data['group_data']['name']?></a>
             <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link<?=nav_active('posts', $data)?>" href="/groups/<?=$GLOBALS['url_array']['1']?>">Posts</a>
+                <button class="btn btn-success" ng-click="joinGroup()" <?=$data['hideIfMember']?>>Join</button>
+                <li class="nav-item" <?=$data['showIfAdmin']?>>
+                    <a class="nav-link<?=nav_active('settings', $data)?>" href="/groups/<?=$GLOBALS['url_array']['1']?>/settings">Settings</a>
+                </li>
+                <li class="nav-item" <?=$data['showIfAdmin']?>>
+                    <a class="nav-link<?=nav_active('requests', $data)?>" href="/groups/<?=$GLOBALS['url_array']['1']?>/requests">Requests</a>
+                </li>
+                <li class="nav-item" <?=$data['showIfMember']?>>
+                    <a class="nav-link<?=nav_active('members', $data)?>" href="/groups/<?=$GLOBALS['url_array']['1']?>/members">Members</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link<?=nav_active('profile', $data)?>" href="/groups/<?=$GLOBALS['url_array']['1']?>/profile">Profile</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link<?=nav_active('members', $data)?>" href="/groups/<?=$GLOBALS['url_array']['1']?>/members">Members</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link<?=nav_active('settings', $data)?>" href="/groups/<?=$GLOBALS['url_array']['1']?>/settings">Settings</a>
+                 <li class="nav-item" <?=$data['showIfMember']?>>
+                    <a class="nav-link<?=nav_active('posts', $data)?>" href="/groups/<?=$GLOBALS['url_array']['1']?>">Posts</a>
                 </li>
             </ul>
         </nav>

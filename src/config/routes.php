@@ -140,7 +140,7 @@ $routes = array(
         'content' => array(
             '-main-' => ['group.php']
         ),
-        'data' => ['common', 'groups']
+        'data' => ['common', 'group']
     ),
     'groups/*/members' => array(
         'parent' => TRUE
@@ -149,6 +149,9 @@ $routes = array(
         'parent' => TRUE
     ),
     'groups/*/profile' => array(
+        'parent' => TRUE
+    ),
+    'groups/*/requests' => array(
         'parent' => TRUE
     ),
 );

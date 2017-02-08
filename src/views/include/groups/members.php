@@ -1,10 +1,5 @@
 <?php
-$id = $GLOBALS['url_array'][1];
-$group = new Group($id);
-$group->getMembersPublicData();
-$group_data = empty($group->members_public_data) ? [] : $group->members_public_data;
-
-foreach ($group_data as $key => $value) {
+foreach ($data['group_members_data'] as $key => $value) {
     echo '
         <div class="col-lg-4 col-md-12">
             <a href="/profile/'.$value['username'].'">
