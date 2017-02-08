@@ -140,7 +140,7 @@ class Core {
         }
 
         if(!empty($page['template'])) {
-            $view = $page['template'];
+            $view = 'templates/'.$page['template'].'.php';
         } elseif (!empty($page['view'])) {
             $view = $page['view'];
         } elseif(!empty($page['function'])) {
@@ -162,7 +162,7 @@ class Core {
                 require_once 'models/'.$value.'.php';
             }
         }
-        $path = 'views/'.$view.'.php';
+        $path = 'views/'.$view;
         require_once $path;
     }
 }
