@@ -123,8 +123,9 @@ class Funcs {
         if($crop) {
             $src = Session::get('ppic_path');
             $name = Session::get('ppic_name');
+            $type = Session::get('ppic_type');
             
-            $image = new Image($src);
+            $image = new Image($src, $type);
             $image->crop($input['x'], $input['y'], $input['width'], $input['height']);
 
             $image->scale(200, 200);
@@ -141,11 +142,13 @@ class Funcs {
             $name = Input::files()['uploaded_file']['name'];
             $src = new Upload;
             $src->profilePic(Input::files());
-            $path = $src->path;
-            $name = $src->name;
             if ($src->uploaded) {
+                $path = $src->path;
+                $name = $src->name;
+                $type = $src->type;
                 Session::create('ppic_path', $path);
                 Session::create('ppic_name', $name);
+                Session::create('ppic_type', $type);
                 include 'crop.php';
             } else {
                 print_r($src->errors);

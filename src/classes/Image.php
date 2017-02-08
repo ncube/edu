@@ -7,9 +7,23 @@ class Image {
     public $simage;
     public $saved;
 
-    public function __construct($path) {
+    public function __construct($path, $type) {
         $this->path = $path;
-        $this->image = imagecreatefromjpeg($path);
+        $this->type = $type;
+
+        switch ($type) {
+            case 'image/png':
+                $this->image = imagecreatefrompng($path);
+                break;
+
+            case 'image/jpeg':
+                $this->image = imagecreatefromjpeg($path);
+                break;
+
+            default:
+                $this->errors = 'Unknown format';
+                break;
+        }
         $this->simage = NULL;
         $this->saved = FALSE;
         list($this->width, $this->height) = getimagesize($path);;
@@ -28,9 +42,9 @@ class Image {
 
     public function save($path) {
         if ($this->simage !== NULL) {
-            imagejpeg($this->simage, $path);
+            imagejpeg($this->simage, $path.'.jpg');
         } else {
-            imagejpeg($this->image, $path);
+            imagejpeg($this->image, $path.'.jpg');
         }
         $this->saved = TRUE;
     }
