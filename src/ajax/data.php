@@ -68,19 +68,20 @@ class Ajax {
     // $data['user']['profile_pic'] = User::getProfilePic($data['user']['profile_pic']);
     
     // Questions
-    $questions = new Question;
+    $questions = new Question($GLOBALS['url_array']['1']);
     $questions->getPublicQuestions();
 
     $questions = (isset($questions->public_questions)) ? $questions->public_questions : [];
     
     foreach($questions as $key => $value) {
-        $questions[$key]['up_count'] = Question::getVoteUpCount($value['q_id']);
+        $question = new Question($value['q_id']);
+        $questions[$key]['up_count'] = $question->getVoteUpCount();
         $user_data = new User($value['user_id']);
         $user_data->getPublicData(['profile_pic', 'first_name', 'last_name']);
         $user_data->getProfilePic();
         $questions[$key]['user_data'] = $user_data->user_data;
-        $questions[$key]['answers'] = Question::getAnswersCount($value['q_id']);
-        $vote = Question::getVote($value['q_id']);
+        $questions[$key]['answers'] = $question->getAnswersCount();
+        $vote = $question->getVote();
         if ($vote == 1) {
             $questions[$key]['my_data']['vote_up_class'] = 'vote-up-active';
         } else if ($vote == 0) {

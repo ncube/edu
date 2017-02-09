@@ -59,10 +59,9 @@ $routes = array(
             'ng-controller' => 'ng-controller="questionsList"',
         ),
     ),
-    'questions/create' => array(
+    'questions/ask' => array(
         'protect' => TRUE,
-        'template' => '404',
-        'title' => 'Page Not Found'
+        'function' => 'askQuestion',
     ),
     'questions/*' => array(
         'protect' => TRUE,

@@ -34,11 +34,11 @@ class Funcs {
 
     public static function answerQuestion() {
         if(!empty(Input::post())) {
-            echo 'Under Construction';
-            // $content = Input::post()['content'];
-            // $id = $url[0];
-            // Question::postAnswer($content, $id);
-            // echo 'Posted';
+            // Add token check
+            $content = Input::post()['content'];
+            $question = new Question($GLOBALS['url_array'][1]);
+            $question->postAnswer($content);
+            echo 'Posted';
         } else {                    
             echo '
                 Post Answer
@@ -191,6 +191,31 @@ class Funcs {
                         <option value="0">No</option>
                     </select>
                     <input type="submit" value="Submit">
+                </form>
+            ';
+        }
+    }
+
+    public static function askQuestion() {
+        new Protect;
+        $post = Input::post();
+        echo '<pre>';
+        if (!empty($post)) {
+            if (Token::check($post['token'])) {
+                Question::postQuestion($post);
+                echo 'Posted';
+            } else {
+                echo 'Security token missing.';
+            }
+        } else {
+            echo '
+                <form method="post" action="">
+                    <input type="text" name="title" placeholder="Title">
+                    <input type="hidden" name="token" value="'.Token::generate().'">
+                    <br>
+                    <textarea placeholder="Description" type="text" name="content"></textarea>
+                    <br>
+                    <input type="submit">
                 </form>
             ';
         }

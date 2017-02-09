@@ -8,24 +8,25 @@ class Question {
         $this->id = $id;
     }
 
-    public function postQuestion($data) {
+    public static function postQuestion($data) {
         $allowed = ['title', 'content'];
         
         $data = Restrict::data($data, $allowed);
         $data['user_id'] = Session::get('user_id');
-        $data['q_id'] = md5(uniqid(mt_rand, TRUE));
+        $data['q_id'] = md5(uniqid(mt_rand(), TRUE));
         $data['time'] = time();
         $data['public'] = 1;
+        $data['views'] = 0;
         
         $db = DB::connect();
         $db->insert('question', $data);
         return TRUE;
     }
     
-    public function postAnswer($content, $id) {
+    public function postAnswer($content) {
         $data['user_id'] = Session::get('user_id');
         $data['content'] = $content;
-        $data['q_id'] = $id;
+        $data['q_id'] = $this->id;
         $data['time'] = time();
         
         $db = DB::connect();
@@ -38,17 +39,18 @@ class Question {
         $this->public_questions = PhpConvert::toArray($db->fetch(array('question'), array('public' => 1)));
     }
     
-    public function getAnswers($id) {
+    public function getAnswers() {
         $db = DB::connect();
-        return PhpConvert::toArray($db->fetch(array('answer'), array('q_id' => $id)));
+        return PhpConvert::toArray($db->fetch(array('answer'), array('q_id' => $this->id)));
     }
     
-    public function getPublicQuestion($id) {
+    public function getPublicQuestion() {
         $db = DB::connect();
-        return PhpConvert::toArray($db->fetch(array('question'), array('q_id' => $id, 'public' => 1)));
+        return PhpConvert::toArray($db->fetch(array('question'), array('q_id' => $this->id, 'public' => 1)))[0];
     }
     
-    public function voteQuestion($id, $vote) {
+    public function voteQuestion($vote) {
+        $id = $this->id;
         $user_id = Session::get('user_id');
         $db = DB::connect();
         $count = $db->fetchcount('vote', array('user_id' => $user_id, 'q_id' => $id));
@@ -62,55 +64,50 @@ class Question {
         }
     }
     
-    public function countQuestionViews($id) {
+    public function countQuestionViews() {
         $db = DB::connect();
-        $count = $db->fetch(array('question' => ['views']), array('q_id' => $id))[0];
+        $count = $db->fetch(array('question' => ['views']), array('q_id' => $this->id))[0];
         if (!empty($count)) {
             $count = $count->views;
             $count++;
-            $db->updateIf('question', array('views' => $count), array('q_id' => $id));
+            $db->updateIf('question', array('views' => $count), array('q_id' => $this->id));
             return TRUE;
         } else {
             return FALSE;
         }
     }
     
-    public function getQuestionViews($id) {
+    public function getQuestionViews() {
         $db = DB::connect();
-        return $db->fetch(array('question' => ['views']), array('q_id' => $id))[0]->views;
+        return $db->fetch(array('question' => ['views']), array('q_id' => $this->id))[0]->views;
     }
     
-    public function getVoteUpCount($id) {
+    public function getVoteUpCount() {
         $db = DB::connect();
-        return $db->fetchCount('vote', array('q_id' => $id, 'vote' => 1));
+        return $db->fetchCount('vote', array('q_id' => $this->id, 'vote' => 1));
     }
     
-    public function getAnswersCount($id) {
+    public function getAnswersCount() {
         $db = DB::connect();
-        return $db->fetchCount('answer', array('q_id' => $id));
+        return $db->fetchCount('answer', array('q_id' => $this->id));
     }
     
-    public function getVote($id) {
+    public function getVote() {
         $db = DB::connect();
-        $data = PhpConvert::toArray($db->fetch(array('vote' => ['vote']), array('user_id' => Session::get('user_id'), 'q_id' => $id)));
+        $data = PhpConvert::toArray($db->fetch(array('vote' => ['vote']), array('user_id' => Session::get('user_id'), 'q_id' => $this->id)));
         
-        if (count($data) > 0) {
-            return $data[0]['vote'];
-        } else {
-            return [];
-        }
-        
+        return (count($data) > 0) ? $data[0]['vote'] : [];
     }
     
-    public function unVoteQuestion($id) {
+    public function unVoteQuestion() {
         $db = DB::connect();
-        $db->deleteIf('vote', array('q_id' => $id, 'user_id' => Session::get('user_id')));
+        $db->deleteIf('vote', array('q_id' => $this->id, 'user_id' => Session::get('user_id')));
         return TRUE;
     }
     
-    public function exists($id) {
+    public function exists() {
         $db = DB::connect();
-        if ($db->fetchCount('question', array('q_id' => $id)) === 1) {
+        if ($db->fetchCount('question', array('q_id' => $this->id)) === 1) {
             return TRUE;
         } else {
             return FALSE;

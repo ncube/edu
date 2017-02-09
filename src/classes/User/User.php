@@ -174,21 +174,6 @@ class User {
         return FALSE;
     }
 
-    public static function getAcceptedUsersData() {
-        $id = Session::get('user_id');
-        $db = DB::connect();
-        $sent = $db->fetch(array('request' => 'other_user_id'), array('user_id' => $id, 'status' => 1));
-        $received = $db->fetch(array('request' => 'user_id'), array('other_user_id' => $id, 'status' => 1));
-
-        $ids = array_merge($sent, $received);
-        foreach($ids as $value) {
-            $value = (array) $value;
-            $id = array_values($value)[0];
-            $data[] = self::getPublicUserData($id, ['username', 'first_name', 'last_name'])[0];
-        }
-        return PhpConvert::toArray($data);
-    }
-
     public function getProfilePic() {
         $name = $this->user_data['profile_pic'];
         if (empty($name)) {

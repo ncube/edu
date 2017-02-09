@@ -1,4 +1,4 @@
-<a href="/questions/create" class="btn">Ask Question</a>
+<a href="/questions/ask" class="btn">Ask Question</a>
 <div class="col-lg-6 col-md-12" ng-repeat="item in questions">
     <div class="card">
         <div class="card-block">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="col-md-1">
-                    <img ng-src="{{item.pic}}" alt="@{{item.username}}" class="img-thumb-sm pull-right">
+                    <img ng-src="/data/images/profile/35/{{item.user_data.profile_pic}}.jpg" alt="@{{item.username}}" class="img-thumb-sm pull-right">
                 </div>
                 <div class="col-md-3">
                     <div class="post-head">
