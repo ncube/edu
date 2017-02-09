@@ -52,11 +52,11 @@ $q_time = new Time($data['question']['time']);
             <div style="padding-top: 20px; padding-left: 25px; padding-bottom: 10px; border-bottom: 1px solid lightgray;">
                 <div class="row">
                     <div class="col-md-1 p-0">
-                        <img ng-src="/data/images/profile/35/<?=$value['user']['profile_pic']?>.jpg" alt="@" class="img-thumb-sm pull-right">
+                        <img ng-src="/data/images/profile/35/<?=$value['user_data']['profile_pic']?>.jpg" alt="@" class="img-thumb-sm pull-right">
                     </div>
                     <div class="col-md-11">
                         <div class="post-head">
-                            <a href="/profile/<?=$value['user']['username']?>"><b class="ng-binding"><?=$value['user']['first_name']?> <?=$value['user']['last_name']?></b></a>
+                            <a href="/profile/<?=$value['user_data']['username']?>"><b class="ng-binding"><?=$value['user_data']['first_name']?> <?=$value['user_data']['last_name']?></b></a>
                             <br>
                             <span class="time ng-binding"><?=$time->hrf?></span>
                         </div>

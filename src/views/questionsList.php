@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="post-head">
-                        <a href="/profile/{{item.username}}"><b>{{item.user_data.first_name}} {{item.user_data.last_name}}</b></a>
+                        <a href="/profile/{{item.user_data.username}}"><b>{{item.user_data.first_name}} {{item.user_data.last_name}}</b></a>
                         <br>
                         <span class="time">{{item.time}}</span>
                     </div>
