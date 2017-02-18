@@ -5,14 +5,14 @@ $q_time = new Time($data['question']['time']);
     <div class="col-lg-6 col-md-12">
         <a href="/questions/<?=$data['question']['q_id']?>/answer">Answer</a>
         <div class="card">
-            <div style="padding-top: 20px; padding-left: 25px; padding-bottom: 10px; border-bottom: 1px solid lightgray;">
+            <div style="padding-top: 20px; padding-left: 25px;">
                 <div class="row">
                     <div class="col-md-1 p-0">
                         <img ng-src="/data/images/profile/35/<?=$data['q_user']['profile_pic']?>.jpg" alt="@" class="img-thumb-sm pull-right">
                     </div>
                     <div class="col-md-11">
                         <div class="post-head">
-                            <a href="/profile/"><b class="ng-binding"><?=$data['q_user']['first_name']?> <?=$data['q_user']['last_name']?></b></a>
+                            <a href="/profile/<?=$data['q_user']['username']?>"><b class="ng-binding"><?=$data['q_user']['first_name']?> <?=$data['q_user']['last_name']?></b></a>
                             <br>
                             <span class="time ng-binding"><?=$q_time->hrf?></span>
                         </div>
@@ -27,7 +27,7 @@ $q_time = new Time($data['question']['time']);
                     <?=$data['question']['content']?>
                 </div>
             </div>
-            <div class="card-footer">
+            <div class="question-footer">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="pull-left" style="padding: 10px; font-size: 17px;" id="{{item.q_id}}">
@@ -49,7 +49,7 @@ $q_time = new Time($data['question']['time']);
                 $time = new Time($value['time']);
         ?>
         <div class="card">
-            <div style="padding-top: 20px; padding-left: 25px; padding-bottom: 10px; border-bottom: 1px solid lightgray;">
+            <div style="padding-top: 20px; padding-left: 25px;">
                 <div class="row">
                     <div class="col-md-1 p-0">
                         <img ng-src="/data/images/profile/35/<?=$value['user_data']['profile_pic']?>.jpg" alt="@" class="img-thumb-sm pull-right">

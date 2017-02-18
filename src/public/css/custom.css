@@ -348,8 +348,11 @@ a:hover {
     color: #4CAF50;
 }
 
-.vote-down-active {
-    color: #F44336;
+.question-footer {
+    padding: .5rem 1.25rem;
+    padding-top: 0px;
+    background-color: #fff;
+    border-top: none;
 }
 
 

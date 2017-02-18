@@ -5,11 +5,8 @@
             <a href="/questions/{{item.q_id}}" style="color: inherit; text-decoration: none;">
                 <h5><strong>{{item.title}}</strong></h5>
             </a>
-            <p>
-                {{item.content}}
-            </p>
         </div>
-        <div class="card-footer">
+        <div class="question-footer">
             <div class="row">
                 <div class="col-md-8">
                     <div class="pull-left" style="padding: 10px; font-size: 17px;" id="{{item.q_id}}">
