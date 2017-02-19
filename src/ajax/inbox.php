@@ -26,7 +26,7 @@ class Ajax {
                 $msg = Input::post('msg');
                 if (!empty($username)) {
                     Message::sendMessage($username, $msg);
-                    Notif::raiseMsgNotif(User::getPublicUserId($username));
+                    // Notif::raiseMsgNotif(User::getPublicUserId($username));
                 } else {
                     return 'Username Required';
                 }

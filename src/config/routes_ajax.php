@@ -35,4 +35,16 @@ $routes_ajax = array(
         'protect' => TRUE,
         'file' => 'group/reject'
     ),
+    'ajax/profile/follow' => array(
+        'protect' => TRUE,
+        'file' => 'profile/follow'
+    ),
+    'ajax/profile/unfollow' => array(
+        'protect' => TRUE,
+        'file' => 'profile/unfollow'
+    ),
+    'ajax/profile/data' => array(
+        'protect' => TRUE,
+        'file' => 'profile/data'
+    ),
 );

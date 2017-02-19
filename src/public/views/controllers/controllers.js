@@ -122,3 +122,67 @@ homeControllers.controller('group', ['$scope', '$http', '$httpParamSerializerJQL
     }
 
 }]);
+
+homeControllers.controller('profile', ['$scope', '$http', '$httpParamSerializerJQLike', function($scope, $http, $httpParamSerializerJQLike) {
+
+    username = url_array[1]
+
+    data = {}
+    data.username = username
+    data.token = token
+
+    $http({
+            url: '/ajax/profile/data',
+            method: 'POST',
+            data: $httpParamSerializerJQLike(data),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        })
+        .then(function(response) {
+                $scope.userData = response.data
+                $scope.following = response.data.following
+                $scope.default = response.data.default
+            },
+            function(response) {
+                console.log('Request Failed: ' + response)
+            });
+
+
+
+    $scope.follow = function() {
+        var data = {}
+        data.token = token
+        data.username = url_array[1]
+
+        $http({
+                url: '/ajax/profile/follow',
+                method: 'POST',
+                data: $httpParamSerializerJQLike(data),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .then(function(response) {
+                    $scope.following = true
+                },
+                function(response) {
+                    console.log('Request Failed: ' + response)
+                });
+    }
+
+    $scope.unfollow = function() {
+        var data = {}
+        data.token = token
+        data.username = url_array[1]
+        $http({
+                url: '/ajax/profile/unfollow',
+                method: 'POST',
+                data: $httpParamSerializerJQLike(data),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .then(function(response) {
+                    $scope.following = false
+                },
+                function(response) {
+                    console.log('Request Failed: ' + response)
+                });
+    }
+
+}]);

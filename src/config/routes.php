@@ -30,21 +30,17 @@ $routes = array(
         'protect' => TRUE,
         'template' => 'index',
         'title' => 'Profile - NCube School',
-        'includes' => array(
-            'js' => array(
-                'bottom' => ['profile-ajax']
-            )
-        ),
         'content' => array(
-            '-main-' => ['profile.php', array('data' => ['profile'])]
+            '-main-' => ['profile.php']
         ),
-        'data' => ['common', 'profile']
+        'data' => ['common']
     ),
     'profile/changepic' => array(
         'function' => 'changepic',
         'data' => ['common']
     ),
     'profile/*' => array(
+        'protect' => TRUE,
         'parent' => TRUE
     ),
     'questions' => array(

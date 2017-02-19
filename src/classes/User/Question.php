@@ -104,6 +104,16 @@ class Question {
         $db->deleteIf('vote', array('q_id' => $this->id, 'user_id' => Session::get('user_id')));
         return TRUE;
     }
+
+    public static function countUserQuestions($id) {
+        $db = DB::connect();
+        return $db->fetchCount('question', array('user_id' => $id, 'public' => 1));
+    }
+
+    public static function countUserAnswers($id) {
+        $db = DB::connect();
+        return $db->fetchCount('answer', array('user_id' => $id));
+    }
     
     public function exists() {
         $db = DB::connect();

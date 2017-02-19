@@ -21,10 +21,7 @@ class Ajax {
                 $data['errors'][] = 'Username Required';
             }
         }
-        if (!empty($data)) {
-            return $data;
-        } else {
-            return FALSE;
-        }
+        
+        $this->data = $data;
     }
 }

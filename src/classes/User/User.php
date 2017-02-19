@@ -54,8 +54,8 @@ class User {
                 $follow_id = $db->fetch(array('follow' => 'follow_id'), array('user_id' => Session::get('user_id'), 'following_id' => $user_id));
 
                 if (empty($follow_id)) {
-                    $dbinsert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id, 'time' => time()));
-                    Notif::raiseNotif($user_id, 'F');
+                    $db->insert('follow', array('user_id' => Session::get('user_id'), 'following_id' => $user_id, 'time' => time()));
+                    // Notif::raiseNotif($user_id, 'F');
                     return TRUE;
                 } else {
                     return 'following';
@@ -89,14 +89,16 @@ class User {
         return PhpConvert::toArray($data);
     }
 
-    public static function followingCount() {
+    public function followingCount() {
+        $id = $this->user_id;
         $db = DB::connect();
-        return $db->fetchCount('follow', array('user_id' => Session::get('user_id')));
+        return $db->fetchCount('follow', array('user_id' => $id));
     }
 
-    public static function followerCount() {
+    public function followerCount() {
+        $id = $this->user_id;
         $db = DB::connect();
-        return $db->fetchCount('follow', array('following_id' => Session::get('user_id')));
+        return $db->fetchCount('follow', array('following_id' => $id));
     }
 
     public function getUserData($fields = NULL) {
@@ -167,9 +169,19 @@ class User {
     public static function getPublicUserId($username) {
         $db = DB::connect();
         $userData = $db->fetch(array('user' => 'user_id'), array('public' => '1', 'username' => $username));
-        $userData = $userData[0];
+        $userData = empty($userData) ? [] : $userData[0];
         if (!empty($userData)) {
             return $userData->user_id;
+        }
+        return FALSE;
+    }
+
+    public static function getPublicUsername($user_id) {
+        $db = DB::connect();
+        $userData = $db->fetch(array('user' => 'username'), array('public' => '1', 'user_id' => $user_id));
+        $userData = empty($userData) ? [] : $userData[0];
+        if (!empty($userData)) {
+            return $userData->username;
         }
         return FALSE;
     }

@@ -94,7 +94,7 @@ class Ajax {
 
         // Groups
         $data['groups'] = Group::getPublicGroups();
-        
+
         $this->data = $data;
     }
 }

@@ -356,15 +356,39 @@ a:hover {
 }
 
 
-/*Image Upload*/
+/*Profile & Image Upload*/
+
+.prof {
+    /*height: 100%;*/
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.prof .ppic {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.prof .img-thumb-lg {
+    width: 150px;
+    height: 150px;
+}
+
+.prof-content {
+    text-align: center;
+}
 
 .img-upload {
     line-height: 1.5em;
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 15px;
     color: white;
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    margin-bottom: 20px;
     overflow: hidden;
     background: black;
 }
@@ -399,7 +423,7 @@ a:hover {
 }
 
 .img-upload span i {
-    margin-top: 70px;
+    margin-top: 55px;
     color: white;
 }
 
