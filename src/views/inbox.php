@@ -9,7 +9,7 @@
                 echo '
                 <a href="/inbox/'. $value['username'] .'">
                 <div class="msg msg-active">
-                <img src="/public/images/profile-pic.png" class="img-thumb-sm">
+                <img src="/data/images/profile/35/'.$value['profile_pic'].'.jpg" class="img-thumb-sm">
                 '. ucwords($value['first_name']) . ' ' . ucwords($value['last_name']) . '
                 </div>
                 </a>
@@ -19,7 +19,7 @@
             $listOutput .= '
             <a href="/inbox/'. $value['username'] .'">
             <div class="msg">
-            <img src="/public/images/profile-pic.png" class="img-thumb-sm">
+            <img src="/data/images/profile/35/'.$value['profile_pic'].'.jpg" class="img-thumb-sm">
             '. ucwords($value['first_name']) . ' ' . ucwords($value['last_name']) . '
             </div>
             </a>

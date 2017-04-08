@@ -25,7 +25,7 @@ class Ajax {
                 $username = Input::post('username');
                 $msg = Input::post('msg');
                 if (!empty($username)) {
-                    Message::sendMessage($username, $msg);
+                    Inbox::sendMessage($username, $msg);
                     // Notif::raiseMsgNotif(User::getPublicUserId($username));
                 } else {
                     return 'Username Required';
@@ -44,14 +44,14 @@ class Ajax {
         $data['errors'] = NULL;
 
         if (!empty($post['username'] && $token === TRUE)) {
-            $msgs = Message::getMessages($post['username']);
+            $msgs = Inbox::getMessages($post['username']);
             $data['success'] = TRUE;
             foreach($msgs as $key => $value) {
                 $time = new Time($value['time']);
                 $msgs[$key]['time'] = $time->hrf;
             }
             $data['msgs'] = $msgs;
-            Message::read(User::getPublicUserId($post['username']));
+            Inbox::read(User::getPublicUserId($post['username']));
             //TODO: Replace with function
             $db = DB::connect();
             $db->updateIf('msg_notif', array('status' => 1), array('user_id' => User::getPublicUserId($post['username']), 'to_id' => Session::get('user_id')));
