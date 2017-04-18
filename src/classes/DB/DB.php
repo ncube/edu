@@ -268,4 +268,17 @@ class DB {
         self::query($sql, TRUE);
         return PhpConvert::toArray($this->_results);
     }
+
+    public function eQuery($table, $fields, $q) {
+        $q = rtrim($q,',');
+        $sql = "INSERT INTO `$table` (`" . implode('`, `', $fields) . "`) VALUES $q";
+        $query = self::connect()->_conn->prepare($sql);
+
+        try {
+            $execute = $query->execute();
+        } catch (PDOException $error) {
+            Log::error('db', $error);
+            die('Sorry something went wrong please try again later.');
+        }
+    }
 }

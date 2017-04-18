@@ -29,3 +29,11 @@ db/*.bak
 
 # Apache Logs
 src/apache_logs/*
+
+#Composer Vendor Files
+seeder/vendor/*
+
+#Seeder
+seeder/data.json
+seeder/vendor/*
+seeder/composer.phar
