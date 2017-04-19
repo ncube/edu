@@ -3,8 +3,9 @@
     <section>
         <nav class="groups-menu">
             <a class="navbar-brand" href="/groups/<?=$GLOBALS['url_array']['1']?>"><?=$data['group_data']['name']?></a>
-            <ul class="nav nav-tabs">
-                <button class="btn btn-success" ng-click="joinGroup()" <?=$data['hideIfMember']?>>Join</button>
+            <ul class="nav nav-tabs" ng-init="requested='<?=$data['requested']?>'">
+                <button class="btn btn-success" ng-click="joinGroup()" ng-hide="requested" <?=$data['hideIfMember']?>>Join</button>
+                <button class="btn btn-primary" ng-click="revokeRequest()" ng-hide="!requested">Requested</button>
                 <li class="nav-item" <?=$data['showIfAdmin']?>>
                     <a class="nav-link<?=nav_active('settings', $data)?>" href="/groups/<?=$GLOBALS['url_array']['1']?>/settings">Settings</a>
                 </li>

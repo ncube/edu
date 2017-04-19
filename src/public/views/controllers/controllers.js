@@ -74,7 +74,9 @@ homeControllers.controller('group', ['$scope', '$http', '$httpParamSerializerJQL
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
             .then(function(response) {
-                    console.log(response.data);
+                    if(response.data.success) {
+                        $scope.requested = true;
+                    }
                 },
                 function(response) {
                     console.log('Request Failed: ' + response)

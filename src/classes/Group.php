@@ -24,6 +24,7 @@ class Group {
         $db = DB::connect();
         $db->insert('groups', $data);
         $this->group_created = TRUE;
+        $this->id = $data['group_id'];
     }
 
     public function getType() {
@@ -37,6 +38,11 @@ class Group {
         $type = isset($this->user_type) ? $this->user_type : self::getType();
         return in_array($type, array('A','M'), true );
     }
+
+    public function isRequested(){
+        $db = DB::connect();
+        return ($db->fetchCount('groups_users', array('user_id' => Session::get('user_id'), 'group_id' => $this->id, 'status' => 0)) === 1) ? TRUE : FALSE;
+    }
     
     public function isAdmin() {
         $type = isset($this->user_type) ? $this->user_type : self::getType();
@@ -44,16 +50,24 @@ class Group {
     }
     
     public function checkRequest() {
-        $id = $this->id;
         $db = DB::connect();
-        return ($db->fetchCount('groups_users', array('user_id' => Session::get('user_id'), 'group_id' => $id)) === 1) ? TRUE : FALSE;
+        return ($db->fetchCount('groups_users', array('user_id' => Session::get('user_id'), 'group_id' => $this->id)) === 0) ? FALSE : TRUE;
     }
     
     public function joinAsMember() {
-        $id = $this->id;
         if (!self::checkRequest()) {
             $db = DB::connect();
-            $db->insert('groups_users', array('user_id' => Session::get('user_id'), 'group_id' => $id, 'type' => 'M', 'time' => time()));
+            $db->insert('groups_users', array('user_id' => Session::get('user_id'), 'group_id' => $this->id, 'type' => 'M', 'time' => time()));
+            // Notif::raiseNotif($id, 'GR');
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function addAdmin() {
+        if (!self::checkRequest()) {
+            $db = DB::connect();
+            $db->insert('groups_users', array('user_id' => Session::get('user_id'), 'group_id' => $this->id, 'type' => 'A', 'status' => 1, 'time' => time()));
             // Notif::raiseNotif($id, 'GR');
             return TRUE;
         }
@@ -61,13 +75,11 @@ class Group {
     }
     
     public function getRequestsIds() {
-        $id = $this->id;
         $db = DB::connect();
-        return PhpConvert::toArray($db->fetch(array('groups_users' => ['user_id', 'time']), array('group_id' => $id, 'status' => 0)));
+        return PhpConvert::toArray($db->fetch(array('groups_users' => ['user_id', 'time']), array('group_id' => $this->id, 'status' => 0)));
     }
     
     public function getRequests() {
-        $id = $this->id;
         $reqs = self::getRequestsIds();
         foreach($reqs as $value) {
             $user = new User($value['user_id']);

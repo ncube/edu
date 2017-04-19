@@ -1,6 +1,6 @@
 <div class="card" style="height: 100%;">
   <div class="con" style="height: 100%;">
-    <div class="col-xs-3 p-0">
+    <div class="col-xs-3 p-0" style="overflow-y: auto;">
       <?php
         // TODO: Move to Model 
         $listOutput = NULL;

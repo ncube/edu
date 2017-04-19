@@ -172,6 +172,7 @@ class Funcs {
             if (!empty($input['name'] && isset($input['public']))) {
                 $group = new Group;
                 $group->create($input);
+                $group->addAdmin();
                 echo $group->group_created ? 'Group Created' : 'Unable to create group';
             } else {
                 echo 'Group name and group type is required';

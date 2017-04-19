@@ -43,32 +43,32 @@ $q_time = new Time($data['question']['time']);
     <div class="col-lg-6 col-md-12">
         <h5 style="color: gray; text-align: center;">Answers</h5>
     </div>
-    <div class="col-lg-6 col-md-12">
-        <?php
-            foreach($data['answers'] as $key => $value) {
-                $time = new Time($value['time']);
-        ?>
-        <div class="card">
-            <div style="padding-top: 20px; padding-left: 25px;">
-                <div class="row">
-                    <div class="col-md-1 p-0">
-                        <img ng-src="/data/images/profile/35/<?=$value['user_data']['profile_pic']?>.jpg" alt="@" class="img-thumb-sm pull-right">
-                    </div>
-                    <div class="col-md-11">
-                        <div class="post-head">
-                            <a href="/profile/<?=$value['user_data']['username']?>"><b class="ng-binding"><?=$value['user_data']['first_name']?> <?=$value['user_data']['last_name']?></b></a>
-                            <br>
-                            <span class="time ng-binding"><?=$time->hrf?></span>
+    <?php
+        foreach($data['answers'] as $key => $value) {
+            $time = new Time($value['time']);
+    ?>
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div style="padding-top: 20px; padding-left: 25px;">
+                    <div class="row">
+                        <div class="col-md-1 p-0">
+                            <img ng-src="/data/images/profile/35/<?=$value['user_data']['profile_pic']?>.jpg" alt="@" class="img-thumb-sm pull-right">
+                        </div>
+                        <div class="col-md-11">
+                            <div class="post-head">
+                                <a href="/profile/<?=$value['user_data']['username']?>"><b class="ng-binding"><?=$value['user_data']['first_name']?> <?=$value['user_data']['last_name']?></b></a>
+                                <br>
+                                <span class="time ng-binding"><?=$time->hrf?></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-block">
-                <div class="q-desp">
-                    <?=$value['content']?>
+                <div class="card-block">
+                    <div class="q-desp">
+                        <?=$value['content']?>
+                    </div>
                 </div>
             </div>
         </div>
-        <?php } ?>
-    </div>
+    <?php } ?>
 </div>

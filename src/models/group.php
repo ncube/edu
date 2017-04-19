@@ -4,7 +4,6 @@ $u = isset($u[2]) ? $u[2]: 'posts';
 $base_url = ($u === 'index.php') ? 'index' : $u;
 $data['groups_nav_active'][$base_url] = ' active';
 
-
 $id = $GLOBALS['url_array'][1];
 $group = new Group($id);
 $group->getPublicData();
@@ -31,7 +30,6 @@ $data['showIfMember'] = NULL;
 $data['showIfAdmin'] = NULL;
 $data['hideIfMember'] = 'hidden';
 
-
 if(!$member) {
     $data['showIfMember'] = 'hidden';
     $data['hideIfMember'] = NULL;
@@ -44,3 +42,5 @@ if(!$admin) {
 // Requests
 $group->getRequests();
 $data['requests'] = $group->requests;
+
+$data['requested'] = $group->isRequested();
